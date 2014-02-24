@@ -1,5 +1,6 @@
 #pragma once 
 #include"utility.hpp"
+#include"at.hpp"
 namespace tupleple{
 	namespace sequence{
 
@@ -22,14 +23,12 @@ namespace tupleple{
 			template<size_t N>
 			class make_N_Sequence_impl
 			{
-				template<class T>struct Inc;
-				template<size_t ...R>
-				struct Inc<Sequence<R...>>
-				{
-					using type = Sequence<0, (R + 1)...>;
-				};
+				using seq = typename make_N_Sequence_impl<N - 1>::type;
+				template<size_t ...N>
+				static auto Inc(Sequence<N...>)
+					->Sequence<0, (N + 1)...>;
 			public:
-				using type = typename Inc<typename make_N_Sequence_impl<N - 1>::type>::type;
+				using type = decltype(Inc(seq()));
 			};
 			template<>
 			struct make_N_Sequence_impl<0>
@@ -72,19 +71,19 @@ namespace tupleple{
 		{
 			template<class Seq,class Tuple>
 			struct to_tuple;
-			template<size_t ...N, class ...R>
-			struct to_tuple<Sequence<N...>,std::tuple<R...>>
+			template<size_t...N,class Tuple>
+			struct to_tuple<Sequence<N...>,Tuple>
 			{
-				using type = std::tuple < typename std::tuple_element<N, std::tuple<R...>>::type...>;
+				using type = std::tuple < typename tupleple::type_list::at<N, Tuple>::type...>;
 			};
 		}
 
-		template<size_t ...N, class ...R>
-		inline auto to_tuple(Sequence<N...>, const std::tuple<R...>&tuple)
-			->typename type_list::to_tuple<Sequence<N...>, std::tuple<R...>>::type
+		template<size_t ...N, class Tuple>
+		inline auto to_tuple(Sequence<N...>, const Tuple&tuple)
+			->typename type_list::to_tuple<Sequence<N...>, Tuple>::type
 		{
-			using Tuple = typename  type_list::to_tuple<Sequence<N...>, std::tuple<R...>>::type;
-			return Tuple(std::get<N>(tuple)...);
+			using tuple_type = typename  type_list::to_tuple<Sequence<N...>, Tuple>::type;
+			return tuple_type(tupleple::at<N>(tuple)...);
 		}
 
 
@@ -113,6 +112,27 @@ namespace tupleple{
 		template<size_t ...N>
 		struct bit_filter<Sequence<N...>>:deteil::bit_filter_impl<0, Sequence<N...>>
 		{};
+		namespace type_list
+		{
+			template<class Seq, template<size_t X>class Trans>
+			class map;
+
+			template<size_t...N, template<size_t X>class Trans>
+			struct map<Sequence<N...>, Trans>
+			{
+				using type = Sequence<Trans<N>::value...>;
+			};
+
+			template<class Seq, template<size_t X>class Trans>
+			class map_to_tuple;
+
+			template<size_t...N, template<size_t X>class Trans>
+			struct map_to_tuple<Sequence<N...>, Trans>
+			{
+				using type = std::tuple<typename Trans<N>::type...>;
+			};
+		}
+		
 
 	}
 }
