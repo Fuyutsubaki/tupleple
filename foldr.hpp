@@ -6,15 +6,16 @@
 template<class L, class R>
 struct Maxsize
 {
-using type = typename tupleple::utility::if_ < (sizeof(L)>sizeof(R)), L, R>::type;
+	using type = typename tupleple::utility::if_ < (sizeof(L)>sizeof(R)), L, R>::type;
 };
 
 int main()
 {
-using tuple = std::tuple<char, int, long>;
-using type = tupleple::type_list::foldl<Maxsize, tuple>::type;
-std::cout << typeid(type).name();
+	using tuple = std::tuple<char[42], int,char>;
+	using type = tupleple::type_list::foldr<Maxsize, tuple>::type;
+	std::cout << typeid(type).name();
 }
+
 */
 
 namespace tupleple
@@ -27,7 +28,7 @@ namespace tupleple
 			template<bool is_back, size_t N, class Tuple, template<class L, class R>class Transform>
 			class foldr_impl2;
 			template<size_t N, class Tuple, template<class L, class R>class Transform>
-			struct foldr_impl :foldr_impl2<(N==size<Tuple>::value-1), N, Tuple, Transform>
+			struct foldr_impl :foldr_impl2<(N==(size<Tuple>::value-1)), N, Tuple, Transform>
 			{
 
 			};
@@ -52,7 +53,7 @@ namespace tupleple
 		template<template<class L_ist, class R_eturn>class Transform, class Tuple>
 		struct foldr<Transform, Tuple>
 		{
-			using type = typename deteil::foldr_impl<size<Tuple>::value - 1, Tuple, Transform>::type;
+			using type = typename deteil::foldr_impl<0, Tuple, Transform>::type;
 		};
 
 		//(&&1(&&2(&&3 Init)))

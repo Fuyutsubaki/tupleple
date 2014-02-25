@@ -6,7 +6,11 @@ namespace tupleple
 	namespace type_list
 	{
 		template<class Tuple>
-		struct size;
+		struct size
+		{
+			//static_assert(false,"this is no tuple");
+			//static const size_t value = 0;
+		};
 
 		template<class ...R>
 		struct size<std::tuple<R...>>
@@ -29,6 +33,17 @@ namespace tupleple
 	{
 			return std::get<N>(tuple);
 	}
+
+	template<class T>
+	struct is_tuple
+	{
+		static const bool value = false;
+	};
+	template<class ...T>
+	struct is_tuple<std::tuple<T...>>
+	{
+		static const bool value = true;
+	};
 }
 //atを特殊化することでタプル以外のものもタプル化できる
 /*

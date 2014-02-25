@@ -2,6 +2,13 @@
 #include<functional>
 #include<tuple>
 #include"Index.hpp"
+/*
+auto f = tupleple::fuse_cast(std::function<int(int, int)>([](int x, int y){return x*y; }));
+auto i = f(std::make_tuple(4, 2));
+*/
+
+
+
 namespace tupleple
 {
 	namespace deteil{

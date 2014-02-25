@@ -12,13 +12,15 @@ namespace tupleple
 	{
 		namespace type_list
 		{
+			//Index s ,Tuple
 			template<class Idxs, class Tuple>
 			class to_tuple
 			{
+				static_assert(is_tuple<Tuple>::value, "this is not tuple");
 				template<class Idx>
 				struct Trans
 				{
-					using type = typename tupleple::type_list::at<Idx::value, Tuple>::type;
+					using type =  typename tupleple::type_list::at<Idx::value, Tuple>::type;
 				};
 			public:
 				using type = typename tupleple::type_list::map<Trans, Idxs>::type;

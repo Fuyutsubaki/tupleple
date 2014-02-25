@@ -23,7 +23,7 @@ namespace tupleple
 	namespace deteil
 	{
 		template<class Tuple, class T>
-		struct cons_impl
+		struct push_impl
 		{
 			using result_type = typename tupleple::type_list::push<Tuple, T>::type;
 			template<class ...Idx>
@@ -38,6 +38,6 @@ namespace tupleple
 	typename type_list::push<Tuple,T>::type push(const Tuple&tuple, const T&x)
 	{
 		using seq = typename index::make_N_index<type_list::size<Tuple>::value>::type;
-		return deteil::cons_impl<Tuple, T>::push(tuple, x, seq());
+		return deteil::push_impl<Tuple, T>::push(tuple, x, seq());
 	}
 }
