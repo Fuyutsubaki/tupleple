@@ -3,3 +3,5 @@
 ２：sequence滅びるべし
 	Indexに移行中。自前のmapやfilterが使えないのは痛い
 ３：フォルダ分けしたい
+４：foldr(bi_fun) | filter(Pred()) | map(trans)みたいにしたい
+５：４が可能であるとfilterは要素の参照のタプル返してもいいのではなかろうか
