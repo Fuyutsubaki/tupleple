@@ -6,3 +6,5 @@
 ４：foldr(bi_fun) | filter(Pred()) | map(trans)みたいにしたい
 ５：４が可能であるとfilterは要素の参照のタプル返してもいいのではなかろうか
 ６：sequence滅ぼしといてなんだけれど間に変換するヤツ作ればよかったのでは。
+７：sub_tupleってどうよ。filterとかtakeとか要素に変更を及ぼさない系の関数に
+８：方針としてstd::tupleのみに対応、O(N)を減らす
