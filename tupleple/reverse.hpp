@@ -1,9 +1,9 @@
 #pragma once
 #include<tuple>
 #include"Index.hpp"
-#include"foldr.hpp"
-#include"cons.hpp"
+#include"binary_fold.hpp"
 #include"to_tuple.hpp"
+#include"cat.hpp"
 /*
 auto x=tupleple::reverse(std::make_tuple(1,2,3,4));
 */
@@ -13,15 +13,21 @@ namespace tupleple
 	namespace type_list
 	{
 		template<class Tuple>
-		struct reverse
+		class reverse
 		{
-			using normal_idxs = typename index::make_N_index<size<Tuple>::value>::type;
-			template<class L_ist,class R_eturn>
+			using seq = typename index::make_N_index<size<Tuple>::value>::type;
+			template<class L,class R>
 			struct Trans
 			{
-				using type =  typename push<R_eturn,L_ist>::type;
+				using type = typename cat<R, L>::type;
 			};
-			using indexs_type = typename foldr<Trans, normal_idxs,std::tuple<>>::type;
+			template<class T>
+			struct wrap
+			{
+				using type = std::tuple<T>;
+			};
+		public:
+			using indexs_type = typename binary_fold<Trans, seq, wrap>::type;
 			using type = typename index::type_list::to_tuple<indexs_type, Tuple>::type;
 		};
 	}

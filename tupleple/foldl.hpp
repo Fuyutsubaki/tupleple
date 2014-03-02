@@ -1,7 +1,7 @@
 #pragma once 
 #include<tuple>
 #include"tuple.hpp"
-
+#include"cons.hpp"
 /*
 template<class L, class R>
 struct Maxsize
@@ -46,6 +46,12 @@ namespace tupleple
 		struct foldl<Transform, Tuple>
 		{
 			using type = typename deteil::fold_impl<size<Tuple>::value - 1, Tuple, Transform>::type;
+		};
+
+		template<template<class L_ist, class R_eturn>class Transform, class Tuple, class Init>
+		struct foldl<Transform, Tuple, Init>
+		{
+			using type = typename foldl < Transform, typename cons<Init,Tuple>::type>::type;
 		};
 	}
 }
