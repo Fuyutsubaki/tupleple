@@ -8,3 +8,4 @@
 ６：sequence滅ぼしといてなんだけれど間に変換するヤツ作ればよかったのでは。
 ７：sub_tupleってどうよ。filterとかtakeとか要素に変更を及ぼさない系の関数に
 ８：方針としてstd::tupleのみに対応、O(N)を減らす
+９：わかったことがある。index_tuple_idiomはmapで扱うと便利
