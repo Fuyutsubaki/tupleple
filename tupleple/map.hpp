@@ -2,8 +2,11 @@
 #include<tuple>
 #include"tuple.hpp"
 #include"Index.hpp"
-
-
+#include<type_traits>
+/*
+using tuple = std::tuple<char, int, void*>;
+using r = tupleple::type_list::map<std::add_pointer, tuple>;
+*/
 
 /*
 struct Func
@@ -25,36 +28,43 @@ namespace tupleple
 {
 	namespace type_list
 	{
-		template<template<class T>class Transform, class Tuple>
-		class map
+		namespace impl
 		{
-			using seq = typename index::make_N_index<size<Tuple>::value>::type;
-			template<size_t ...N>
-			static auto trans(std::tuple<index::Index<N> ...>)
-				->std::tuple<typename Transform<typename at<N, Tuple>::type>::type...>;
-			template<class ...C>
-			static auto trans(std::tuple<C...>)
-				->std::tuple<void, void, void>;
-		public:
-			using type = decltype(trans(seq()));
-		};
+			template<template<class T>class Transform, class Tuple>
+			class map_impl
+			{
+				using seq = index::make_N_index<size<Tuple>::value>;
+				template<size_t ...N>
+				static auto trans(std::tuple<index::Index<N> ...>)
+					->std::tuple<typename Transform<at<N, Tuple>>::type...>;
+			public:
+				using type = decltype(trans(seq()));
+			};
+		}
+
+		template<template<class T>class Transform, class Tuple>
+		using map = typename impl::map_impl<Transform, Tuple>::type;
 	}
 	namespace deteil
 	{
-		template<class Func, class Tuple,size_t ...N>
-		static auto map_impl(const Func&func, const Tuple&tuple, std::tuple<index::Index<N>...>)
-			->std::tuple<decltype(func(at<N>(tuple)))...>
+		template<class Func,class Tuple>
+		class map_impl
 		{
-			return std::tuple<decltype(func(at<N>(tuple)))...>(func(at<N>(tuple))...);
-		}
-		template<class Tuple>
-		typename index::make_N_index<type_list::size<Tuple>::value>::type map_impl_index_();
+			template<class T>
+			using map_r = std::result_of<Func(T)>;
+		public:
+			using type = type_list::map<map_r, Tuple>;
+			template<class Func, class Tuple, size_t ...N>
+			static type map(const Func&func, const Tuple&tuple, std::tuple<index::Index<N>...>)
+			{
+				return type(func(at<N>(tuple))...);
+			}
+		};
 	}
 	template<class Func,class Tuple>
-	auto map(const Func&func,const Tuple&tuple)
-		->decltype(deteil::map_impl(func, tuple, deteil::map_impl_index_<Tuple>()))
+	typename deteil::map_impl<Func,Tuple>::type map(const Func&func, const Tuple&tuple)
 	{
-		using seq = typename index::make_N_index<type_list::size<Tuple>::value>::type;
-		return deteil::map_impl(func,tuple,seq());
+		using seq = index::make_N_index<type_list::size<Tuple>::value>;
+		return deteil::map_impl<Func, Tuple>::map(func, tuple, seq());
 	}
 }

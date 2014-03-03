@@ -9,3 +9,4 @@
 ７：sub_tupleってどうよ。filterとかtakeとか要素に変更を及ぼさない系の関数に
 ８：方針としてstd::tupleのみに対応、O(N)を減らす
 ９：わかったことがある。index_tuple_idiomはmapで扱うと便利
+１０：alias templateだと可変長テンプレートでおかしくなる場合がある。ひとまずzipとcatの可変長版はflexに退避

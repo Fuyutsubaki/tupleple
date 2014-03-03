@@ -11,26 +11,30 @@ namespace tupleple
 {
 	namespace type_list
 	{
-		template<size_t N, class Tuple>
-		class drop
-		{
-			using seq = typename index::make_N_index<size<Tuple>::value - N>::type;
-			template<class T>
-			struct Up
+		namespace impl{
+			template<size_t N, class Tuple>
+			class drop_impl
 			{
-				using type = index::Index<T::value + N>;
+				using seq = index::make_N_index<size<Tuple>::value - N>;
+				template<class T>
+				struct Up
+				{
+					using type = index::Index<T::value + N>;
+				};
+			public:
+				using indexs_type = map<Up, seq>;
+				using type = index::type_list::to_tuple<indexs_type, Tuple>;
 			};
-		public:
-			using indexs_type = typename map<Up, seq>::type;
-			using type = typename index::type_list::to_tuple<indexs_type, Tuple>::type;
-		};
+		}
+		template<size_t N, class Tuple>
+		using drop = typename impl::drop_impl<N, Tuple>::type;
 	}
 
 	template<size_t N, class Tuple>
-	auto drop(const Tuple&tuple)
-		->typename type_list::drop<N, Tuple>::type
+	inline auto drop(const Tuple&tuple)
+		->type_list::drop<N, Tuple>
 	{
-		using seq = typename type_list::drop<N, Tuple>::indexs_type;
+		using seq = typename type_list::impl::drop_impl<N, Tuple>::indexs_type;
 		return index::to_tuple(seq(), tuple);
 	}
 }

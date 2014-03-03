@@ -15,11 +15,11 @@ namespace tupleple
 		template<class Tuple>
 		class reverse
 		{
-			using seq = typename index::make_N_index<size<Tuple>::value>::type;
+			using seq = index::make_N_index<size<Tuple>::value>;
 			template<class L,class R>
 			struct Trans
 			{
-				using type = typename cat<R, L>::type;
+				using type = cat<R, L>;
 			};
 			template<class T>
 			struct wrap
@@ -27,8 +27,8 @@ namespace tupleple
 				using type = std::tuple<T>;
 			};
 		public:
-			using indexs_type = typename binary_fold<Trans, seq, wrap>::type;
-			using type = typename index::type_list::to_tuple<indexs_type, Tuple>::type;
+			using indexs_type = binary_fold<Trans, seq, wrap>;
+			using type = index::type_list::to_tuple<indexs_type, Tuple>;
 		};
 	}
 	template<class Tuple>

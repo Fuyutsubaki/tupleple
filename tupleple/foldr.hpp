@@ -6,13 +6,13 @@
 template<class L, class R>
 struct Maxsize
 {
-	using type = typename tupleple::utility::if_ < (sizeof(L)>sizeof(R)), L, R>::type;
+	using type = tupleple::utility::cond < (sizeof(L)>sizeof(R)), L, R>;
 };
 
 int main()
 {
-	using tuple = std::tuple<char[42], int,char>;
-	using type = tupleple::type_list::foldr<Maxsize, tuple>::type;
+	using tuple = std::tuple<char, int,long long>;
+	using type = tupleple::type_list::foldr1<Maxsize, tuple>;
 	std::cout << typeid(type).name();
 }
 
@@ -22,45 +22,49 @@ namespace tupleple
 {
 	namespace type_list
 	{
-		//(&&1(&&2(&&3 4)))
-		namespace deteil
-		{
-			template<bool is_back, size_t N, class Tuple, template<class L, class R>class Transform>
-			class foldr_impl2;
-			template<size_t N, class Tuple, template<class L, class R>class Transform>
-			struct foldr_impl :foldr_impl2<(N==(size<Tuple>::value-1)), N, Tuple, Transform>
+		namespace impl{
+			namespace deteil
 			{
+				template<bool is_back, size_t N, class Tuple, template<class L, class R>class Transform>
+				class foldr_impl2;
+				template<size_t N, class Tuple, template<class L, class R>class Transform>
+				struct foldr_impl :foldr_impl2<(N == (size<Tuple>::value - 1)), N, Tuple, Transform>
+				{
 
-			};
-			template<size_t N, class Tuple, template<class L, class R>class Transform>
-			class foldr_impl2<false, N, Tuple, Transform>
+				};
+				template<size_t N, class Tuple, template<class L, class R>class Transform>
+				class foldr_impl2<false, N, Tuple, Transform>
+				{
+					using rhs = typename foldr_impl<N + 1, Tuple, Transform>::type;
+					using lhs = at<N, Tuple>;
+				public:
+					using type = typename Transform<lhs, rhs>::type;
+				};
+				template<size_t N, class Tuple, template<class L, class R>class Transform>
+				struct foldr_impl2<true, N, Tuple, Transform>
+				{
+					using type = at<N, Tuple>;
+				};
+			}
+			template<template<class L_ist, class R_eturn>class Transform, class Tuple>
+			struct foldr1
 			{
-				using rhs = typename foldr_impl<N + 1, Tuple, Transform>::type;
-				using lhs = typename at<N, Tuple>::type;
-			public:
-				using type = typename Transform<lhs, rhs>::type;
+				using type = typename deteil::foldr_impl<0, Tuple, Transform>::type;
 			};
-			template<size_t N,class Tuple, template<class L, class R>class Transform>
-			struct foldr_impl2<true,N, Tuple, Transform>
+
+			
+			template<template<class L_ist, class R_eturn>class Transform, class Tuple, class Init>
+			struct foldr
 			{
-				using type = typename at<N, Tuple>::type;
+				using type = typename foldr1 < Transform, push<Tuple, Init>>::type;
 			};
 		}
 
-		template<template<class L, class R>class Transform, class ...R>
-		class foldr;
 		//(&&1(&&2(&&3 4)))
 		template<template<class L_ist, class R_eturn>class Transform, class Tuple>
-		struct foldr<Transform, Tuple>
-		{
-			using type = typename deteil::foldr_impl<0, Tuple, Transform>::type;
-		};
-
+		using foldr1 = typename impl::foldr1<Transform, Tuple>::type;
 		//(&&1(&&2(&&3 Init)))
 		template<template<class L_ist, class R_eturn>class Transform, class Tuple, class Init>
-		struct foldr<Transform, Tuple,Init>
-		{
-			using type = typename foldr < Transform, typename push<Tuple, Init>::type>::type;
-		};
+		using foldr = typename impl::foldr<Transform, Tuple, Init>::type;
 	}
 }

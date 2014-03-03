@@ -33,14 +33,19 @@ namespace tupleple
 			template<>
 			struct make_N_seq<0>{ using type = Sequence<>; };
 		}
-		template<size_t N>
-		class make_N_index
+		namespace impl
 		{
-			template<size_t...N>
-			static auto trans(sequence::Sequence<N...>)->std::tuple<Index<N>...>;
-			using seq = typename sequence::make_N_seq<N>::type;
-		public:
-			using type = decltype(trans(seq()));
-		};
+			template<size_t N>
+			class make_N_index_impl
+			{
+				template<size_t...N>
+				static auto trans(sequence::Sequence<N...>)->std::tuple<Index<N>...>;
+				using seq = typename sequence::make_N_seq<N>::type;
+			public:
+				using type = decltype(trans(seq()));
+			};
+		}
+		template<size_t N>
+		using make_N_index = typename impl::make_N_index_impl<N>::type;
 	}
 }

@@ -17,19 +17,23 @@ namespace tupleple
 		{
 			static const size_t value = std::tuple_size<std::tuple<R...>>::value;
 		};
+		namespace impl{
+			template<size_t N, class Tuple>
+			struct at_impl;
 
-		template<size_t N,class Tuple>
-		struct at;
+			template<size_t N, class ...R>
+			struct at_impl<N, std::tuple<R...>>
+			{
+				using type = typename std::tuple_element<N, std::tuple<R...>>::type;
+			};
+		}
 
-		template<size_t N, class ...R>
-		struct at<N,std::tuple<R...>>
-		{
-			using type = typename std::tuple_element<N, std::tuple<R...>>::type;
-		};
+		template<size_t N, class Tuple>
+		using at = typename impl::at_impl<N, Tuple>::type;
 	}	
 	template<size_t N, class ...R>
 	auto at(const std::tuple<R...>&tuple)
-		->typename type_list::at<N, std::tuple<R...>>::type const &
+		->type_list::at<N, std::tuple<R...>> const &
 	{
 			return std::get<N>(tuple);
 	}

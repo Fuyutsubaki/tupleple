@@ -12,30 +12,31 @@ namespace tupleple
 	{
 		namespace type_list
 		{
-			//Index s ,Tuple
-			template<class Idxs, class Tuple>
-			class to_tuple
-			{
-				static_assert(is_tuple<Tuple>::value, "this is not tuple");
-				template<class Idx>
-				struct Trans
+			namespace impl{
+				//Index s ,Tuple
+				template<class Idxs, class Tuple>
+				class to_tuple_impl
 				{
-					using type =  typename tupleple::type_list::at<Idx::value, Tuple>::type;
+					static_assert(is_tuple<Tuple>::value, "this is not tuple");
+					template<class Idx>
+					struct Trans
+					{
+						using type = tupleple::type_list::at<Idx::value, Tuple>;
+					};
+				public:
+					using type = tupleple::type_list::map<Trans, Idxs>;
 				};
-			public:
-				using type = typename tupleple::type_list::map<Trans, Idxs>::type;
-			};
+			}
+			template<class Idxs, class Tuple>
+			using to_tuple = typename impl::to_tuple_impl<Idxs, Tuple>::type;
 		}
 
 		template<class ...Idx,class Tuple>
-		auto to_tuple(std::tuple<Idx...>,const Tuple&tuple)
-			->typename type_list::to_tuple<std::tuple<Idx...>,Tuple>::type
+		inline auto to_tuple(std::tuple<Idx...>,const Tuple&tuple)
+			->type_list::to_tuple<std::tuple<Idx...>,Tuple>
 		{
-			using result_type = typename type_list::to_tuple<std::tuple<Idx...>, Tuple>::type;
+			using result_type = type_list::to_tuple<std::tuple<Idx...>, Tuple>;
 			return result_type(tupleple::at<Idx::value>(tuple)...);
 		}
-
-
-
 	}
 }
