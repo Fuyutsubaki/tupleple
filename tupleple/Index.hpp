@@ -47,5 +47,16 @@ namespace tupleple
 		}
 		template<size_t N>
 		using make_N_index = typename impl::make_N_index_impl<N>::type;
+		namespace impl{
+			template<class Idx, class Tuple>
+			struct at_helper_impl
+			{
+				using type = tupleple::type_list::at<Idx::value, Tuple>;
+			};
+		}
+		
+		//コンパイラの不都合な動作用
+		template<class Idx, class Tuple>
+		using at_helper = typename impl::at_helper_impl<Idx, Tuple>::type;
 	}
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include<tuple>
 #include"Index.hpp"
-#include"binary_fold.hpp"
+
 #include"to_tuple.hpp"
 #include"cat.hpp"
 /*
@@ -15,19 +15,15 @@ namespace tupleple
 		template<class Tuple>
 		class reverse
 		{
-			using seq = index::make_N_index<size<Tuple>::value>;
-			template<class L,class R>
+			static const size_t N = size<Tuple>::value;
+			using seq = index::make_N_index<N>;
+			template<class Idx>
 			struct Trans
 			{
-				using type = cat<R, L>;
-			};
-			template<class T>
-			struct wrap
-			{
-				using type = std::tuple<T>;
+				using type = index::Index<N - 1 - Idx::value>;
 			};
 		public:
-			using indexs_type = binary_fold<Trans, seq, wrap>;
+			using indexs_type = map<Trans, seq>;
 			using type = index::type_list::to_tuple<indexs_type, Tuple>;
 		};
 	}

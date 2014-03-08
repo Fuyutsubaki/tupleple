@@ -14,14 +14,9 @@ namespace tupleple
 			class cons_impl
 			{
 				using seq = index::make_N_index<size<Tuple>::value>;
-				template<size_t ...N>
-				static auto trans(std::tuple<index::Index<N>...>)
-					->std::tuple<T, at<N, Tuple> ...>;
-				//Fuckin
-				/*template<class ...Idx>
+				template<class ...Idx>
 				static auto trans(std::tuple<Idx...>)
-				->std::tuple<T, typename at<(Idx::value), Tuple>::type ...>;*/
-
+					->std::tuple<T, index::at_helper<Idx, Tuple> ...>;
 			public:
 				using type = decltype(trans(seq()));
 			};

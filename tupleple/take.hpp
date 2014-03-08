@@ -21,6 +21,7 @@ namespace tupleple
 		template<size_t N, class Tuple>
 		using take = typename impl::take_impl<N, Tuple>::type;
 	}
+	
 
 	template<size_t N,class Tuple>
 	inline auto take(const Tuple&tuple)
@@ -29,4 +30,7 @@ namespace tupleple
 		using Idxs = typename type_list::impl::take_impl<N, Tuple>::indexs_type;
 		return index::to_tuple(Idxs(), tuple);
 	}
+
+
+	//lazy
 }

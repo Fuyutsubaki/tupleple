@@ -6,7 +6,8 @@
 #include"map.hpp"
 #include"utility.hpp"
 #include"cat.hpp"
-#include"binary_fold.hpp"
+#include"to_tuple.hpp"
+
 /*
 	auto result=tupleple::filter<std::is_integral>(std::make_tuple(42, 3.14, 'A', 1.4f));
 */
@@ -28,13 +29,8 @@ namespace tupleple
 				public:
 					using type = utility::cond<r, std::tuple<Idx>, std::tuple<> >;
 				};
-				template<class L, class R>
-				struct bi_cat
-				{
-					using type = cat<L, R>;
-				};
 			public:
-				using sequence_type = binary_fold<bi_cat, seq, Trans>;
+				using sequence_type = cat<map<Trans, seq>>;
 				using type = index::type_list::to_tuple<sequence_type, Tuple>;
 			};
 		}
