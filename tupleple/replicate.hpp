@@ -8,7 +8,7 @@ namespace tupleple
 	{
 		namespace impl{
 			template<size_t N, class T>
-			class repricate_impl
+			class replicicate_impl
 			{
 				template<class>
 				struct trans{ using type = T; };
@@ -18,7 +18,7 @@ namespace tupleple
 			};
 		}
 		template<size_t N, class T>
-		using repricate = typename impl::repricate_impl<N, T>::type;
+		using replicicate = typename impl::replicicate_impl<N, T>::type;
 	}
 
 	namespace deteil
@@ -29,15 +29,15 @@ namespace tupleple
 			return x;
 		}
 		template<size_t N, class T,class ...Idx>
-		inline type_list::repricate<N, T> repricate_impl(const T&x,std::tuple<Idx...>)
+		inline type_list::replicicate<N, T> replicicate_impl(const T&x,std::tuple<Idx...>)
 		{
-			return type_list::repricate<N, T>(do_nothing<Idx>(x)...);
+			return type_list::replicicate<N, T>(do_nothing<Idx>(x)...);
 		}
 	}
 	template<size_t N, class T>
-	type_list::repricate<N, T> repricate(const T&x)
+	type_list::replicicate<N, T> replicicate(const T&x)
 	{
-		return deteil::repricate_impl<N>(x, index::make_tuple<N>());
+		return deteil::replicicate_impl<N>(x, index::make_tuple<N>());
 	}
 
 }

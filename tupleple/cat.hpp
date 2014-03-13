@@ -20,7 +20,7 @@ namespace tupleple
 				class trans1
 				{
 					using tuple = at<Idx::value, meta_tuple>;
-					using type = repricate<size<tuple>::value, Idx>;
+					using type = replicicate<size<tuple>::value, Idx>;
 				};
 				template<class Idx>
 				class trans2
