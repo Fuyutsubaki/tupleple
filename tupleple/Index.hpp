@@ -6,57 +6,56 @@ namespace tupleple
 {
 	namespace index
 	{
-		template<size_t N>
-		struct Index
-		{
-			static const size_t value = N;
-		};
-		
-		namespace sequence
-		{
-			template<size_t ...N>
-			struct Sequence{};
+		template<size_t ...N>
+		struct Sequence{};
+		namespace impl{
 			template<size_t N>
-			class make_N_seq
+			class make_seq_impl
 			{
 				static const size_t half = N / 2;
 				static const size_t halfr = (N - half);
-				using left = typename make_N_seq<half>::type;
-				using right = typename make_N_seq<halfr>::type;
-				template<size_t ...L,size_t...R>
+				using left = typename make_seq_impl<half>::type;
+				using right = typename make_seq_impl<halfr>::type;
+				template<size_t ...L, size_t...R>
 				static auto trans(Sequence<L...>, Sequence<R...>)->Sequence<L..., (half + R)...>;
 			public:
 				using type = decltype(trans(left(), right()));
 			};
 			template<>
-			struct make_N_seq<1>{ using type = Sequence<0>; };
+			struct make_seq_impl<1>{ using type = Sequence<0>; };
 			template<>
-			struct make_N_seq<0>{ using type = Sequence<>; };
-		}
-		namespace impl
-		{
-			template<size_t N>
-			class make_N_index_impl
-			{
-				template<size_t...N>
-				static auto trans(sequence::Sequence<N...>)->std::tuple<Index<N>...>;
-				using seq = typename sequence::make_N_seq<N>::type;
-			public:
-				using type = decltype(trans(seq()));
-			};
+			struct make_seq_impl<0>{ using type = Sequence<>; };
 		}
 		template<size_t N>
-		using make_N_index = typename impl::make_N_index_impl<N>::type;
-		namespace impl{
-			template<class Idx, class Tuple>
-			struct at_helper_impl
+		using make_seq = typename impl::make_seq_impl<N>::type;
+
+		namespace impl
+		{
+			template<class>
+			struct seq_to_tuple_impl;
+			template<size_t...N>
+			struct seq_to_tuple_impl<Sequence<N...>>
 			{
-				using type = tupleple::type_list::at<Idx::value, Tuple>;
+				using type = std::tuple<std::integral_constant<size_t,N>...>;
 			};
 		}
-		
-		//コンパイラの不都合な動作用
-		template<class Idx, class Tuple>
-		using at_helper = typename impl::at_helper_impl<Idx, Tuple>::type;
+		template<class Sequence>
+		using seq_to_tuple = typename impl::seq_to_tuple_impl<Sequence>::type;
+		namespace impl
+		{
+			template<class Tuple>
+			struct tuple_to_seq_impl;
+			template<class ...R>
+			struct tuple_to_seq_impl<std::tuple<R...>>
+			{
+				using type = Sequence<R::value...>;
+			};
+		}
+		template<class STDTuple>
+		using tuple_to_seq = typename impl::tuple_to_seq_impl<STDTuple>::type;
+
+
+		template<size_t N>
+		using make_tuple = seq_to_tuple<make_seq<N>>;
 	}
 }

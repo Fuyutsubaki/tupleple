@@ -1,56 +1,60 @@
 #pragma once 
 #include<tuple>
-
+#include"utility.hpp"
 namespace tupleple
 {
+	template<class Tuple>
+	struct tuple_definer
+	{
+		static_assert(sizeof(Tuple)>0, "this is not define");
+	};
+
 	namespace type_list
 	{
+		namespace impl
+		{
+			template<size_t N, class Tuple>
+			struct at_impl
+			{
+				using type = typename typename tuple_definer<Tuple>::template element<N>::type;
+			};
+		}
 		template<class Tuple>
 		struct size
 		{
-			//static_assert(false,"this is no tuple");
-			//static const size_t value = 0;
+			static const size_t value = tuple_definer<Tuple>::size;
 		};
-
-		template<class ...R>
-		struct size<std::tuple<R...>>
-		{
-			static const size_t value = std::tuple_size<std::tuple<R...>>::value;
-		};
-		namespace impl{
-			template<size_t N, class Tuple>
-			struct at_impl;
-
-			template<size_t N, class ...R>
-			struct at_impl<N, std::tuple<R...>>
-			{
-				using type = typename std::tuple_element<N, std::tuple<R...>>::type;
-			};
-		}
 
 		template<size_t N, class Tuple>
-		using at = typename impl::at_impl<N, Tuple>::type;
+		using at = typename impl::at_impl<N,Tuple>::type;
 	}	
-	template<size_t N, class ...R>
-	auto at(const std::tuple<R...>&tuple)
-		->type_list::at<N, std::tuple<R...>> const &
+	
+	template<size_t N, class Tuple>
+	auto at(Tuple&&tuple)
+		->utility::trace_const_ref<Tuple&&, type_list::at<N, utility::remove_const_ref<Tuple>>>
 	{
-			return std::get<N>(tuple);
+		return tuple_definer<utility::remove_const_ref<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
 	}
+	
 
-	template<class T>
-	struct is_tuple
+	template<class ...R>
+	struct tuple_definer<std::tuple<R...>>
 	{
-		static const bool value = false;
+		using tuple_type = std::tuple<R...>;
+		template<size_t N>
+		struct element
+		{
+			using type = typename std::tuple_element<N, tuple_type>::type;
+		};
+		template<size_t N,class Tuple>
+		static auto get(Tuple&&tuple)
+			->decltype(std::get<N>(std::forward<Tuple>(tuple)))
+		{
+			return std::get<N>(std::forward<Tuple>(tuple));
+		}
+		
+		static const size_t size = std::tuple_size<tuple_type>::value;
 	};
-	template<class ...T>
-	struct is_tuple<std::tuple<T...>>
-	{
-		static const bool value = true;
-	};
+
+
 }
-//atを特殊化することでタプル以外のものもタプル化できる
-/*
-auto x = std::make_tuple(1, 2, 42);
-tupleple::at<2>(x);	//42
-*/

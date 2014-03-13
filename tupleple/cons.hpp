@@ -13,10 +13,10 @@ namespace tupleple
 			template<class T, class Tuple>
 			class cons_impl
 			{
-				using seq = index::make_N_index<size<Tuple>::value>;
-				template<class ...Idx>
-				static auto trans(std::tuple<Idx...>)
-					->std::tuple<T, index::at_helper<Idx, Tuple> ...>;
+				using seq = index::make_seq<size<Tuple>::value>;
+				template<size_t ...N>
+				static auto trans(index::Sequence<N...>)
+					->std::tuple<T, at<N, Tuple> ...>;
 			public:
 				using type = decltype(trans(seq()));
 			};
@@ -30,10 +30,10 @@ namespace tupleple
 		struct cons_impl
 		{
 			using result_type = tupleple::type_list::cons<T, Tuple>;
-			template<class ...Idx>
-			static result_type cons(const T&x, const Tuple&tuple, std::tuple<Idx...>)
+			template<size_t ...N>
+			static result_type cons(const T&x, const Tuple&tuple, index::Sequence<N...>)
 			{
-				return result_type(x, at<Idx::value>(tuple)...);
+				return result_type(x, at<N>(tuple)...);
 			}
 
 		};
@@ -41,7 +41,7 @@ namespace tupleple
 	template<class T, class Tuple>
 	type_list::cons<T, Tuple> cons(const T&x,const Tuple&tuple)
 	{
-		using seq = typename index::make_N_index<type_list::size<Tuple>::value>::type;
+		using seq = index::make_seq<type_list::size<Tuple>::value>;
 		return deteil::cons_impl<T, Tuple>::cons(x, tuple, seq());
 	}
 }

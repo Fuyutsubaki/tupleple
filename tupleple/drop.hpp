@@ -15,15 +15,13 @@ namespace tupleple
 			template<size_t N, class Tuple>
 			class drop_impl
 			{
-				using seq = index::make_N_index<size<Tuple>::value - N>;
-				template<class T>
-				struct Up
-				{
-					using type = index::Index<T::value + N>;
-				};
+				using seq = index::make_seq<size<Tuple>::value - N>;
+				template<size_t ...X>
+				static auto trans(index::Sequence<X...>)
+					->index::Sequence<(N + X)...>;
 			public:
-				using indexs_type = map<Up, seq>;
-				using type = index::type_list::to_tuple<indexs_type, Tuple>;
+				using seq_type = decltype(trans(seq()));
+				using type = type_list::to_tuple<seq_type, Tuple>;
 			};
 		}
 		template<size_t N, class Tuple>
@@ -34,8 +32,8 @@ namespace tupleple
 	inline auto drop(const Tuple&tuple)
 		->type_list::drop<N, Tuple>
 	{
-		using seq = typename type_list::impl::drop_impl<N, Tuple>::indexs_type;
-		return index::to_tuple(seq(), tuple);
+		using seq = typename type_list::impl::drop_impl<N, Tuple>::seq_type;
+		return to_tuple(seq(), tuple);
 	}
 }
 

@@ -12,26 +12,29 @@ namespace tupleple
 {
 	namespace type_list
 	{
-		template<class Tuple>
-		class reverse
-		{
-			static const size_t N = size<Tuple>::value;
-			using seq = index::make_N_index<N>;
-			template<class Idx>
-			struct Trans
+		namespace impl{
+			template<class Tuple>
+			class reverse_impl
 			{
-				using type = index::Index<N - 1 - Idx::value>;
+				static const size_t N = size<Tuple>::value;
+				using seq = index::make_seq<N>;
+
+				template<size_t...K>
+				static auto trans(index::Sequence<K...>)
+					->index::Sequence<(N - K - 1)...>;
+			public:
+				using seq_type = decltype(trans(seq()));
+				using type = type_list::to_tuple<seq_type, Tuple>;
 			};
-		public:
-			using indexs_type = map<Trans, seq>;
-			using type = index::type_list::to_tuple<indexs_type, Tuple>;
-		};
+		}
+		template<class Tuple>
+		using reverse = typename impl::reverse_impl<Tuple>::type;
 	}
 	template<class Tuple>
 	auto reverse(const Tuple&tuple)
-		->typename type_list::reverse<Tuple>::type
+		->type_list::reverse<Tuple>
 	{
-		using seq = typename type_list::reverse<Tuple>::indexs_type;
-		return index::to_tuple(seq(), tuple);
+		using seq = typename type_list::impl::reverse_impl<Tuple>::seq_type;
+		return to_tuple(seq(), tuple);
 	}
 }

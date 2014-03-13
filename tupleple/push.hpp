@@ -13,9 +13,9 @@ namespace tupleple
 			template<class Tuple, class T>
 			class push_impl
 			{
-				using seq = index::make_N_index<size<Tuple>::value>;
+				using seq = index::make_seq<size<Tuple>::value>;
 				template<size_t ...N>
-				static auto trans(std::tuple<index::Index<N>...>)
+				static auto trans(index::Sequence<N...>)
 					->std::tuple<at<N, Tuple> ..., T>;
 			public:
 				using type = decltype(trans(seq()));
@@ -30,10 +30,10 @@ namespace tupleple
 		struct push_impl
 		{
 			using result_type = tupleple::type_list::push<Tuple, T>;
-			template<class ...Idx>
-			static result_type push(const Tuple&tuple, const T&x, std::tuple<Idx...>)
+			template<size_t ...N>
+			static result_type push(const Tuple&tuple, const T&x, index::Sequence<N...>)
 			{
-				return result_type(at<Idx::value>(tuple)..., x);
+				return result_type(at<N>(tuple)..., x);
 			}
 
 		};
@@ -41,7 +41,7 @@ namespace tupleple
 	template<class Tuple, class T>
 	type_list::push<Tuple,T> push(const Tuple&tuple, const T&x)
 	{
-		using seq = typename index::make_N_index<type_list::size<Tuple>::value>::type;
+		using seq = index::make_seq<type_list::size<Tuple>::value>;
 		return deteil::push_impl<Tuple, T>::push(tuple, x, seq());
 	}
 }

@@ -22,7 +22,7 @@ namespace tupleple
 			template<class Tuple0, class ...Tuple>
 			class zip
 			{
-				using seq = index::make_N_index<size<Tuple0>::value>;
+				using seq = index::make_tuple<size<Tuple0>::value>;
 				template<class Idx>
 				struct one_tuple
 				{
@@ -56,7 +56,7 @@ namespace tupleple
 	auto zip(const Tuple0&t0, const Tuple&...t)
 		->typename type_list::flex::zip<Tuple0,Tuple...>::type
 	{
-		using seq = index::make_N_index<type_list::size<Tuple0>::value>;
+		using seq = index::make_tuple<type_list::size<Tuple0>::value>;
 		return deteil::zip_impl(seq(), t0, t...);
 	}
 }

@@ -20,7 +20,7 @@ namespace tupleple
 			class filter_impl
 			{
 			private:
-				using seq = index::make_N_index<size<Tuple>::value>;
+				using seq = index::make_tuple<size<Tuple>::value>;
 				template<class Idx>
 				class Trans
 				{
@@ -30,8 +30,8 @@ namespace tupleple
 					using type = utility::cond<r, std::tuple<Idx>, std::tuple<> >;
 				};
 			public:
-				using sequence_type = cat<map<Trans, seq>>;
-				using type = index::type_list::to_tuple<sequence_type, Tuple>;
+				using sequence_type = index::tuple_to_seq<cat<map<Trans, seq>>>;
+				using type = type_list::to_tuple<sequence_type, Tuple>;
 			};
 		}
 		template<template<class T>class Pred, class Tuple>
@@ -42,6 +42,6 @@ namespace tupleple
 		->type_list::filter<Pred, Tuple>
 	{
 		using seq = typename type_list::impl::filter_impl<Pred, Tuple>::sequence_type;
-		return index::to_tuple(seq(),tuple);
+		return to_tuple(seq(),tuple);
 	}
 }

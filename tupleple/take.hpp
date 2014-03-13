@@ -14,8 +14,8 @@ namespace tupleple
 			template<size_t N, class Tuple>
 			struct take_impl
 			{
-				using indexs_type = index::make_N_index<N>;
-				using type = index::type_list::to_tuple<indexs_type, Tuple>;
+				using indexs_type = index::make_seq<N>;
+				using type = type_list::to_tuple<indexs_type, Tuple>;
 			};
 		}
 		template<size_t N, class Tuple>
@@ -28,9 +28,17 @@ namespace tupleple
 		->type_list::take<N, Tuple>
 	{
 		using Idxs = typename type_list::impl::take_impl<N, Tuple>::indexs_type;
-		return index::to_tuple(Idxs(), tuple);
+		return to_tuple(Idxs(), tuple);
 	}
 
 
 	//lazy
+	namespace lazy
+	{
+		template<size_t N, class Tuple>
+		struct lazy_take_tuple
+		{
+			Tuple tuple;
+		};
+	}
 }

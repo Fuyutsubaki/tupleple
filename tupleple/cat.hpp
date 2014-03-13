@@ -8,13 +8,14 @@ namespace tupleple
 {
 	namespace type_list
 	{
-		namespace flex
+		namespace impl
 		{
 			template<class MetaTuple>
-			class cat
+			class cat_impl
 			{
 				using meta_tuple = MetaTuple;
-				using seq = index::make_N_index<size<meta_tuple>::value>;
+				using seq = index::make_tuple<size<meta_tuple>::value>;
+
 				template<class Idx>
 				class trans1
 				{
@@ -25,7 +26,7 @@ namespace tupleple
 				class trans2
 				{
 					using tuple = at<Idx::value, meta_tuple>;
-					using type = index::make_N_index<size<tuple>::value>;
+					using type = index::make_tuple<size<tuple>::value>;
 				};
 
 				template<class...Tuple>
@@ -33,14 +34,14 @@ namespace tupleple
 				{
 					using type = decltype(std::tuple_cat(std::declval<Tuple>()...));
 				};
-				template<class ...Idx0, class ...Idx1>
-				static auto trans(std::tuple<Idx0...>, std::tuple<Idx1...>)
-					->std::tuple<index::at_helper<Idx1, index::at_helper<Idx0, meta_tuple>>...>;
+				template<size_t ...X, size_t ...Y>
+				static auto trans(index::Sequence<X...>, index::Sequence<Y...>)
+					->std::tuple<at<Y, at<X, meta_tuple>>...>;
 			public:
-				using index_type1 = invoke<cat_idx, map<trans1, seq>>;//ex:)111223333
-				using index_type2 = invoke<cat_idx, map<trans2, seq>>;//ex:)123121234
+				using seq_type1 = index::tuple_to_seq<invoke<cat_idx, map<trans1, seq>>>;//ex:)111223333
+				using seq_type2 = index::tuple_to_seq<invoke<cat_idx, map<trans2, seq>>>;//ex:)123121234
 				
-				using type = decltype(trans(index_type1(), index_type2()));
+				using type = decltype(trans(seq_type1(), seq_type2()));
 			};
 			/*template<class ...Tuple>
 			struct cat
@@ -66,19 +67,19 @@ namespace tupleple
 			};*/
 		}
 		template<class MetaTuple>
-		using cat = typename flex::cat<MetaTuple>::type;
+		using cat = typename impl::cat_impl<MetaTuple>::type;
 	}
 	namespace deteil
 	{
-		template<class Meta_Tuple,class...Idx0,class...Idx1>
-		type_list::cat<Meta_Tuple> cat_impl(const Meta_Tuple&meta_tuple, std::tuple<Idx0...>, std::tuple<Idx1...>)
+		template<class Meta_Tuple,size_t...A,size_t...B>
+		type_list::cat<Meta_Tuple> cat_impl(const Meta_Tuple&meta_tuple, index::Sequence<A...>,index::Sequence<B...>)
 		{
-			return type_list::cat<Meta_Tuple>(at<Idx1::value>(at<Idx0::value>(meta_tuple))...);
+			return type_list::cat<Meta_Tuple>(at<B>(at<A>(meta_tuple))...);
 		}
 	}
 	template<class Tuple>
-	typename type_list::flex::cat<Tuple>::type cat(const Tuple&tuple)
+	typename type_list::cat<Tuple> cat(const Tuple&tuple)
 	{
-		return deteil::cat_impl(tuple, typename type_list::flex::cat<Tuple>::index_type1(), typename type_list::flex::cat<Tuple>::index_type2());
+		return deteil::cat_impl(tuple, typename type_list::impl::cat_impl<Tuple>::seq_type1(), typename type_list::impl::cat_impl<Tuple>::seq_type2());
 	}
 }

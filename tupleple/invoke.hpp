@@ -11,11 +11,11 @@ namespace tupleple
 			template<template<class...>class Transform, class Tuple>
 			class invoke_impl
 			{
-				template<class ...Idx>
-				static auto trans(std::tuple<Idx...>)
-					->typename Transform<index::at_helper<Idx, Tuple>...>::type;
+				template<size_t ...N>
+				static auto trans(index::Sequence<N...>)
+					->typename Transform<at<N, Tuple>...>::type;
 			public:
-				using type = decltype(trans(index::make_N_index<size<Tuple>::value>()));
+				using type = decltype(trans(index::make_seq<size<Tuple>::value>()));
 			};
 		}
 		template<template<class...>class Transform, class Tuple>

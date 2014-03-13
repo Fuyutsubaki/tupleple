@@ -13,7 +13,7 @@ namespace tupleple
 				template<class>
 				struct trans{ using type = T; };
 			public:
-				using index_type = index::make_N_index<N>;
+				using index_type = index::make_tuple<N>;
 				using type = map<trans, index_type>;
 			};
 		}
@@ -37,7 +37,7 @@ namespace tupleple
 	template<size_t N, class T>
 	type_list::repricate<N, T> repricate(const T&x)
 	{
-		return deteil::repricate_impl<N>(x, index::make_N_index<N>());
+		return deteil::repricate_impl<N>(x, index::make_tuple<N>());
 	}
 
 }
