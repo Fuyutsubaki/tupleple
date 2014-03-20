@@ -26,3 +26,5 @@
 １９：replicicateの綴りどっか間違ってたきがする
 ２０：sequenceが復活した。Indexの思想は間違っていなかった。が、謎バグ(多分コンパイラの不具合系)の温床となった。今後は両方とも使っていく方針
 ２１：at,size,の特殊化をやめtuple_definerを作った。サンプルはstd::tupleについて設定してるところを見て真似して
+２２：lazyを取りやめadapterにした。元ネタはboost.range
+２３：アダプタ系からstd::tupleに変換するヤツの名前をevalにするかnormalizeにするか悩む
