@@ -3,8 +3,8 @@
 #include"utility.hpp"
 namespace tupleple
 {
-	template<class Tuple>
-	struct tuple_definer
+	template<class Tuple,class Enabler=void>
+	struct tuple_trait
 	{
 		static_assert(sizeof(Tuple)>0, "this is not define");
 	};
@@ -16,13 +16,13 @@ namespace tupleple
 			template<size_t N, class Tuple>
 			struct at_impl
 			{
-				using type = typename typename tuple_definer<Tuple>::template element<N>::type;
+				using type = typename typename tuple_trait<Tuple>::template element<N>::type;
 			};
 		}
 		template<class Tuple>
 		struct size
 		{
-			static const size_t value = tuple_definer<Tuple>::size;
+			static const size_t value = tuple_trait<Tuple>::size;
 		};
 
 		template<size_t N, class Tuple>
@@ -31,14 +31,14 @@ namespace tupleple
 	
 	template<size_t N, class Tuple>
 	auto at(Tuple&&tuple)
-		->utility::trace_const_ref<Tuple&&, type_list::at<N, utility::remove_const_ref<Tuple>>>
+		->utility::trace_const_ref<Tuple, type_list::at<N, utility::remove_const_ref<Tuple>>>
 	{
-		return tuple_definer<utility::remove_const_ref<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
+		return tuple_trait<utility::remove_const_ref<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
 	}
 	
 
 	template<class ...R>
-	struct tuple_definer<std::tuple<R...>>
+	struct tuple_trait<std::tuple<R...>>
 	{
 		using tuple_type = std::tuple<R...>;
 		template<size_t N>
