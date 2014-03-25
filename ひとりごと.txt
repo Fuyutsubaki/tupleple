@@ -28,3 +28,5 @@
 ２１：at,size,の特殊化をやめtuple_definerを作った。サンプルはstd::tupleについて設定してるところを見て真似して
 ２２：lazyを取りやめadapterにした。元ネタはboost.range
 ２３：アダプタ系からstd::tupleに変換するヤツの名前をevalにするかnormalizeにするか悩む
+２４：VSにはconstexprがない。alias templateはある。alias templateにvariadic template絡みの不具合もある
+	C++14の標準にのっとり_t _cを採用すべきではなかろうか？
