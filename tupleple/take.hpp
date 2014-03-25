@@ -57,7 +57,7 @@ namespace tupleple
 		inline impl::take_foward<N> take(){ return impl::take_foward <N>(); }
 	}
 	template <size_t N, class c_ref_Tuple>
-	class tuple_trait<adapter::take_tuple<N, c_ref_Tuple>>
+	class tuple_trait<adapter::take_adapter<N, c_ref_Tuple>>
 	{
 	public:
 		static const size_t size = N;

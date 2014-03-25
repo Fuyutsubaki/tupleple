@@ -26,5 +26,25 @@ namespace tupleple
 		}
 		template<class From, class To>
 		using trace_const_ref = typename impl::trace_const_ref_impl<From, To>::type;
+
+
+		template<class Functor>
+		struct carry_variadic_result_of
+		{
+			template<class...R>
+			using type = typename std::result_of<Functor(R...)>::type;
+		};
+		template<class Functor>
+		struct carry_1_result_of
+		{
+			template<class T0>
+			using type = typename std::result_of<Functor(T0)>::type;
+		};
+		template<class Functor>
+		struct carry_2_result_of
+		{
+			template<class T0, class T1>
+			using type = typename std::result_of<Functor(T0, T1)>::type;
+		};
 	}
 }
