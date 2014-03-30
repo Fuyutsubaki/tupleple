@@ -17,9 +17,10 @@ struct Func
 		return std::pair<T, size_t>(x, sizeof(x));
 	}
 };
+
 int main()
 {
-	auto r = tupleple::map(Func(), std::make_tuple('X', 3));
+	auto r = tupleple::map(std::make_tuple('X', 3), Func());
 }
 */
 
@@ -28,27 +29,23 @@ namespace tupleple
 {
 	namespace type_list
 	{
-		namespace impl
+		template<class Tuple, template<class T>class Transform>
+		class map
 		{
-			template<template<class T>class Transform, class Tuple>
-			class map_impl
-			{
-				using seq = index::make_seq<size<Tuple>::value>;
+			using seq = index::make_tuple_size_seq_t<Tuple>;
 
-				template<size_t ...N>
-				static auto trans(index::Sequence<N...>)
-					->std::tuple<typename Transform<at<N, Tuple>>::type...>;
-			public:
-				using type = decltype(trans(seq()));
-			};
-		}
-
-		template<template<class T>class Transform, class Tuple>
-		using map = typename impl::map_impl<Transform, Tuple>::type;
+			template<size_t ...N>
+			static auto trans(index::Sequence<N...>)
+				->std::tuple<typename Transform<at_t<N, Tuple>>::type...>;
+		public:
+			using type = decltype(trans(seq()));
+		};
+		template<class Tuple, template<class T>class Transform>
+		using map_t = typename map<Tuple, Transform>::type;
 	}
 	namespace deteil
 	{
-		template<class Func,class Tuple>
+		template<class Tuple, class Func>
 		class map_impl
 		{
 			template<class T>
@@ -56,21 +53,19 @@ namespace tupleple
 			{
 				using type = typename std::result_of<Func(T)>::type;
 			};
-			//template<class T>
-			//using map_r = std::result_of<Func(T)>;
 		public:
-			using type = type_list::map<map_r, Tuple>;
-			template<class Func, class Tuple, size_t ...N>
-			static type map(const Func&func, const Tuple&tuple,index::Sequence<N...>)
+			using type = type_list::map_t< Tuple, map_r >;
+			template<class Tuple, class Func, size_t ...N>
+			static type map(const Tuple&tuple, const Func&func, index::Sequence<N...>)
 			{
 				return type(func(at<N>(tuple))...);
 			}
 		};
 	}
 	template<class Func,class Tuple>
-	typename deteil::map_impl<Func,Tuple>::type map(const Func&func, const Tuple&tuple)
+	typename deteil::map_impl<Tuple,Func>::type map(const Tuple&tuple, const Func&func)
 	{
-		using seq = index::make_seq<type_list::size<Tuple>::value>;
-		return deteil::map_impl<Func, Tuple>::map(func, tuple, seq());
+		using seq = index::make_tuple_size_seq_t<Tuple>;
+		return deteil::map_impl<Tuple, Func>::map(tuple, func, seq());
 	}
 }

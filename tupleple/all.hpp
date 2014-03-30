@@ -18,7 +18,7 @@ namespace tupleple
 			template<class L, class R>
 			struct eval
 			{
-				using type = utility::cond<!L::value, L, R>;
+				using type = utility::cond_t<!L::value, L, R>;
 			};
 			template<class T>
 			struct wrap

@@ -1,32 +1,8 @@
-１：std::tuple限定にすればよいのではないか
-	どうせアウトプットはstd::tupleだし、std::tupleに統一すればデバックが楽になるのでは？
-２：sequence滅びるべし
-	Indexに移行中。自前のmapやfilterが使えないのは痛い
-３：フォルダ分けしたい
-４：foldr(bi_fun) | filter(Pred()) | map(trans)みたいにしたい
-５：４が可能であるとfilterは要素の参照のタプル返してもいいのではなかろうか
-６：sequence滅ぼしといてなんだけれど間に変換するヤツ作ればよかったのでは。
-７：sub_tupleってどうよ。filterとかtakeとか要素に変更を及ぼさない系の関数に
-８：方針としてstd::tupleのみに対応、O(N)を減らす
-９：わかったことがある。index_tuple_idiomはmapで扱うと便利
-１０：alias templateだと可変長テンプレートでおかしくなる場合がある。ひとまずzipとcatの可変長版はflexに退避
-１１：foldとzipとcatに変更がありました。foldはfold1を追加しました。zip catは2変数にのみ対応となります(可変長はflexを使って)
-１２：flexはたまたま近くにいた触手の名前だ。深い意味はない
-１３：そんなことよりずっと目をそらし続けてきたconst T&,T&x,T&&xの使い分けの方が深刻な問題だ
-１４：遅延評価したい。しかしそれにはstd::tuple以外も使えるようにしなければならない
-１５：lazy::takeとか作りたいけどどーしよ
-	１：std::tuple<int>をstd::tuple<int()>として遅延評価とする
-		問題点	いちいち手動で評価するのがめんどい
-			しかしstd::getとかを特殊化したくはない
-	２：lazy_tupleを作って返してどうにかする
-			std::tupleを原則的に使うという法則が崩れる
-１６：2にした。そしてeval的なものを付けてstd::tupleに変換、もとい評価できるようにする
-１７：tuple_definerなるものが必要だ
-１８：lazy_tupleが本当にlazyという名前でいいのかわからない
-１９：replicicateの綴りどっか間違ってたきがする
-２０：sequenceが復活した。Indexの思想は間違っていなかった。が、謎バグ(多分コンパイラの不具合系)の温床となった。今後は両方とも使っていく方針
-２１：at,size,の特殊化をやめtuple_definerを作った。サンプルはstd::tupleについて設定してるところを見て真似して
-２２：lazyを取りやめadapterにした。元ネタはboost.range
-２３：アダプタ系からstd::tupleに変換するヤツの名前をevalにするかnormalizeにするか悩む
-２４：VSにはconstexprがない。alias templateはある。alias templateにvariadic template絡みの不具合もある
-	C++14の標準にのっとり_t _cを採用すべきではなかろうか？
+２５：fusionおよびrange(V3)にのっとりviewという名前とシステムを採用。要するにアダプターである。遅延評価でもある
+２６：_t _cを採用。ただしconstexprが使えないので_cは未実装
+２７：type_list::atはTuple&&や& constを受け取らないことにした
+	理由はat と getに相関性がないからサポートは不要であると考えたため
+	(map(Tuple&)の戻り値はT&かもしれないしTかもしれない)
+２８：無限超タプルは扱わない。理由は実装が面倒なこと、そして使い道が思いつかないためである
+２９：(fusionに対し)すべてはデータ構造でいうところのvector(ランダムアクセスコンテナ)として扱う
+３０：(fusionに対し)Iteratorは扱わない。かわりにTakeとかを使ってくれ

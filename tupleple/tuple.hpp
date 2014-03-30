@@ -11,14 +11,15 @@ namespace tupleple
 
 	namespace type_list
 	{
-		namespace impl
+		template<size_t N, class Tuple>
+		class at
 		{
-			template<size_t N, class Tuple>
-			struct at_impl
-			{
-				using type = typename typename tuple_trait<Tuple>::template element<N>::type;
-			};
-		}
+			using base_tuple = utility::remove_const_ref_t <Tuple>;
+			using base_result_type = typename typename tuple_trait<base_tuple>::template element<N>::type;
+		public:
+			using type = base_result_type;
+		};
+
 		template<class Tuple>
 		struct size
 		{
@@ -26,14 +27,26 @@ namespace tupleple
 		};
 
 		template<size_t N, class Tuple>
-		using at = typename impl::at_impl<N,Tuple>::type;
+		using at_t = typename at<N,Tuple>::type;
 	}	
 	
+	namespace deteil
+	{
+		//コンパイラ的な都合
+		template<class Tuple,size_t N>
+		struct at_result
+		{
+			using traits = tuple_trait<utility::remove_const_ref_t<Tuple>>;
+			using type = decltype(traits::template get<N>(std::forward<Tuple>(std::declval<Tuple&&>())));
+		};
+		
+	}
+
 	template<size_t N, class Tuple>
 	auto at(Tuple&&tuple)
-		->utility::trace_const_ref<Tuple, type_list::at<N, utility::remove_const_ref<Tuple>>>
+		->typename deteil::at_result<Tuple,N>::type
 	{
-		return tuple_trait<utility::remove_const_ref<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
+		return tuple_trait<utility::remove_const_ref_t<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
 	}
 	
 
