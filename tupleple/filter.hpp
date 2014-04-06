@@ -44,4 +44,23 @@ namespace tupleple
 		using seq = typename type_list::impl::filter_impl<Pred, Tuple>::sequence_type;
 		return to_tuple(seq(),tuple);
 	}
+
+	namespace view
+	{
+		template<class Tuple,template<class>class Pred>
+		struct filter_view
+		{
+
+		};
+	}
+	template<class Tuple, template<class>class Pred>
+	class tuple_trait<view::filter_view<Tuple, Pred>>
+	{
+		static const size_t size = ;
+		template<size_t N>
+		struct element
+		{
+			using type = Tuple<>;
+		};
+	};
 }

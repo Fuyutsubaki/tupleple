@@ -49,6 +49,18 @@ namespace tupleple
 		return tuple_trait<utility::remove_const_ref_t<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
 	}
 	
+	template<size_t N>
+	struct at_foward
+	{
+		template<class Tuple>
+		friend auto operator | (Tuple&&tuple, at_foward)
+			->typename deteil::at_result<Tuple, N>::type
+		{
+			return tuple_trait<utility::remove_const_ref_t<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
+		}
+	};
+	template<size_t N>
+	at_foward<N> at(){ return at_foward<N>(); }
 
 	template<class ...R>
 	struct tuple_trait<std::tuple<R...>>

@@ -43,6 +43,34 @@ namespace tupleple
 		template<class Tuple, template<class T>class Transform>
 		using map_t = typename map<Tuple, Transform>::type;
 	}
+
+	namespace view
+	{
+		template<class Tuple, template<class T>class Transform>
+		class map_view
+		{
+			using seq = index::make_tuple_size_seq_t<Tuple>;
+
+			template<size_t ...N>
+			static auto trans(index::Sequence<N...>)
+				->std::tuple<typename Transform<at_t<N, Tuple>>::type...>;
+		public:
+			using type = decltype(trans(seq()));
+		};
+	}
+	template<class Tuple, template<class T>class Transform>
+	class tuple_trait<view::map_view<Tuple, Transform>>
+	{
+		using base = utility::remove_const_ref_t<Tuple>;
+	public:
+		static const size_t size = type_list::size<base>::value;
+		template<size_t N>
+		struct element
+		{
+
+		};
+
+	};
 	namespace deteil
 	{
 		template<class Tuple, class Func>

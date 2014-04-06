@@ -40,6 +40,7 @@ namespace tupleple
 		template<size_t N, class Tuple>
 		using take_t = typename take<N, Tuple>::type;
 	}
+
 	template <size_t N, class c_ref_Tuple>
 	class tuple_trait<view::take_view<N, c_ref_Tuple>>
 	{
@@ -53,9 +54,9 @@ namespace tupleple
 		};
 		template<size_t Idx,class T>
 		static auto get(T&&tuple)
-			->utility::trace_const_ref_t<T, typename element<Idx>::type>&&
+			->decltype(at<Idx>(utility::foward_member_ref<T, c_ref_Tuple>(tuple.base_tuple)))
 		{
-			return at<Idx>(utility::forward_mem<T>(tuple.base_tuple));
+			return utility::foward_member_ref<T, c_ref_Tuple>(tuple.base_tuple) | at<Idx>();
 		}
 	};
 

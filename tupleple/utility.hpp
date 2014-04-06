@@ -30,11 +30,16 @@ namespace tupleple
 		template<class From, class To>
 		using trace_const_ref_t = typename trace_const_ref<From, To>::type;
 
-		template<class T,class Member>
-		trace_const_ref_t<T, typename std::remove_reference<Member>::type>&& forward_mem(Member&&mem)
+		
+		template<class Class, class Member, class = typename std::enable_if<std::is_lvalue_reference<Class>::value>::type>
+		Member& foward_member_ref(typename std::remove_reference<Member>::type&mem)
 		{
-			using result_type = trace_const_ref_t<T, typename std::remove_reference<Member>::type>;
-			return std::forward<result_type>(mem);
+			return mem;
+		}
+		template<class Class, class Member>
+		Member&& foward_member_ref(typename std::remove_reference<Member>::type&mem)
+		{
+			return std::forward<Member>(mem);
 		}
 	}
 }
