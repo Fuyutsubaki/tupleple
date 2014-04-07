@@ -6,7 +6,7 @@ namespace tupleple
 	template<class Tuple,class Enabler=void>
 	struct tuple_trait
 	{
-		static_assert(sizeof(Tuple)>0, "this is not define");
+		using is_not_define = void;
 	};
 
 	namespace type_list
@@ -81,5 +81,12 @@ namespace tupleple
 		static const size_t size = std::tuple_size<tuple_type>::value;
 	};
 
-
+	template<class Tuple,class Enabler=void>
+	struct is_tuple
+		:std::true_type
+	{};
+	template<class Tuple>
+	struct is_tuple<Tuple, typename tuple_trait<Tuple>::is_not_define>
+		:std::false_type
+	{};
 }

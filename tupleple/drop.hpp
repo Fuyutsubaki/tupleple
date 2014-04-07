@@ -10,18 +10,20 @@ namespace tupleple
 {
 	namespace view
 	{
-		template<size_t N, class c_ref_Tuple>
+		template<size_t N, class Tuple>
 		struct drop_view
 		{
-			drop_view(c_ref_Tuple&&tuple)
-			:base_tuple(std::forward<c_ref_Tuple>(tuple))
+			friend tuple_trait<drop_view>;
+			drop_view(Tuple&&tuple)
+			:base(std::forward<Tuple>(tuple))
 			{}
-			c_ref_Tuple&& base_tuple;
+		private:
+			Tuple&& base;
 		};
 		template<size_t N>
 		struct drop_foward
 		{
-			template<class Tuple>
+			template<class Tuple,class = typename std::enable_if<is_tuple<Tuple>::value>::type>
 			friend drop_view<N, Tuple> operator|(Tuple&&tuple, drop_foward)
 			{
 				return drop_view<N, Tuple>(std::forward<Tuple>(tuple));
@@ -42,22 +44,22 @@ namespace tupleple
 		using drop_t = typename drop<N, Tuple>::type;
 	}
 
-	template <size_t N, class c_ref_Tuple>
-	class tuple_trait<view::drop_view<N, c_ref_Tuple>>
+	template <size_t N, class Tuple>
+	class tuple_trait<view::drop_view<N, Tuple>>
 	{
-		using base_type = utility::remove_const_ref_t<c_ref_Tuple>;
+		using base_type = utility::remove_const_ref_t<Tuple>;
 	public:
 		static const size_t size = type_list::size<base_type>::value - N;
-		template<size_t K>
+		template<size_t Idx>
 		struct element
 		{
-			using type = type_list::at_t<K, base_type>;
+			using type = type_list::at_t<Idx + N, base_type>;
 		};
 		template<size_t Idx, class T>
 		static auto get(T&&tuple)
-			->utility::trace_const_ref_t<T, typename element<Idx + N>::type>&&
+			->decltype(at<Idx + N>(utility::foward_member_ref<T, Tuple>(tuple.base)))
 		{
-			return at<Idx + N>(utility::forward_mem<T>(tuple.base_tuple));
+			return at<Idx + N>(utility::foward_member_ref<T, Tuple>(tuple.base));
 		}
 	};
 }
