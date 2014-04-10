@@ -1,85 +1,73 @@
 #pragma once
-#include<tuple>
 #include"tuple.hpp"
-#include"Index.hpp"
-#include"replicate.hpp"
-#include"invoke.hpp"
+#include<type_traits>
 namespace tupleple
 {
-	namespace type_list
+	namespace view
 	{
-		namespace impl
+		template<class TupleL,class TupleR>
+		class cat_view
 		{
-			template<class MetaTuple>
-			class cat_impl
-			{
-				using meta_tuple = MetaTuple;
-				using seq = index::make_tuple<size<meta_tuple>::value>;
-
-				template<class Idx>
-				class trans1
-				{
-					using tuple = at<Idx::value, meta_tuple>;
-					using type = replicicate<size<tuple>::value, Idx>;
-				};
-				template<class Idx>
-				class trans2
-				{
-					using tuple = at<Idx::value, meta_tuple>;
-					using type = index::make_tuple<size<tuple>::value>;
-				};
-
-				template<class...Tuple>
-				struct cat_idx
-				{
-					using type = decltype(std::tuple_cat(std::declval<Tuple>()...));
-				};
-				template<size_t ...X, size_t ...Y>
-				static auto trans(index::Sequence<X...>, index::Sequence<Y...>)
-					->std::tuple<at<Y, at<X, meta_tuple>>...>;
-			public:
-				using seq_type1 = index::tuple_to_seq<invoke<cat_idx, map<trans1, seq>>>;//ex:)111223333
-				using seq_type2 = index::tuple_to_seq<invoke<cat_idx, map<trans2, seq>>>;//ex:)123121234
-				
-				using type = decltype(trans(seq_type1(), seq_type2()));
-			};
-			/*template<class ...Tuple>
-			struct cat
-			{
-				using meta_tuple = std::tuple<Tuple...>;
-				using seq = index::make_N_index<size<meta_tuple>::value>;
-				template<class Idx>
-				class trans
-				{
-					using tuple = at<Idx::value, meta_tuple>;
-					using seq = index::make_N_index<size<tuple>::value>;
-					template<class local_idx>
-					struct trans2
-					{
-						using type = std::tuple<Idx, local_idx>;
-					};
-				public:
-					using type = map<trans2,seq>;
-				};
-
-				using index_type = map<trans, seq>;
-				using type = typename decltype(std::tuple_cat(std::declval<Tuple>()...));
-			};*/
-		}
-		template<class MetaTuple>
-		using cat = typename impl::cat_impl<MetaTuple>::type;
-	}
-	namespace deteil
-	{
-		template<class Meta_Tuple,size_t...A,size_t...B>
-		type_list::cat<Meta_Tuple> cat_impl(const Meta_Tuple&meta_tuple, index::Sequence<A...>,index::Sequence<B...>)
+			friend tuple_trait<cat_view>;
+		public:
+			cat_view(TupleL&&lhs, TupleR&&rhs)
+				:lhs(std::forward<TupleL>(lhs)), rhs(std::forward<TupleR>(rhs))
+			{}
+		private:
+			TupleL&&lhs;
+			TupleR&&rhs;
+		};
+		template<class TupleL, class TupleR>
+		cat_view<TupleL, TupleR> cat(TupleL&&lhs, TupleR&&rhs)
 		{
-			return type_list::cat<Meta_Tuple>(at<B>(at<A>(meta_tuple))...);
+			return cat_view<TupleL, TupleR>(std::forward<TupleL>(lhs), std::forward<TupleR>(rhs));
 		}
 	}
-	template<class Tuple>
-	typename type_list::cat<Tuple> cat(const Tuple&tuple)
+	template<class TupleL, class TupleR>
+	class tuple_trait<view::cat_view<TupleL, TupleR>>
 	{
-		return deteil::cat_impl(tuple, typename type_list::impl::cat_impl<Tuple>::seq_type1(), typename type_list::impl::cat_impl<Tuple>::seq_type2());
-	}
+		using Lhs = utility::remove_const_ref_t<TupleL>;
+		using Rhs = utility::remove_const_ref_t<TupleR>;
+		static const size_t Lsize = type_list::size<Lhs>::value;
+		static const size_t Rsize = type_list::size<Rhs>::value;
+		
+		template<size_t Idx>
+		struct isL
+		{
+			static const bool value = (Idx < Lsize);
+		};
+	public:
+		static const size_t size = Lsize + Rsize;
+		template<size_t Idx>
+		struct element
+		{
+			using type = utility::cond_t<
+			(Idx<Lsize),
+			type_list::at_t<Idx,Lhs>,
+			type_list::at_t<Idx - Lsize, Rhs>
+			>;
+		};
+
+		template<size_t Idx, class T>
+		static auto get(T&&tuple)
+			->typename std::enable_if<
+			isL<Idx>::value,
+			decltype(at<Idx>(utility::foward_member_ref<T, TupleL>(tuple.lhs)))
+			>::type
+		{
+			return utility::foward_member_ref<T, TupleL>(tuple.lhs)
+				| at<Idx>();
+		}
+
+		template<size_t Idx, class T>
+		static auto get(T&&tuple)
+			->typename std::enable_if<
+			!isL<Idx>::value, 
+			decltype(at<Idx - Lsize>(utility::foward_member_ref<T, TupleR>(tuple.rhs)))
+			>::type
+		{
+			return utility::foward_member_ref<T, TupleR>(tuple.rhs)
+				| at<Idx - Lsize>();
+		}
+	};
 }

@@ -31,13 +31,15 @@ namespace tupleple
 		using trace_const_ref_t = typename trace_const_ref<From, To>::type;
 
 		
-		template<class Class, class Member, class = typename std::enable_if<std::is_lvalue_reference<Class>::value>::type>
-		Member& foward_member_ref(typename std::remove_reference<Member>::type&mem)
+		template<class Class, class Member>
+		auto foward_member_ref(typename std::remove_reference<Member>::type&mem)
+			->std::enable_if_t<std::is_lvalue_reference<Class>::value,Member&>
 		{
 			return mem;
 		}
 		template<class Class, class Member>
-		Member&& foward_member_ref(typename std::remove_reference<Member>::type&mem)
+		auto foward_member_ref(typename std::remove_reference<Member>::type&mem)
+			->std::enable_if_t<!std::is_lvalue_reference<Class>::value, Member&&>
 		{
 			return std::forward<Member>(mem);
 		}

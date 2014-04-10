@@ -20,10 +20,11 @@ struct Func
 
 int main()
 {
-	auto r = tupleple::map(std::make_tuple('X', 3), Func());
+	using namespace tupleple;
+	auto r = std::make_tuple('X', 3) | view::map(Func()) | at<0>();
 }
 */
-
+//element‚ÌÀ‘•‚ªÅ‘åŒö–ñ”Š´
 
 namespace tupleple
 {
@@ -46,20 +47,41 @@ namespace tupleple
 
 	namespace view
 	{
-		template<class Tuple, template<class T>class Transform>
+		template<class Tuple, class Func>
 		class map_view
 		{
-			using seq = index::make_tuple_size_seq_t<Tuple>;
-
-			template<size_t ...N>
-			static auto trans(index::Sequence<N...>)
-				->std::tuple<typename Transform<at_t<N, Tuple>>::type...>;
+			friend tuple_trait<map_view>;
 		public:
-			using type = decltype(trans(seq()));
+			map_view(Tuple&&tuple, Func&&func)
+				:func(std::forward<Func>(func))
+				, base(std::forward<Tuple>(tuple))
+			{}
+		private:
+			Func&&func;
+			Tuple&&base;
 		};
+		template<class Func>
+		struct map_foward
+		{
+			map_foward(Func&&func)
+			:func_(std::forward<Func>(func))
+			{}
+			template<class Tuple>
+			friend map_view<Tuple, Func> operator|(Tuple&&tuple, map_foward&&this_)
+			{
+				return map_view<Tuple, Func>(std::forward<Tuple>(tuple),std::forward<Func>(this_.func_));
+			}
+		private:
+			Func&&func_;
+		};
+		template<class Func>
+		map_foward<Func> map(Func&&func)
+		{
+			return map_foward<Func>(std::forward<Func>(func));
+		}
 	}
-	template<class Tuple, template<class T>class Transform>
-	class tuple_trait<view::map_view<Tuple, Transform>>
+	template<class Tuple,class Func>
+	class tuple_trait<view::map_view<Tuple, Func>>
 	{
 		using base = utility::remove_const_ref_t<Tuple>;
 	public:
@@ -67,33 +89,14 @@ namespace tupleple
 		template<size_t N>
 		struct element
 		{
-
+			using type = utility::remove_const_ref_t<typename std::result_of<Func(Tuple)>::type>;
 		};
-
-	};
-	namespace deteil
-	{
-		template<class Tuple, class Func>
-		class map_impl
+		template<size_t Idx,class T>
+		static auto get(T&&tuple)
+			->decltype(tuple.func(utility::foward_member_ref<T, Tuple>(tuple.base) | at<Idx>()))
 		{
-			template<class T>
-			struct map_r
-			{
-				using type = typename std::result_of<Func(T)>::type;
-			};
-		public:
-			using type = type_list::map_t< Tuple, map_r >;
-			template<class Tuple, class Func, size_t ...N>
-			static type map(const Tuple&tuple, const Func&func, index::Sequence<N...>)
-			{
-				return type(func(at<N>(tuple))...);
-			}
-		};
-	}
-	template<class Func,class Tuple>
-	typename deteil::map_impl<Tuple,Func>::type map(const Tuple&tuple, const Func&func)
-	{
-		using seq = index::make_tuple_size_seq_t<Tuple>;
-		return deteil::map_impl<Tuple, Func>::map(tuple, func, seq());
-	}
+			return tuple.func(utility::foward_member_ref<T, Tuple>(tuple.base) | at<Idx>());
+		}
+		
+	};
 }
