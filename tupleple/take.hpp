@@ -22,7 +22,7 @@ namespace tupleple
 		template<size_t N>
 		struct take_foward
 		{
-			template<class Tuple, class = typename std::enable_if<is_tuple<Tuple>::value>::type>
+			template<class Tuple>
 			friend take_view<N, Tuple> operator|(Tuple&&tuple, take_foward)
 			{
 				return take_view<N, Tuple>(std::forward<Tuple>(tuple));

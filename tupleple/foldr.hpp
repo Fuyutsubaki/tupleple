@@ -67,4 +67,6 @@ namespace tupleple
 		template<template<class L_ist, class R_eturn>class Transform, class Tuple, class Init>
 		using foldr = typename impl::foldr<Transform, Tuple, Init>::type;
 	}
+
+
 }

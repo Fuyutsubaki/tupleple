@@ -23,7 +23,7 @@ namespace tupleple
 		template<size_t N>
 		struct drop_foward
 		{
-			template<class Tuple,class = typename std::enable_if<is_tuple<Tuple>::value>::type>
+			template<class Tuple>
 			friend drop_view<N, Tuple> operator|(Tuple&&tuple, drop_foward)
 			{
 				return drop_view<N, Tuple>(std::forward<Tuple>(tuple));

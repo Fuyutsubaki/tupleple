@@ -59,4 +59,11 @@ namespace tupleple
 		using seq = index::make_tuple<type_list::size<Tuple0>::value>;
 		return deteil::zip_impl(seq(), t0, t...);
 	}
+
+
+
+	namespace view
+	{
+
+	}
 }

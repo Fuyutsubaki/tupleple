@@ -1,40 +1,50 @@
 #pragma once
-#include<tuple>
-#include"Index.hpp"
-
-#include"to_tuple.hpp"
-#include"cat.hpp"
+#include"tuple.hpp"
 /*
 auto x=tupleple::reverse(std::make_tuple(1,2,3,4));
 */
 
 namespace tupleple
 {
-	namespace type_list
+	namespace view
 	{
-		namespace impl{
-			template<class Tuple>
-			class reverse_impl
-			{
-				static const size_t N = size<Tuple>::value;
-				using seq = index::make_seq<N>;
-
-				template<size_t...K>
-				static auto trans(index::Sequence<K...>)
-					->index::Sequence<(N - K - 1)...>;
-			public:
-				using seq_type = decltype(trans(seq()));
-				using type = type_list::to_tuple<seq_type, Tuple>;
-			};
-		}
 		template<class Tuple>
-		using reverse = typename impl::reverse_impl<Tuple>::type;
+		struct reverse_view
+		{
+			friend tuple_trait<view::reverse_view<Tuple>>;
+			reverse_view(Tuple&&tuple)
+			:base(std::forward<Tuple>(tuple))
+			{}
+		private:
+			Tuple&&base;
+		};
+		struct reverse_foward
+		{
+			template<class Tuple>
+			friend reverse_view<Tuple> operator|(Tuple&&tuple, reverse_foward)
+			{
+				return reverse_view<Tuple>(std::forward<Tuple>(tuple));
+			}
+		};
+		inline reverse_foward reverse(){ return reverse_foward(); }
 	}
 	template<class Tuple>
-	auto reverse(const Tuple&tuple)
-		->type_list::reverse<Tuple>
+	struct tuple_trait<view::reverse_view<Tuple>>
 	{
-		using seq = typename type_list::impl::reverse_impl<Tuple>::seq_type;
-		return to_tuple(seq(), tuple);
-	}
+		using Base = utility::remove_const_ref_t<Tuple>;
+		static const size_t size = type_list::size<Base>::value;
+		template<size_t Idx>
+		struct element
+		{
+			using type = type_list::at_t<size - 1 - Idx, Base>;
+		};
+		template<size_t Idx, class T>
+		static auto get(T&&tuple)
+			->decltype(at <size - 1 - Idx>(utility::foward_member_ref<T, Tuple>(tuple.base)))
+		{
+			return utility::foward_member_ref<T, Tuple>(tuple.base) | at < size - 1 - Idx>();
+		}
+
+	};
+
 }

@@ -6,7 +6,6 @@
 #include"map.hpp"
 #include"utility.hpp"
 #include"cat.hpp"
-#include"to_tuple.hpp"
 
 /*
 	auto result=tupleple::filter<std::is_integral>(std::make_tuple(42, 3.14, 'A', 1.4f));
@@ -50,7 +49,7 @@ namespace tupleple
 		template<class Tuple,template<class>class Pred>
 		struct filter_view
 		{
-
+			
 		};
 	}
 	template<class Tuple, template<class>class Pred>
@@ -63,4 +62,7 @@ namespace tupleple
 			using type = Tuple<>;
 		};
 	};
+
+
+
 }
