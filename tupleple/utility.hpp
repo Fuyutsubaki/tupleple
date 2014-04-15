@@ -43,5 +43,32 @@ namespace tupleple
 		{
 			return std::forward<Member>(mem);
 		}
+
+		template<bool,class T>
+		struct lazy_enable_if
+		{
+			using type = typename T::type;
+		};
+		template<class T>
+		struct lazy_enable_if<false,T>
+		{};
+
+		template<bool r,class T>
+		using lazy_enable_if_t = typename lazy_enable_if<r, T>::type;
+
+		struct ExtensionMemberFunction
+		{};
+
+		
+
 	}
+}
+template<class Lhs, class Rhs>
+auto operator|(Lhs&&lhs, Rhs&&rhs)
+->std::enable_if_t<
+std::is_base_of<tupleple::utility::ExtensionMemberFunction, Rhs>::value
+,  decltype(std::declval<Rhs>()(std::declval<Lhs>()))
+>
+{
+	return std::forward<Rhs>(rhs)(std::forward<Lhs>(lhs));
 }

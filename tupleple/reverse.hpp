@@ -18,10 +18,10 @@ namespace tupleple
 		private:
 			Tuple&&base;
 		};
-		struct reverse_foward
+		struct reverse_foward:utility::ExtensionMemberFunction
 		{
 			template<class Tuple>
-			friend reverse_view<Tuple> operator|(Tuple&&tuple, reverse_foward)
+			reverse_view<Tuple> operator()(Tuple&&tuple)
 			{
 				return reverse_view<Tuple>(std::forward<Tuple>(tuple));
 			}

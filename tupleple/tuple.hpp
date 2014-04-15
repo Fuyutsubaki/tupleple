@@ -37,7 +37,7 @@ namespace tupleple
 		struct at_result
 		{
 			using traits = tuple_trait<utility::remove_const_ref_t<Tuple>>;
-			using type = decltype(traits::template get<N>(std::forward<Tuple>(std::declval<Tuple&&>())));
+			using type = decltype(traits::template get<N>(std::declval<Tuple>()));
 		};
 		
 	}
@@ -50,13 +50,13 @@ namespace tupleple
 	}
 	
 	template<size_t N>
-	struct at_foward
+	struct at_foward:utility::ExtensionMemberFunction
 	{
 		template<class Tuple>
-		friend auto operator | (Tuple&&tuple, at_foward)
-			->typename deteil::at_result<Tuple, N>::type
+		auto operator () (Tuple&&tuple)
+			->decltype(at<N>(std::forward<Tuple>(tuple)))
 		{
-			return tuple_trait<utility::remove_const_ref_t<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
+			return at<N>(std::forward<Tuple>(tuple));
 		}
 	};
 	template<size_t N>

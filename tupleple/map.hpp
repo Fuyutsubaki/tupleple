@@ -61,15 +61,15 @@ namespace tupleple
 			Tuple&&base;
 		};
 		template<class Func>
-		struct map_foward
+		struct map_foward :utility::ExtensionMemberFunction
 		{
 			map_foward(Func&&func)
 			:func_(std::forward<Func>(func))
 			{}
 			template<class Tuple>
-			friend map_view<Tuple, Func> operator|(Tuple&&tuple, map_foward&&this_)
+			map_view<Tuple, Func> operator()(Tuple&&tuple)
 			{
-				return map_view<Tuple, Func>(std::forward<Tuple>(tuple),std::forward<Func>(this_.func_));
+				return map_view<Tuple, Func>(std::forward<Tuple>(tuple),std::forward<Func>(func_));
 			}
 		private:
 			Func&&func_;

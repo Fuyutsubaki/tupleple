@@ -21,10 +21,10 @@ namespace tupleple
 			Tuple&& base;
 		};
 		template<size_t N>
-		struct drop_foward
+		struct drop_foward :utility::ExtensionMemberFunction
 		{
 			template<class Tuple>
-			friend drop_view<N, Tuple> operator|(Tuple&&tuple, drop_foward)
+			drop_view<N, Tuple> operator()(Tuple&&tuple)
 			{
 				return drop_view<N, Tuple>(std::forward<Tuple>(tuple));
 			}

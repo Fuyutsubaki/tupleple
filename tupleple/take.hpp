@@ -20,10 +20,10 @@ namespace tupleple
 			Tuple&& base_tuple;
 		};
 		template<size_t N>
-		struct take_foward
+		struct take_foward:utility::ExtensionMemberFunction
 		{
 			template<class Tuple>
-			friend take_view<N, Tuple> operator|(Tuple&&tuple, take_foward)
+			take_view<N, Tuple> operator()(Tuple&&tuple)
 			{
 				return take_view<N, Tuple>(std::forward<Tuple>(tuple));
 			}
