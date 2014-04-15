@@ -10,24 +10,15 @@
 
 namespace tupleple
 {
-	namespace type_list
+	namespace algorithm
 	{
-		template<template<class T>class Pred, class Tuple>
-		class any
+		template<class Tuple, class Pred>
+		bool any(Tuple&&tuple, Pred&&pred)
 		{
-			template<class L,class R>
-			struct eval
-			{
-				using type = utility::cond_t<L::value, L, R>;
-			};
-			template<class T>
-			struct wrap
-			{
-				using type = Pred<T>;
-			};
-		public:
-			static const bool value = binary_fold<eval, Tuple, wrap>::value;
-		};
+			return binary_fold(
+				std::forward<Tuple>(tuple) | view::map(std::forward<Pred>(pred))
+				, [](bool l, bool r){return l || r; });
+		}
 	}
 }
 

@@ -28,46 +28,43 @@ namespace tupleple
 {
 	namespace algorithm
 	{
-		namespace deteil
+		namespace impl
 		{
-			template<class Tuple, class binary_func>
-			struct binary_fold_result_type
+			template<class Tuple, class binary_func,class =void>
+			struct binary_fold_impl
 			{
 				static const size_t N = type_list::size<utility::remove_const_ref_t<Tuple>>::value;
-				using type = decltype(
-					std::declval<binary_func>()(
-					binary_fold(std::declval<Tuple>() | view::take<N / 2>(), std::declval<binary_func>()),
-					binary_fold(std::declval<Tuple>() | view::drop<N / 2>(), std::declval<binary_func>())
-					));
+				using Lhs = binary_fold_impl<view::take_view<N / 2, Tuple>, binary_func>;
+				using Rhs = binary_fold_impl<view::drop_view<N / 2, Tuple>, binary_func>;
+
+				using result_type =
+					typename std::result_of<binary_func(typename Lhs::result_type, typename Rhs::result_type)>::type;
+
+				static result_type fold(Tuple&&tuple, binary_func&&func)
+				{
+					return std::forward<binary_func>(func)(
+						Lhs::fold(std::forward<Tuple>(tuple) | view::take<N / 2>(), std::forward<binary_func>(func))
+						,Rhs::fold(std::forward<Tuple>(tuple) | view::drop<N / 2>(), std::forward<binary_func>(func))
+						);
+				}
+			};
+			template<class Tuple, class binary_func>
+			struct binary_fold_impl<Tuple, binary_func,
+				typename std::enable_if<(type_list::size<utility::remove_const_ref_t<Tuple>>::value==1)>::type>
+			{
+				using result_type = decltype(std::declval<Tuple>() | at<0>());
+				static auto fold(Tuple&&tuple, binary_func&&func)
+					->result_type
+				{
+					return std::forward<Tuple>(tuple) | at<0>();
+				}
 			};
 		}
-
 		template<class Tuple, class binary_func>
 		auto binary_fold(Tuple&&tuple, binary_func&&func)
-			->utility::lazy_enable_if_t<
-			(type_list::size<utility::remove_const_ref_t<Tuple>>::value > 1)
-			, deteil::binary_fold_result_type<Tuple, binary_func>
-			>
+			->typename impl::binary_fold_impl<Tuple, binary_func>::result_type
 		{
-			static const size_t N = type_list::size<utility::remove_const_ref_t<Tuple>>::value;
-			return std::forward<binary_func>(func)(
-				binary_fold(std::forward<Tuple>(tuple) | view::take<N / 2>(), std::forward<binary_func>(func))
-				, binary_fold(std::forward<Tuple>(tuple) | view::drop<N / 2>(), std::forward<binary_func>(func))
-				);
-		}
-		template<class Tuple, class binary_func>
-		auto binary_fold(Tuple&&tuple, binary_func&&)
-			->typename std::enable_if<
-			(type_list::size<utility::remove_const_ref_t<Tuple>>::value == 1)
-			, decltype(std::forward<Tuple>(tuple) | at<0>())
-			>::type
-			//«fuckin “®‚©‚Ë‚¥
-			/*->std::enable_if_t<
-			(type_list::size<utility::remove_const_ref_t<Tuple>>::value == 1)
-			, decltype(std::forward<Tuple>(tuple) | at<0>())
-			>*/
-		{
-			return std::forward<Tuple>(tuple) | at<0>();
+			return impl::binary_fold_impl<Tuple, binary_func>::fold(std::forward<Tuple>(tuple), std::forward<binary_func>(func));
 		}
 
 	}
