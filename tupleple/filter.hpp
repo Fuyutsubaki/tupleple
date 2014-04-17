@@ -55,12 +55,16 @@ namespace tupleple
 	template<class Tuple, template<class>class Pred>
 	class tuple_trait<view::filter_view<Tuple, Pred>>
 	{
-		static const size_t size = ;
+		static const size_t size = 0xdeadc0de;
+		using index = ;
 		template<size_t N>
 		struct element
 		{
-			using type = Tuple<>;
+			using type = Tuple;
 		};
+
+
+
 	};
 
 

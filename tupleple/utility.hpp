@@ -33,7 +33,7 @@ namespace tupleple
 		
 		template<class Class, class Member>
 		auto foward_member_ref(typename std::remove_reference<Member>::type&mem)
-			->std::enable_if_t<std::is_lvalue_reference<Class>::value,Member&>
+			->typename std::enable_if<std::is_lvalue_reference<Class>::value,Member&>::type
 		{
 			return mem;
 		}
@@ -59,7 +59,8 @@ namespace tupleple
 		struct ExtensionMemberFunction
 		{};
 
-		
+		struct Compareble
+		{};
 
 	}
 }
@@ -68,6 +69,20 @@ auto operator|(Lhs&&lhs, Rhs&&rhs)
 ->std::enable_if_t<
 std::is_base_of<tupleple::utility::ExtensionMemberFunction, Rhs>::value
 ,  decltype(std::declval<Rhs>()(std::declval<Lhs>()))
+>
+{
+	auto x =  lhs;
+	auto r = typeid(Rhs).name();
+	auto l = typeid(Lhs).name();
+	return std::forward<Rhs>(rhs)(std::forward<Lhs>(lhs));
+}
+
+
+template<class Lhs, class Rhs>
+auto operator==(Lhs&&lhs, Rhs&&rhs)
+->std::enable_if_t<
+std::is_base_of<tupleple::utility::Compareble, Rhs>::value
+, decltype(std::declval<Rhs>()(std::declval<Lhs>()))
 >
 {
 	return std::forward<Rhs>(rhs)(std::forward<Lhs>(lhs));

@@ -1,6 +1,9 @@
 #pragma once
 #include"tuple.hpp"
 #include<type_traits>
+#include"binary_fold.hpp"
+
+
 namespace tupleple
 {
 	namespace view
@@ -17,10 +20,29 @@ namespace tupleple
 			TupleL&&lhs;
 			TupleR&&rhs;
 		};
-		template<class TupleL, class TupleR>
-		cat_view<TupleL, TupleR> cat(TupleL&&lhs, TupleR&&rhs)
+
+		namespace deteil
 		{
-			return cat_view<TupleL, TupleR>(std::forward<TupleL>(lhs), std::forward<TupleR>(rhs));
+			struct cat_impl
+			{
+				template<class TupleL, class TupleR>
+				cat_view<TupleL, TupleR> operator()(TupleL&&lhs, TupleR&&rhs)
+				{
+					return cat_view<TupleL, TupleR>(std::forward<TupleL>(lhs), std::forward<TupleR>(rhs));
+				}
+			};
+			template<class...R>
+			struct cat_result
+			{
+				using type = decltype(algorithm::binary_fold(std::declval<std::tuple<R&&...>>(), std::declval<deteil::cat_impl>()));
+			};
+		}
+		
+		template<class ...R>
+		auto cat(R&&...tuple)
+			->typename deteil::cat_result<R...>::type
+		{
+			return algorithm::binary_fold(std::forward_as_tuple(std::forward<R>(tuple)...),deteil::cat_impl());
 		}
 	}
 	template<class TupleL, class TupleR>

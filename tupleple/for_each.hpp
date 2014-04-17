@@ -1,5 +1,4 @@
 #pragma once
-#include"Index.hpp"
 #include"tuple.hpp"
 #include"map.hpp"
 /*
@@ -28,9 +27,7 @@ namespace tupleple
 		{
 			for_each_impl_adapter(const Func&func)
 				:func_(func)
-			{
-
-			}
+			{	}
 			struct nil{};
 			template<class T>
 			nil operator()(const T&x)const
@@ -46,6 +43,11 @@ namespace tupleple
 	void for_each(const Tuple&tuple,const Func&func)
 	{
 		map(deteil::for_each_impl_adapter<Func>(func), tuple);
+	}
+
+	namespace
+	{
+
 	}
 }
 

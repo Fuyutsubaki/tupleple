@@ -42,7 +42,8 @@ namespace tupleple
 
 				static result_type fold(Tuple&&tuple, binary_func&&func)
 				{
-					return std::forward<binary_func>(func)(
+					return
+						std::forward<binary_func>(func)(
 						Lhs::fold(std::forward<Tuple>(tuple) | view::take<N / 2>(), std::forward<binary_func>(func))
 						,Rhs::fold(std::forward<Tuple>(tuple) | view::drop<N / 2>(), std::forward<binary_func>(func))
 						);

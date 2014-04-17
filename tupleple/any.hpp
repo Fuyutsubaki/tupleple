@@ -1,8 +1,7 @@
 #pragma once
-#include<tuple>
-#include"Index.hpp"
 #include"binary_fold.hpp"
-#include"utility.hpp"
+#include"map.hpp"
+#include<type_traits>
 /*
 	using type = std::tuple<float, std::string, void>;
 	std::cout << tupleple::type_list::any<std::is_integral,type>::value;

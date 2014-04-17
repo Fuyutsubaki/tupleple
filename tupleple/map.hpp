@@ -1,7 +1,5 @@
 #pragma once
-#include<tuple>
 #include"tuple.hpp"
-#include"Index.hpp"
 #include<type_traits>
 /*
 using tuple = std::tuple<char, int, void*>;
@@ -28,23 +26,6 @@ int main()
 
 namespace tupleple
 {
-	namespace type_list
-	{
-		template<class Tuple, template<class T>class Transform>
-		class map
-		{
-			using seq = index::make_tuple_size_seq_t<Tuple>;
-
-			template<size_t ...N>
-			static auto trans(index::Sequence<N...>)
-				->std::tuple<typename Transform<at_t<N, Tuple>>::type...>;
-		public:
-			using type = decltype(trans(seq()));
-		};
-		template<class Tuple, template<class T>class Transform>
-		using map_t = typename map<Tuple, Transform>::type;
-	}
-
 	namespace view
 	{
 		template<class Tuple, class Func>

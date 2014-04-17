@@ -39,5 +39,4 @@ namespace tupleple
 	{
 		return deteil::replicicate_impl<N>(x, index::make_tuple<N>());
 	}
-
 }
