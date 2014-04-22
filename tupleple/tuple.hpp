@@ -14,7 +14,7 @@ namespace tupleple
 		template<size_t N, class Tuple>
 		class at
 		{
-			using base_tuple = utility::remove_const_ref_t <Tuple>;
+			using base_tuple = utility::remove_cv_ref_t <Tuple>;
 			using base_result_type = typename typename tuple_trait<base_tuple>::template element<N>::type;
 		public:
 			using type = base_result_type;
@@ -36,7 +36,7 @@ namespace tupleple
 		template<class Tuple,size_t N>
 		struct at_result
 		{
-			using traits = tuple_trait<utility::remove_const_ref_t<Tuple>>;
+			using traits = tuple_trait<utility::remove_cv_ref_t<Tuple>>;
 			using type = decltype(traits::template get<N>(std::declval<Tuple>()));
 		};
 		
@@ -46,7 +46,7 @@ namespace tupleple
 	auto at(Tuple&&tuple)
 		->typename deteil::at_result<Tuple,N>::type
 	{
-		return tuple_trait<utility::remove_const_ref_t<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
+		return tuple_trait<utility::remove_cv_ref_t<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
 	}
 	
 	template<size_t N>
