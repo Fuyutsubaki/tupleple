@@ -1,5 +1,6 @@
 #pragma once 
 #include"tuple.hpp"
+#include"basic_view.hpp"
 /*
 	using namespace tupleple;
 	std::make_tuple(1, std::make_unique<int>(2), 3) | view::take<1>() | at<0>();
@@ -8,19 +9,13 @@ namespace tupleple
 {
 	namespace view
 	{
-		template<size_t N, class Tuple>
-		class take_view
-		{
-			friend tuple_trait<take_view>;
-		public:
-			take_view(Tuple&&tuple)
-			:base_tuple(std::forward<Tuple>(tuple))
-			{}
-		private:
-			Tuple&& base_tuple;
-		};
 		template<size_t N>
-		struct take_foward:utility::ExtensionMemberFunction
+		struct take_view_tag{};
+		template<size_t N,class Tuple>
+		using take_view = utility::basic_view<take_view_tag<N>, Tuple>;
+		
+		template<size_t N>
+		struct take_forward:utility::ExtensionMemberFunction
 		{
 			template<class Tuple>
 			take_view<N, Tuple> operator()(Tuple&&tuple)
@@ -29,7 +24,8 @@ namespace tupleple
 			}
 		};
 		template<size_t N>
-		inline take_foward<N> take(){ return take_foward<N>(); }
+		inline take_forward<N> take(){ return{}; }
+
 	}
 	namespace type_list
 	{
@@ -45,19 +41,20 @@ namespace tupleple
 	template <size_t N, class Tuple>
 	class tuple_trait<view::take_view<N, Tuple>>
 	{
+		using View = view::take_view<N, Tuple>;
+		using base_type = utility::remove_cv_ref_t<Tuple>;
 	public:
 		static const size_t size = N;
 		template<size_t K>
 		struct element
 		{
-			using base_type = utility::remove_const_ref_t<Tuple>;
 			using type = type_list::at_t<K, base_type>;
 		};
 		template<size_t Idx,class T>
 		static auto get(T&&tuple)
-			->decltype(at<Idx>(utility::foward_member_ref<T, Tuple>(tuple.base_tuple)))
+			->decltype(View::first(std::forward<T>(tuple)) | at<Idx>())
 		{
-			return utility::foward_member_ref<T, Tuple>(tuple.base_tuple) | at<Idx>();
+			return View::first(std::forward<T>(tuple)) | at<Idx>();
 		}
 	};
 }

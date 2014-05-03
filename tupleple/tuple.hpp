@@ -14,10 +14,7 @@ namespace tupleple
 		template<size_t N, class Tuple>
 		class at
 		{
-			using base_tuple = utility::remove_cv_ref_t <Tuple>;
-			using base_result_type = typename typename tuple_trait<base_tuple>::template element<N>::type;
-		public:
-			using type = base_result_type;
+			using type = typename typename tuple_trait<utility::remove_cv_ref_t <Tuple>>::template element<N>::type;
 		};
 
 		template<class Tuple>
@@ -28,23 +25,24 @@ namespace tupleple
 
 		template<size_t N, class Tuple>
 		using at_t = typename at<N,Tuple>::type;
-	}	
-	
-	namespace deteil
-	{
-		//コンパイラ的な都合
-		template<class Tuple,size_t N>
-		struct at_result
+
+		template<size_t N, class Tuple>
+		class result_of
 		{
-			using traits = tuple_trait<utility::remove_cv_ref_t<Tuple>>;
-			using type = decltype(traits::template get<N>(std::declval<Tuple>()));
+			using base_tuple = utility::remove_cv_ref_t <Tuple>;
+			using res =  typename tuple_trait<base_tuple>::template result_of<N, Tuple>;
+			using base_result_type = typename res::type;
+		public:
+			using type = base_result_type;
 		};
-		
-	}
+		template<size_t N, class Tuple>
+		using result_of_t = typename result_of<N, Tuple>::type;
+	}	
+
 
 	template<size_t N, class Tuple>
 	auto at(Tuple&&tuple)
-		->typename deteil::at_result<Tuple,N>::type
+		->type_list::result_of_t<N, Tuple>
 	{
 		return tuple_trait<utility::remove_cv_ref_t<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
 	}
@@ -54,33 +52,16 @@ namespace tupleple
 	{
 		template<class Tuple>
 		auto operator () (Tuple&&tuple)
-			->decltype(at<N>(std::forward<Tuple>(tuple)))
+			->type_list::result_of_t<N, Tuple>
 		{
+			auto r = std::is_lvalue_reference<Tuple>::value;
 			return at<N>(std::forward<Tuple>(tuple));
 		}
 	};
 	template<size_t N>
-	at_foward<N> at(){ return at_foward<N>(); }
+	at_foward<N> at(){ return{}; }
 
-	template<class ...R>
-	struct tuple_trait<std::tuple<R...>>
-	{
-		using tuple_type = std::tuple<R...>;
-		template<size_t N>
-		struct element
-		{
-			using type = typename std::tuple_element<N, tuple_type>::type;
-		};
-		template<size_t N,class Tuple>
-		static auto get(Tuple&&tuple)
-			->decltype(std::get<N>(std::forward<Tuple>(tuple)))
-		{
-			return std::get<N>(std::forward<Tuple>(tuple));
-		}
-		
-		static const size_t size = std::tuple_size<tuple_type>::value;
-	};
-
+	
 	template<class Tuple,class Enabler=void>
 	struct is_tuple
 		:std::true_type
@@ -89,4 +70,8 @@ namespace tupleple
 	struct is_tuple<Tuple, typename tuple_trait<Tuple>::is_not_define>
 		:std::false_type
 	{};
+
+	
+
+
 }

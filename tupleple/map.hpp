@@ -22,25 +22,16 @@ int main()
 	auto r = std::make_tuple('X', 3) | view::map(Func()) | at<0>();
 }
 */
-//element‚ÌÀ‘•‚ªÅ‘åŒö–ñ”Š´
 
 namespace tupleple
 {
 	namespace view
 	{
+		struct map_tag{};
 		template<class Tuple, class Func>
-		class map_view
-		{
-			friend tuple_trait<map_view>;
-		public:
-			map_view(Tuple&&tuple, Func&&func)
-				:func(std::forward<Func>(func))
-				, base(std::forward<Tuple>(tuple))
-			{}
-		private:
-			Func&&func;
-			Tuple&&base;
-		};
+		using map_view = utility::basic_view<map_tag,Tuple, Func>;
+		
+
 		template<class Func>
 		struct map_foward :utility::ExtensionMemberFunction
 		{
@@ -50,33 +41,34 @@ namespace tupleple
 			template<class Tuple>
 			map_view<Tuple, Func> operator()(Tuple&&tuple)
 			{
-				return map_view<Tuple, Func>(std::forward<Tuple>(tuple),std::forward<Func>(func_));
+				return{ std::forward<Tuple>(tuple), std::forward<Func>(func_) };
 			}
 		private:
-			Func&&func_;
+			Func func_;
 		};
 		template<class Func>
 		map_foward<Func> map(Func&&func)
 		{
-			return map_foward<Func>(std::forward<Func>(func));
+			return{ std::forward<Func>(func) };
 		}
 	}
 	template<class Tuple,class Func>
 	class tuple_trait<view::map_view<Tuple, Func>>
 	{
-		using base = utility::remove_const_ref_t<Tuple>;
+		using base = utility::remove_cv_ref_t<Tuple>;
+		using View = view::map_view<Tuple, Func>;
 	public:
 		static const size_t size = type_list::size<base>::value;
 		template<size_t N>
 		struct element
 		{
-			using type = utility::remove_const_ref_t<typename std::result_of<Func(Tuple)>::type>;
+			using type = typename std::result_of<Func(type_list::at_t<N, base>)>::type;
 		};
 		template<size_t Idx,class T>
 		static auto get(T&&tuple)
-			->decltype(tuple.func(utility::foward_member_ref<T, Tuple>(tuple.base) | at<Idx>()))
+			->decltype(View::second(std::forward<T>(tuple))(View::first(std::forward<T>(tuple)) | at<Idx>()))
 		{
-			return tuple.func(utility::foward_member_ref<T, Tuple>(tuple.base) | at<Idx>());
+			return View::second(std::forward<T>(tuple))(View::first(std::forward<T>(tuple)) | at<Idx>());
 		}
 		
 	};

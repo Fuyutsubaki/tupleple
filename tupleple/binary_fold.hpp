@@ -44,14 +44,14 @@ namespace tupleple
 				{
 					return
 						std::forward<binary_func>(func)(
-						Lhs::fold(std::forward<Tuple>(tuple) | view::take<N / 2>(), std::forward<binary_func>(func))
-						,Rhs::fold(std::forward<Tuple>(tuple) | view::drop<N / 2>(), std::forward<binary_func>(func))
+						Lhs::fold(tuple | view::take<N / 2>(), std::forward<binary_func>(func))
+						,Rhs::fold(tuple | view::drop<N / 2>(), std::forward<binary_func>(func))
 						);
 				}
 			};
 			template<class Tuple, class binary_func>
 			struct binary_fold_impl<Tuple, binary_func,
-				typename std::enable_if<(type_list::size<utility::remove_const_ref_t<Tuple>>::value==1)>::type>
+				typename std::enable_if<(type_list::size<utility::remove_cv_ref_t<Tuple>>::value==1)>::type>
 			{
 				using result_type = decltype(std::declval<Tuple>() | at<0>());
 				static auto fold(Tuple&&tuple, binary_func&&func)
