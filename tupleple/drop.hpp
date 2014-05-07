@@ -12,13 +12,19 @@ namespace tupleple
 {
 	namespace view
 	{
-		template<size_t N>
-		struct drop_tag{};
 		template<size_t N, class Tuple>
-		using drop_view = utility::basic_view<drop_tag<N>, Tuple>;
-		
+		struct drop_view
+		{
+			Tuple base;
+			friend tuple_trait<view::drop_view<N,Tuple>>;
+		public:
+			drop_view(Tuple&&tuple)
+				:base(std::forward<Tuple>(tuple))
+			{}
+		};
+
 		template<size_t N>
-		struct drop_foward :utility::ExtensionMemberFunction
+		struct drop_forward :utility::ExtensionMemberFunction
 		{
 			template<class Tuple>
 			drop_view<N, Tuple> operator()(Tuple&&tuple)
@@ -27,37 +33,32 @@ namespace tupleple
 			}
 		};
 		template<size_t N>
-		inline drop_foward<N> drop(){ return{}; }
-	}
+		inline drop_forward<N> drop(){ return{}; }
 
-	namespace type_list
+	}
+	namespace result_of
 	{
-		template<size_t N, class Tuple>
-		struct drop
-		{
-			using type = view::drop_view<N, Tuple>;
-		};
-		template<size_t N, class Tuple>
-		using drop_t = typename drop<N, Tuple>::type;
-	}
 
+	}
 	template <size_t N, class Tuple>
 	class tuple_trait<view::drop_view<N, Tuple>>
 	{
-		using base_type = utility::remove_cv_ref_t<Tuple>;
 		using View = view::drop_view<N, Tuple>;
+		using base_type = utility::remove_cv_ref_t<Tuple>;
 	public:
 		static const size_t size = type_list::size<base_type>::value - N;
 		template<size_t Idx>
-		struct element
-		{
-			using type = type_list::at_t<Idx + N, base_type>;
-		};
+		using element = type_list::at<Idx + N, base_type>;
+
 		template<size_t Idx, class T>
-		static auto get(T&&tuple)
-			->decltype(View::first(std::forward<T>(tuple)) | at<Idx + N>())
+		using result_of
+			= type_list::result_of<Idx + N, utility::result_of_forward_mem_t<T, Tuple>>;
+
+		template<size_t Idx, class T>
+		static auto get(T&&x)
+			->type_list::result_of_t<Idx, T>
 		{
-			return View::first(std::forward<T>(tuple)) | at<Idx + N>();
+			return utility::forward_mem<T, Tuple>(x.base) | at<Idx + N>();
 		}
 	};
 }

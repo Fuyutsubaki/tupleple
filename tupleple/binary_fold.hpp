@@ -1,9 +1,8 @@
 #pragma once
 #include"drop.hpp"
 #include"take.hpp"
-#include"map.hpp"
 #include"tuple.hpp"
-
+#include"move_view.hpp"
 /*
 struct plus
 {
@@ -28,14 +27,14 @@ namespace tupleple
 {
 	namespace algorithm
 	{
-		namespace impl
+		namespace deteil
 		{
 			template<class Tuple, class binary_func,class =void>
 			struct binary_fold_impl
 			{
-				static const size_t N = type_list::size<utility::remove_const_ref_t<Tuple>>::value;
-				using Lhs = binary_fold_impl<view::take_view<N / 2, Tuple>, binary_func>;
-				using Rhs = binary_fold_impl<view::drop_view<N / 2, Tuple>, binary_func>;
+				static const size_t N = type_list::size<utility::remove_cv_ref_t<Tuple>>::value;
+				using Lhs = binary_fold_impl<decltype(std::declval<Tuple>() | view::take<N / 2>()), binary_func>;
+				using Rhs = binary_fold_impl<decltype(std::declval<Tuple>() | view::drop<N / 2>()), binary_func>;
 
 				using result_type =
 					typename std::result_of<binary_func(typename Lhs::result_type, typename Rhs::result_type)>::type;
@@ -44,8 +43,8 @@ namespace tupleple
 				{
 					return
 						std::forward<binary_func>(func)(
-						Lhs::fold(tuple | view::take<N / 2>(), std::forward<binary_func>(func))
-						,Rhs::fold(tuple | view::drop<N / 2>(), std::forward<binary_func>(func))
+						Lhs::fold(std::forward<Tuple>(tuple) | view::take<N / 2>(), std::forward<binary_func>(func))
+						, Rhs::fold(std::forward<Tuple>(tuple) | view::drop<N / 2>(), std::forward<binary_func>(func))
 						);
 				}
 			};
@@ -61,12 +60,15 @@ namespace tupleple
 				}
 			};
 		}
+
+
 		template<class Tuple, class binary_func>
 		auto binary_fold(Tuple&&tuple, binary_func&&func)
-			->typename impl::binary_fold_impl<Tuple, binary_func>::result_type
+			->typename deteil::binary_fold_impl<result_of_forward_view_t<Tuple>, binary_func>::result_type
 		{
-			return impl::binary_fold_impl<Tuple, binary_func>::fold(std::forward<Tuple>(tuple), std::forward<binary_func>(func));
+			return deteil::
+				binary_fold_impl<result_of_forward_view_t<Tuple>, binary_func>::
+				fold(forward_view<Tuple>(tuple), std::forward<binary_func>(func));
 		}
-
 	}
 }

@@ -1,28 +1,24 @@
 #include<iostream>
 #include<tuple>
 #include"do_nothing.hpp"
-#include<memory>
 #include"STD_tuple_traits.hpp"
-#include"forward_as_view.hpp"
+#include"apply.hpp"
+#include<vector>
 
-template<class C>
-tupleple::view::do_nothing_forward test()
-{
-	return{};
-}
-template<class>
-struct rhs
-{
-	friend int operator*(int x, rhs){ return 2; }
-};
-
-
-
-
+#include<algorithm>
+#include"binary_fold.hpp"
+#include"move_view.hpp"
+#include"cat.hpp"
+#include<memory>
 
 int main()
 {
 	using namespace tupleple;
-	auto c = std::make_tuple(1, std::make_unique<int>(42));
-	auto x = move_as_view(c) | test<int>() ;
+	auto a = std::make_tuple(1, 2);
+	auto b = std::make_tuple(std::make_unique<int>(42), 'B');
+	auto c = std::make_tuple(std::string(":-)"), std::string(":-|"));
+
+	auto s = view::cat(a, move_view(b), c);
+	auto p = s | at<2>();
 }
+

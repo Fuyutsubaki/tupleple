@@ -26,9 +26,6 @@ namespace tupleple
 		{};
 
 		template<class T>
-		using  enable_view_arg_type_t = std::enable_if_t<std::is_lvalue_reference<T>::value || is_view<T>::value>;
-
-		template<class T>
 		struct wrap
 		{
 			using type = T;
@@ -134,6 +131,8 @@ namespace tupleple
 		{
 			return std::forward<result_of_forward_mem_t<Class, Member>>(mem);
 		}
+
+
 	}
 }
 template<class Lhs, class Rhs, 

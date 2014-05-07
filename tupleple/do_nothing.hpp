@@ -19,7 +19,7 @@ namespace tupleple
 		
 		struct do_nothing_forward:utility::ExtensionMemberFunction
 		{
-			template<class T, class = utility::enable_view_arg_type_t<T>>
+			template<class T>
 			inline do_nothing_view<T> operator()(T&&tuple)
 			{
 				return{ std::forward<T>(tuple) };
