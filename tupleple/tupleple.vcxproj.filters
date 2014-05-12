@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\完成済み">
+      <UniqueIdentifier>{5e37b0b7-0f91-48fe-b9f5-f0f71d8e33d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\utility">
+      <UniqueIdentifier>{07f89a7d-ce8b-4c87-a945-e4114c15a84e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\MPLambda">
+      <UniqueIdentifier>{ca336c82-af6b-481d-a414-0b55f4fa652f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="filter.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="foldl.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="foldr.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="for_each.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="replicate.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="zip.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="all.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="any.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="utility.hpp">
+      <Filter>ソース ファイル\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="STD_tuple_traits.hpp">
+      <Filter>ソース ファイル\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="is_view.hpp">
+      <Filter>ソース ファイル\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="do_nothing.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="apply.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="drop.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="take.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="move_view.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_fold.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="cat.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="Index.hpp">
+      <Filter>ソース ファイル\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="reverse.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="tuple.hpp">
+      <Filter>ソース ファイル\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="map.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="MPLambda.h">
+      <Filter>ヘッダー ファイル\MPLambda</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
