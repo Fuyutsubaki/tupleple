@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Test_hoge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="all.hpp" />
