@@ -1,6 +1,8 @@
 #pragma once
 #include"tuple.hpp"
 #include<type_traits>
+#include"Index.hpp"
+#include"STD_tuple_traits.hpp"
 /*
 using tuple = std::tuple<char, int, void*>;
 using r = tupleple::type_list::map<std::add_pointer, tuple>;
@@ -25,12 +27,50 @@ int main()
 
 namespace tupleple
 {
+	namespace type_list
+	{
+		template<class Tuple, template<class>class F>
+		class map
+		{
+			template<size_t ...Idx>
+			static auto trans(index::Sequence<Idx...>)
+				->std::tuple<typename F< at_t<Idx, Tuple> >::type ...>;
+			using seq = index::make_tuple_size_seq_t<Tuple>;
+		public:
+			using type = decltype(trans(seq()));
+		};
+		template<class Tuple, template<class>class F>
+		using map_t = typename map<Tuple, F>::type;
+	}
+	namespace index
+	{
+		template<class Tuple, template<class>class F>
+		class map
+		{
+			template<size_t ...Idx>
+			static auto trans(index::Sequence<Idx...>)
+				->Sequence<(F< type_list::at_t<Idx, Tuple> >::value) ...>;
+			using seq = index::make_tuple_size_seq_t<Tuple>;
+		public:
+			using type = decltype(trans(seq()));
+		};
+		template<class Tuple, template<class>class F>
+		using map_t = typename map<Tuple, F>::type;
+	}
 	namespace view
 	{
-		struct map_tag{};
-		template<class Tuple, class Func>
-		using map_view = utility::basic_view<map_tag,Tuple, Func>;
-		
+		template<class Tuple,class Functor>
+		struct map_view
+		{
+			Tuple base;
+			Functor func;
+			friend tuple_trait<view::map_view<Tuple, Functor>>;
+		public:
+			map_view(Tuple&&tuple,Functor&&func)
+				:base(std::forward<Tuple>(tuple))
+				, func(std::forward<Functor>(func))
+			{}
+		};
 
 		template<class Func>
 		struct map_foward :utility::ExtensionMemberFunction
@@ -46,30 +86,40 @@ namespace tupleple
 		private:
 			Func func_;
 		};
+
 		template<class Func>
 		map_foward<Func> map(Func&&func)
 		{
 			return{ std::forward<Func>(func) };
 		}
 	}
+
+
+
 	template<class Tuple,class Func>
 	class tuple_trait<view::map_view<Tuple, Func>>
 	{
 		using base = utility::remove_cv_ref_t<Tuple>;
-		using View = view::map_view<Tuple, Func>;
 	public:
 		static const size_t size = type_list::size<base>::value;
+
 		template<size_t N>
-		struct element
+		using element
+			= utility::remove_cv_ref_t<typename std::result_of<Func(type_list::at_t<N, base>)>::type>;
+
+		template<size_t N, class T>
+		using result_of
+			= std::result_of<Func(type_list::result_of_t<N, utility::result_of_forward_mem_t<T, Tuple>>)>;
+
+		template<size_t N, class T>
+		static auto get(T&&x)
+			->type_list::result_of_t<N, T>
 		{
-			using type = typename std::result_of<Func(type_list::at_t<N, base>)>::type;
-		};
-		template<size_t Idx,class T>
-		static auto get(T&&tuple)
-			->decltype(View::second(std::forward<T>(tuple))(View::first(std::forward<T>(tuple)) | at<Idx>()))
-		{
-			return View::second(std::forward<T>(tuple))(View::first(std::forward<T>(tuple)) | at<Idx>());
+			return
+				utility::forward_mem<T, Func>(x.func)
+				(
+					utility::forward_mem<T, Tuple>(x.base) | at<N>()
+				);
 		}
-		
 	};
 }

@@ -26,14 +26,14 @@ namespace tupleple
 		{};
 
 		template<class T>
-		struct wrap
+		struct identity
 		{
 			using type = T;
 		};
 
 		template<class From, class To>
 		struct trace_const
-			:cond_t<std::is_const<From>::value, std::add_const<To>, wrap<To >>
+			:cond_t<std::is_const<From>::value, std::add_const<To>, identity<To >>
 		{};
 
 		template<class From, class To>
@@ -43,7 +43,7 @@ namespace tupleple
 
 		template<class From, class To>
 		struct trace_volatile
-			:cond_t<std::is_volatile<From>::value, std::add_volatile<To>, wrap<To >>
+			:cond_t<std::is_volatile<From>::value, std::add_volatile<To>, identity<To >>
 		{};
 
 		template<class From, class To>
@@ -53,7 +53,7 @@ namespace tupleple
 
 		template<class From, class To>
 		struct trace_lvalue_reference
-			: cond_t<std::is_lvalue_reference<From>::value, std::add_lvalue_reference<To>, wrap<To >>
+			: cond_t<std::is_lvalue_reference<From>::value, std::add_lvalue_reference<To>, identity<To >>
 		{};
 
 		template<class From, class To>
@@ -63,7 +63,7 @@ namespace tupleple
 
 		template<class From, class To>
 		struct trace_rvalue_reference
-			: cond_t<std::is_rvalue_reference<From>::value, std::add_rvalue_reference<To>, wrap<To >>
+			: cond_t<std::is_rvalue_reference<From>::value, std::add_rvalue_reference<To>, identity<To >>
 		{};
 
 		template<class From, class To>

@@ -27,8 +27,6 @@ namespace tupleple
 			using type = decltype(trans(rest()));
 		};
 		template<>
-		struct make_seq<1>{ using type = Sequence<0>; };
-		template<>
 		struct make_seq<0>{ using type = Sequence<>; };
 
 		
