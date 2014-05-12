@@ -15,6 +15,9 @@ auto p = s | at<2>();
 */
 namespace tupleple
 {
+	
+
+
 	namespace view
 	{
 		template<class TupleL,class TupleR>
@@ -54,6 +57,23 @@ namespace tupleple
 			return algorithm::binary_fold(std::forward_as_tuple(std::forward<R>(tuple)...),deteil::cat_impl());
 		}
 	}
+
+	namespace type_list
+	{
+		template<class ...R>
+		struct cat
+		{
+			template<class L, class R>
+			struct cat_
+			{
+				using type = view::cat_view<L, R>;
+			};
+			using type = binary_fold_t<std::tuple<R...>, cat_>;
+		};
+		template<class ...R>
+		using cat_t = typename cat<R...>::type;
+	}
+
 	template<class TupleL, class TupleR>
 	class tuple_trait<view::cat_view<TupleL, TupleR>>
 	{

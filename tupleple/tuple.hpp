@@ -12,7 +12,7 @@ namespace tupleple
 	namespace type_list
 	{
 		template<size_t N, class Tuple>
-		class at
+		struct at
 		{
 			using type = typename typename tuple_trait<utility::remove_cv_ref_t <Tuple>>::template element<N>::type;
 		};

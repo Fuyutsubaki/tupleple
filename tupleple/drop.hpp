@@ -22,7 +22,7 @@ namespace tupleple
 				:base(std::forward<Tuple>(tuple))
 			{}
 		};
-
+		
 		template<size_t N>
 		struct drop_forward :utility::ExtensionMemberFunction
 		{
@@ -36,9 +36,15 @@ namespace tupleple
 		inline drop_forward<N> drop(){ return{}; }
 
 	}
-	namespace result_of
+	namespace type_list
 	{
-
+		template<size_t N, class Tuple>
+		struct drop
+		{
+			using type = view::drop_view<N, Tuple>;
+		};
+		template<size_t N, class Tuple>
+		using drop_t = typename drop<N, Tuple>::type;
 	}
 	template <size_t N, class Tuple>
 	class tuple_trait<view::drop_view<N, Tuple>>

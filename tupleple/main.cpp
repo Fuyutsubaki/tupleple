@@ -1,6 +1,8 @@
 #include<iostream>
 #include<string>
 #include"map.hpp"
+//#include"filter.hpp"
+#include"cat.hpp"
 template<size_t N>
 struct Tag{};
 
@@ -43,14 +45,13 @@ struct tuple:public Data<0,Args...>
 };
 
 
-
 int main()
 {
-	
 	using namespace tupleple;
-
-	using R = index::map_t<std::tuple<char, float, std::string>, std::is_integral>;
-
-	std::cout << typeid(R).name();
-
+	/*auto tuple = std::make_tuple(1, std::string("ABC"), 3.14, true);
+	auto c = tuple | view::filter<std::is_integral>();
+	std::cout << (c | at<0>()) << (c | at<1>());*/
+	using R = type_list::cat_t<std::tuple<char, int>, std::tuple< int, long>, std::tuple<long, long long>>;
+	using C = type_list::at_t<2, R>;
+	std::cout<< typeid(R).name();
 }

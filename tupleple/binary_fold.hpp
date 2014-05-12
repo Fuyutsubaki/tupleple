@@ -71,4 +71,24 @@ namespace tupleple
 				fold(forward_view<Tuple>(tuple), std::forward<binary_func>(func));
 		}
 	}
+
+	namespace type_list
+	{
+		template<class Tuple, template<class, class>class Binary_func, class = void>
+		class binary_fold
+		{
+			static const size_t N = size<Tuple>::value;
+			using L = typename binary_fold<take_t<N / 2, Tuple>, Binary_func>::type;
+			using R = typename binary_fold<drop_t<N / 2, Tuple>, Binary_func>::type;
+		public:
+			using type = typename Binary_func<L, R>::type;
+		};
+		template<class Tuple, template<class, class>class Binary_func>
+		struct binary_fold<Tuple, Binary_func, std::enable_if_t<size<Tuple>::value == 1>>
+		{
+			using type = at_t<0, Tuple>;
+		};
+		template<class Tuple, template<class, class>class Binary_func>
+		using binary_fold_t = typename binary_fold<Tuple, Binary_func>::type;
+	}
 }

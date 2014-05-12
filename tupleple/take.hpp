@@ -32,7 +32,17 @@ namespace tupleple
 		inline take_forward<N> take(){ return{}; }
 
 	}
+	namespace type_list
+	{
+		template<size_t N, class Tuple>
+		struct take
+		{
+			using type = view::take_view<N, Tuple>;
+		};
+		template<size_t N, class Tuple>
+		using take_t = typename take<N, Tuple>::type;
 
+	}
 	template <size_t N, class Tuple>
 	class tuple_trait<view::take_view<N, Tuple>>
 	{
