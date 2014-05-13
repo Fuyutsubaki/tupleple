@@ -60,18 +60,28 @@ namespace tupleple
 
 	namespace type_list
 	{
-		template<class ...R>
-		struct cat
+
+		template<class Tuple>
+		struct flat
 		{
 			template<class L, class R>
 			struct cat_
 			{
 				using type = view::cat_view<L, R>;
 			};
-			using type = binary_fold_t<std::tuple<R...>, cat_>;
+			using type = binary_fold_t<Tuple, cat_>;
 		};
 		template<class ...R>
+		struct cat
+		{
+			using type = flat<std::tuple<R...>>;
+		};
+		template<class Tuple>
+		using flat_t = typename flat<Tuple>::type;
+		template<class ...R>
 		using cat_t = typename cat<R...>::type;
+
+
 	}
 
 	template<class TupleL, class TupleR>
@@ -93,8 +103,8 @@ namespace tupleple
 		template<size_t Idx>
 		using element = utility::cond_t <
 			(Idx<Lsize),
-			type_list::at_t<Idx, Lhs>,
-			type_list::at_t<Idx - Lsize, Rhs>
+			type_list::at<Idx, Lhs>,
+			type_list::at<Idx - Lsize, Rhs>
 			>;
 
 		template<size_t Idx, class T>

@@ -7,7 +7,10 @@
 #include"cat.hpp"
 
 /*
-	auto result=tupleple::filter<std::is_integral>(std::make_tuple(42, 3.14, 'A', 1.4f));
+	using namespace tupleple;
+	auto r = std::make_tuple(false, "ABC", 3.14, 42);
+	auto c= r | view::filter<std::is_integral>();
+	std::cout << (c | at<1>());
 */
 namespace tupleple
 {
@@ -52,18 +55,22 @@ namespace tupleple
 		{
 			using type = utility::cond_t<Pred<type_list::at_t<Idx::value, Tuple>>::value, std::tuple<Idx>, std::tuple<>>;
 		};
-		using Res = type_list::cat_t<type_list::map_t<Seq, Trans>>;
+		using Seqr = type_list::map_t<Seq, Trans>;
+		using Res = type_list::flat_t<Seqr>;
 		template<size_t N>
-		using F = type_list::at_t<N, Res>;
+		struct F 
+		{
+			static const size_t value =  type_list::at_t<N, Res>::value;
+		};
 	public:
 		static const size_t size = type_list::size<Res>::value;
 		
 		template<size_t N>
-		using element = type_list::at<type_list::at_t<N, Res>::value, base>;
+		using element = type_list::at<F<N>::value, base>;
 
 		template<size_t N, class T>
 		using result_of
-			= type_list::result_of<type_list::at_t<N, Res>, utility::result_of_forward_mem_t<T, Tuple>>;
+			= type_list::result_of<F<N>::value, utility::result_of_forward_mem_t<T, Tuple>>;
 
 		template<size_t N, class T>
 		static auto get(T&&x)
