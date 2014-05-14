@@ -29,9 +29,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="filter.hpp">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="foldl.hpp">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
@@ -97,6 +94,15 @@
     </ClInclude>
     <ClInclude Include="MPLambda.h">
       <Filter>ヘッダー ファイル\MPLambda</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeID.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="filter.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="lnTuple.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

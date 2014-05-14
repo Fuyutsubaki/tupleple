@@ -45,6 +45,15 @@ namespace tupleple
 		}
 
 	}
+
+	namespace type_list
+	{
+		template<class Tuple,template<class>class Pred>
+		struct filter
+		{
+			using type = view::filter_view<Tuple, Pred>;
+		};
+	}
 	template<class Tuple, template<class>class Pred>
 	class tuple_trait<view::filter_view<Tuple, Pred>>
 	{
@@ -78,7 +87,6 @@ namespace tupleple
 		{
 			return utility::forward_mem<T, Tuple>(x.base) | at<F<N>::value>();
 		}
-
 	};
 
 

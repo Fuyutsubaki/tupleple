@@ -23,7 +23,7 @@ namespace tupleple
 		template<class TupleL,class TupleR>
 		class cat_view
 		{
-			friend tuple_trait<cat_view>;
+			friend tuple_trait<cat_view<TupleL, TupleR>>;
 		public:
 			cat_view(TupleL&&lhs, TupleR&&rhs)
 				:lhs(std::forward<TupleL>(lhs)), rhs(std::forward<TupleR>(rhs))

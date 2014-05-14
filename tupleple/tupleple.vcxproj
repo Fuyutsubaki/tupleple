@@ -88,6 +88,7 @@
     <ClInclude Include="cat.hpp" />
     <ClInclude Include="do_nothing.hpp" />
     <ClInclude Include="foldr.hpp" />
+    <ClInclude Include="lnTuple.h" />
     <ClInclude Include="move_view.hpp" />
     <ClInclude Include="for_each.hpp" />
     <ClInclude Include="is_view.hpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="map.hpp" />
     <ClInclude Include="reverse.hpp" />
     <ClInclude Include="take.hpp" />
+    <ClInclude Include="TypeID.hpp" />
     <ClInclude Include="utility.hpp" />
     <ClInclude Include="zip.hpp" />
   </ItemGroup>
