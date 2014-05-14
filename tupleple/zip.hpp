@@ -64,20 +64,19 @@ namespace tupleple
 
 	namespace view
 	{
-		template<class TupleL, class TupleR>
+		template<size_t N, class Tuple>
 		class zip_view
 		{
-			friend tuple_trait<zip_view<TupleL,TupleR>>;
+			friend tuple_trait<zip_view<N, Tuple>>;
 		public:
-			zip_view(TupleL&&lhs, TupleR&&rhs)
-				:lhs(std::forward<TupleL>(lhs)), rhs(std::forward<TupleR>(rhs))
+			zip_view(TupleL&&tuple)
+				:tuple(std::forward<Tuple>(tuple))
 			{}
 		private:
-			TupleL lhs;
-			TupleR rhs;
+			Tuple tuple;
 		};
 	}
-	template<class TupleL, class TupleR>
+	template<size_t N,class TupleL, class TupleR>
 	class tuple_trait<view::zip_view<TupleL, TupleR>>
 	{
 		using Lhs = utility::remove_cv_ref_t<TupleL>;

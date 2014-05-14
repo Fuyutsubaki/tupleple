@@ -86,6 +86,7 @@
     <ClInclude Include="apply.hpp" />
     <ClInclude Include="binary_fold.hpp" />
     <ClInclude Include="cat.hpp" />
+    <ClInclude Include="column.hpp" />
     <ClInclude Include="do_nothing.hpp" />
     <ClInclude Include="foldr.hpp" />
     <ClInclude Include="lnTuple.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="is_view.hpp" />
     <ClInclude Include="MPLambda.h" />
     <ClInclude Include="replicate.hpp" />
+    <ClInclude Include="base_view.hpp" />
     <ClInclude Include="STD_tuple_traits.hpp" />
     <ClInclude Include="tuple.hpp" />
     <ClInclude Include="drop.hpp" />

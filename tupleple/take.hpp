@@ -1,5 +1,6 @@
 #pragma once 
 #include"tuple.hpp"
+#include"base_view.hpp"
 /*
 	using namespace tupleple;
 	std::make_tuple(1, std::make_unique<int>(2), 3) | view::take<1>() | at<0>();
@@ -9,16 +10,12 @@ namespace tupleple
 	namespace view
 	{
 		template<size_t N,class Tuple>
-		struct take_view
+		struct take_view :impl::base_view<take_view<N,Tuple>, Tuple>
 		{
-			Tuple base;
-			friend tuple_trait<view::take_view<N,Tuple>>;
-		public:
 			take_view(Tuple&&tuple)
-				:base(std::forward<Tuple>(tuple))
+				:isuper(std::forward<Tuple>(tuple))
 			{}
 		};
-		
 		template<size_t N>
 		struct take_forward:utility::ExtensionMemberFunction
 		{
