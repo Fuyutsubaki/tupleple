@@ -32,6 +32,8 @@ namespace tupleple
 		{
 			using type = view::column_view<N, Tuple>;
 		};
+		template<size_t N, class Tuple>
+		using column_t = typename column<N, Tuple>::type;
 	}
 	template<size_t N, class Tuple>
 	struct tuple_trait<view::column_view<N,Tuple>>

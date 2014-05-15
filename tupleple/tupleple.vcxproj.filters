@@ -104,11 +104,11 @@
     <ClInclude Include="lnTuple.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="column.hpp">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="base_view.hpp">
       <Filter>リソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="column.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
