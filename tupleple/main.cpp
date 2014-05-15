@@ -4,8 +4,14 @@
 #include<memory>
 #include"move_view.hpp"
 #include"STD_tuple_traits.hpp"
+#include"column.hpp"
 int main()
 {
 	using namespace tupleple;
-	move_view(std::make_tuple(1, 2, 3)) | view::take<1>() | at<0>();
+	auto c = std::make_tuple(std::make_tuple("X", 1), std::make_tuple("Y", 2), std::make_tuple("Z", 3));
+
+	auto val = c | view::column<1>();
+	std::cout << (val | at<0>()) << std::endl;
+	std::cout << (val | at<1>()) << std::endl;
+	std::cout << (val | at<2>()) << std::endl;
 }

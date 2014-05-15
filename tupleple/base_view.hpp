@@ -15,7 +15,7 @@ namespace tupleple
 		class base_view :protected Super
 		{
 			friend tuple_trait<Crtp>;
-		public:
+		protected:
 			template<class T, class...R>
 			base_view(T&&x, R&&...args)
 				:Super(std::forward<R>(args)...)

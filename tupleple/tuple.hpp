@@ -54,7 +54,6 @@ namespace tupleple
 		auto operator () (Tuple&&tuple)
 			->type_list::result_of_t<N, Tuple>
 		{
-			auto r = std::is_lvalue_reference<Tuple>::value;
 			return at<N>(std::forward<Tuple>(tuple));
 		}
 	};

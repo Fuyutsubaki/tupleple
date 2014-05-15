@@ -1,51 +1,58 @@
 #pragma once
 #include"tuple.hpp"
-#include"is_view.hpp"
-
+#include"base_view.hpp"
+#include"STD_tuple_traits.hpp"
 namespace tupleple
 {
 	namespace view
 	{
-		template<class Tuple>
-		struct column_view
+		template<size_t N,class Tuple>
+		struct column_view :impl::base_view<column_view<N,Tuple>,Tuple>
 		{
-			Tuple base;
-			friend tuple_trait<view::column_view<Tuple>>;
-		public:
 			column_view(Tuple&&tuple)
-				:base(std::forward<Tuple>(tuple))
+			:isuper(std::forward<Tuple>(tuple))
 			{}
 		};
-
+		template<size_t N>
 		struct column_view_forward :utility::ExtensionMemberFunction
 		{
 			template<class T>
-			inline column_view<T> operator()(T&&tuple)
+			inline column_view<N,T> operator()(T&&tuple)
 			{
 				return{ std::forward<T>(tuple) };
 			}
 		};
-
-		inline column_view_forward column(){ return{}; }
+		template<size_t N>
+		inline column_view_forward<N> column(){ return{}; }
 	}
-	template<class Tuple>
-	struct tuple_trait<view::column_view<Tuple>>
+	namespace type_list
+	{
+		template<size_t N,class Tuple>
+		struct column
+		{
+			using type = view::column_view<N, Tuple>;
+		};
+	}
+	template<size_t N, class Tuple>
+	struct tuple_trait<view::column_view<N,Tuple>>
 	{
 		using base = utility::remove_cv_ref_t<Tuple>;
 		static const size_t size = type_list::size<base>::value;
 
-		template<size_t N>
-		using element = type_list::at<N, base>;
+		template<size_t Idx>
+		using element = type_list::at<N, type_list::at<Idx, base>>;
 
-		template<size_t N, class T>
+		template<size_t Idx, class T>
 		using result_of
-			= type_list::result_of<N, utility::result_of_forward_mem_t<T, Tuple>>;
+			= type_list::result_of<N,
+			type_list::result_of_t<Idx, utility::result_of_forward_mem_t<T, Tuple>>
+			>;
 
-		template<size_t N, class T>
+		template<size_t Idx, class T>
 		static auto get(T&&x)
-			->type_list::result_of_t<N, T>
+			->type_list::result_of_t<Idx, T>
 		{
-			return utility::forward_mem<T, Tuple>(x.base) | at<N>();
+			return utility::forward_mem<T, Tuple>(x.base) | at<Idx>() | at<N>();
 		}
 	};
 }
