@@ -6,17 +6,22 @@
 #include"STD_tuple_traits.hpp"
 #include"column.hpp"
 #include"zip.hpp"
+#include"parameter_pack_at.hpp"
+
+
+
+template<class...C,class T=int>
+T f(C...c)
+{
+	return 0;
+}
+
 int main()
 {
 	using namespace tupleple;
-	char c = 'X';
-	int x = 42;
-	float f = 3.14;
-	auto t1 = std::make_tuple(c, x, f);
-	auto t2 = std::tie(c, x, f);
-	auto t3 = std::make_tuple(&c, &x, &f);
 
-	auto result = tupleple::view::zip(t1, t2, t3);
 
-	std::cout << (result | at<2>() | at<0>());
+	auto r = utility::value_at<6>(1, "", 3.14, false);
+
+
 }

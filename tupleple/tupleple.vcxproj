@@ -94,6 +94,7 @@
     <ClInclude Include="for_each.hpp" />
     <ClInclude Include="is_view.hpp" />
     <ClInclude Include="MPLambda.h" />
+    <ClInclude Include="parameter_pack_at.hpp" />
     <ClInclude Include="replicate.hpp" />
     <ClInclude Include="base_view.hpp" />
     <ClInclude Include="STD_tuple_traits.hpp" />

@@ -132,7 +132,6 @@ namespace tupleple
 			return std::forward<result_of_forward_mem_t<Class, Member>>(mem);
 		}
 
-
 	}
 }
 template<class Lhs, class Rhs, 
