@@ -35,13 +35,13 @@ namespace tupleple
 			return deteil::at_impl<index::make_seq_t<N>>::at(std::forward<R>(args)...);
 		}
 
-		template<class...T>
+		template<size_t N,class...T>
 		struct type_at
 		{
-			using R = decltype(value_at(utility::identity<T>{}...));
+			using R = decltype(value_at<N>(utility::identity<T>{}...));
 			using type = typename typename std::remove_reference<R>::type::type;
 		};
-		template<class...T>
-		using type_at_t = typename type_at<T...>::type;
+		template<size_t N,class...T>
+		using type_at_t = typename type_at<N,T...>::type;
 	}
 }

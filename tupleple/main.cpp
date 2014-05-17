@@ -7,21 +7,19 @@
 #include"column.hpp"
 #include"zip.hpp"
 #include"parameter_pack_at.hpp"
+#include"lnTuple.h"
 
 
 
-template<class...C,class T=int>
-T f(C...c)
+template<class ...T,class...R>
+void f(const std::tuple<T...>&c,T...s,R...t)
 {
-	return 0;
-}
 
+}
 int main()
 {
 	using namespace tupleple;
-
-
-	auto r = utility::value_at<6>(1, "", 3.14, false);
-
+	
+	ln_tuple::tuple<char, int, double, float,long long> c('A', 4, 3.140, 0, 0);
 
 }
