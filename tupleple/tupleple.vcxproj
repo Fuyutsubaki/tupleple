@@ -88,25 +88,19 @@
     <ClInclude Include="cat.hpp" />
     <ClInclude Include="column.hpp" />
     <ClInclude Include="do_nothing.hpp" />
-    <ClInclude Include="foldr.hpp" />
     <ClInclude Include="lnTuple.h" />
     <ClInclude Include="move_view.hpp" />
-    <ClInclude Include="for_each.hpp" />
-    <ClInclude Include="is_view.hpp" />
     <ClInclude Include="MPLambda.h" />
     <ClInclude Include="parameter_pack_at.hpp" />
-    <ClInclude Include="replicate.hpp" />
     <ClInclude Include="base_view.hpp" />
     <ClInclude Include="STD_tuple_traits.hpp" />
     <ClInclude Include="tuple.hpp" />
     <ClInclude Include="drop.hpp" />
     <ClInclude Include="filter.hpp" />
-    <ClInclude Include="foldl.hpp" />
     <ClInclude Include="Index.hpp" />
     <ClInclude Include="map.hpp" />
     <ClInclude Include="reverse.hpp" />
     <ClInclude Include="take.hpp" />
-    <ClInclude Include="TypeID.hpp" />
     <ClInclude Include="utility.hpp" />
     <ClInclude Include="zip.hpp" />
   </ItemGroup>
