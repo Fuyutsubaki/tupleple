@@ -1,6 +1,6 @@
 #pragma once
 #include"tuple.hpp"
-#include"is_view.hpp"
+
 
 namespace tupleple
 {
@@ -49,8 +49,4 @@ namespace tupleple
 		}
 	};
 
-	template<class Tuple>
-	struct is_view<view::do_nothing_view<Tuple>>
-		:std::true_type
-	{};
 }
