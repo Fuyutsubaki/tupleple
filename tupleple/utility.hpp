@@ -132,6 +132,16 @@ namespace tupleple
 			return std::forward<result_of_forward_mem_t<Class, Member>>(mem);
 		}
 
+		template<class U>
+		struct Same
+		{
+			template<class T>
+			struct type
+			{
+				static const bool value = std::is_same<U, T>::value;
+			};
+		};
+
 	}
 }
 template<class Lhs, class Rhs, 

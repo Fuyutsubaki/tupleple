@@ -22,6 +22,7 @@ int main()
 
 namespace tupleple
 {
+
 	namespace algorithm
 	{
 		template<class Tuple,class Pred>

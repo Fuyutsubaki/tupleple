@@ -48,7 +48,7 @@ namespace tupleple
 	}
 	
 	template<size_t N>
-	struct at_foward:utility::ExtensionMemberFunction
+	struct at_functor:utility::ExtensionMemberFunction
 	{
 		template<class Tuple>
 		auto operator () (Tuple&&tuple)
@@ -58,7 +58,7 @@ namespace tupleple
 		}
 	};
 	template<size_t N>
-	at_foward<N> at(){ return{}; }
+	at_functor<N> at(){ return{}; }
 
 	
 	template<class Tuple,class Enabler=void>

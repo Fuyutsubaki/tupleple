@@ -24,7 +24,7 @@ namespace tupleple
 		};
 		
 		template<size_t N>
-		struct drop_forward :utility::ExtensionMemberFunction
+		struct drop_functor :utility::ExtensionMemberFunction
 		{
 			template<class Tuple>
 			drop_view<N, Tuple> operator()(Tuple&&tuple)
@@ -33,7 +33,7 @@ namespace tupleple
 			}
 		};
 		template<size_t N>
-		inline drop_forward<N> drop(){ return{}; }
+		inline drop_functor<N> drop(){ return{}; }
 
 	}
 	namespace type_list

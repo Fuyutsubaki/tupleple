@@ -88,11 +88,14 @@
     <ClInclude Include="cat.hpp" />
     <ClInclude Include="column.hpp" />
     <ClInclude Include="do_nothing.hpp" />
+    <ClInclude Include="foldl.hpp" />
+    <ClInclude Include="ListStyle.hpp" />
     <ClInclude Include="lnTuple.h" />
     <ClInclude Include="move_view.hpp" />
     <ClInclude Include="MPLambda.h" />
     <ClInclude Include="parameter_pack_at.hpp" />
     <ClInclude Include="base_view.hpp" />
+    <ClInclude Include="parameter_pack_library.hpp" />
     <ClInclude Include="STD_tuple_traits.hpp" />
     <ClInclude Include="tuple.hpp" />
     <ClInclude Include="drop.hpp" />

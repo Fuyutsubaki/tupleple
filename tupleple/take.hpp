@@ -17,7 +17,7 @@ namespace tupleple
 			{}
 		};
 		template<size_t N>
-		struct take_forward:utility::ExtensionMemberFunction
+		struct take_functor:utility::ExtensionMemberFunction
 		{
 			template<class Tuple>
 			take_view<N, Tuple> operator()(Tuple&&tuple)
@@ -26,7 +26,7 @@ namespace tupleple
 			}
 		};
 		template<size_t N>
-		inline take_forward<N> take(){ return{}; }
+		inline take_functor<N> take(){ return{}; }
 
 	}
 	namespace type_list

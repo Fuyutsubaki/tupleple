@@ -9,7 +9,13 @@
 /*
 	using namespace tupleple;
 	auto r = std::make_tuple(false, "ABC", 3.14, 42);
-	auto c= r | view::filter<std::is_integral>();
+	auto c= r | view::filter_if<std::is_integral>();
+	std::cout << (c | at<1>());
+*/
+/*
+	using namespace tupleple;
+	auto r = std::make_tuple(false, "ABC", 3.14, 42, 41);
+	auto c = r | view::filter<int>();
 	std::cout << (c | at<1>());
 */
 namespace tupleple
@@ -29,7 +35,7 @@ namespace tupleple
 		};
 
 		template<template<class>class Pred>
-		struct filter_foward :utility::ExtensionMemberFunction
+		struct filter_if_functor :utility::ExtensionMemberFunction
 		{
 			template<class Tuple>
 			filter_view<Tuple, Pred> operator()(Tuple&&tuple)
@@ -39,11 +45,28 @@ namespace tupleple
 		};
 
 		template<template<class>class Pred>
-		inline filter_foward<Pred> filter()
+		inline filter_if_functor<Pred> filter_if()
 		{
 			return{};
 		}
+		template<class T>
+		struct filter_functor :utility::ExtensionMemberFunction
+		{
+			template<class U>
+			struct same_:std::is_same<T,U>
+			{};
+			template<class Tuple>
+			filter_view<Tuple, same_> operator()(Tuple&&tuple)
+			{
+				return{ std::forward<Tuple>(tuple) };
+			}
+		};
 
+		template<class T>
+		inline filter_functor<T> filter()
+		{
+			return{};
+		}
 	}
 
 	namespace type_list

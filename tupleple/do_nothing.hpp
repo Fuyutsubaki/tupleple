@@ -17,7 +17,7 @@ namespace tupleple
 			{}
 		};
 		
-		struct do_nothing_forward:utility::ExtensionMemberFunction
+		struct do_nothing_functor:utility::ExtensionMemberFunction
 		{
 			template<class T>
 			inline do_nothing_view<T> operator()(T&&tuple)
@@ -26,7 +26,7 @@ namespace tupleple
 			}
 		};
 
-		inline do_nothing_forward do_nothing(){ return{}; }
+		inline do_nothing_functor do_nothing(){ return{}; }
 	}
 	template<class Tuple>
 	struct tuple_trait<view::do_nothing_view<Tuple>>

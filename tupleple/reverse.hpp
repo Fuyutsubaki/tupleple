@@ -22,7 +22,7 @@ namespace tupleple
 			{}
 		};
 		
-		struct reverse_forward:utility::ExtensionMemberFunction
+		struct reverse_functor:utility::ExtensionMemberFunction
 		{
 			template<class Tuple>
 			reverse_view<Tuple> operator()(Tuple&&tuple)
@@ -30,7 +30,7 @@ namespace tupleple
 				return reverse_view<Tuple>(std::forward<Tuple>(tuple));
 			}
 		};
-		inline reverse_forward reverse(){ return{}; }
+		inline reverse_functor reverse(){ return{}; }
 	}
 	template<class Tuple>
 	struct tuple_trait<view::reverse_view<Tuple>>

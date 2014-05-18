@@ -14,7 +14,7 @@ namespace tupleple
 			{}
 		};
 		template<size_t N>
-		struct column_view_forward :utility::ExtensionMemberFunction
+		struct column_functor :utility::ExtensionMemberFunction
 		{
 			template<class T>
 			inline column_view<N,T> operator()(T&&tuple)
@@ -23,7 +23,7 @@ namespace tupleple
 			}
 		};
 		template<size_t N>
-		inline column_view_forward<N> column(){ return{}; }
+		inline column_functor<N> column(){ return{}; }
 	}
 	namespace type_list
 	{

@@ -73,9 +73,9 @@ namespace tupleple
 		};
 
 		template<class Func>
-		struct map_foward :utility::ExtensionMemberFunction
+		struct map_functor :utility::ExtensionMemberFunction
 		{
-			map_foward(Func&&func)
+			map_functor(Func&&func)
 			:func_(std::forward<Func>(func))
 			{}
 			template<class Tuple>
@@ -88,7 +88,7 @@ namespace tupleple
 		};
 
 		template<class Func>
-		map_foward<Func> map(Func&&func)
+		map_functor<Func> map(Func&&func)
 		{
 			return{ std::forward<Func>(func) };
 		}

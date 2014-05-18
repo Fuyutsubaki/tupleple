@@ -95,6 +95,15 @@
     <ClInclude Include="parameter_pack_at.hpp">
       <Filter>ソース ファイル\utility</Filter>
     </ClInclude>
+    <ClInclude Include="foldl.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="ListStyle.hpp">
+      <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="parameter_pack_library.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">
