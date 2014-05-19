@@ -8,21 +8,28 @@
 namespace ln_tuple
 {
 	template<class Functor>
-	struct make_tuple
+	struct binary_fold
 	{
 		Functor func;
+		template<class T>
+		binary_fold(T&&x)
+			:func(std::forward<T>(x))
+		{}
 		template<class...T>
-		void operator()(T&&...args)
+		auto operator()(T&&...args)
+			->int/*->std::result_of_t<Functor(
+			decltype(papali::make_take<(sizeof...(T)) / 2>(std::declval<binary_fold&>())(std::declval<T>()...))
+			, decltype(papali::make_drop<(sizeof...(T)) / 2>(std::declval<binary_fold&>())(std::declval<T>()...)))>*/
 		{
-			std::make_pair(
+			return func(
 				papali::make_take<(sizeof...(T)) / 2>(*this)(std::forward<T>(args)...)
 				, papali::make_drop<(sizeof...(T)) / 2>(*this)(std::forward<T>(args)...)
 				);
 		}
 		template<class T>
-		void operator()(T&&x)
+		T&& operator()(T&&x)
 		{
-			
+			return std::forward<T>(x);
 		}
 	};
 
