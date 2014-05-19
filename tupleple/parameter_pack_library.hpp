@@ -33,13 +33,6 @@ namespace papali
 			using type = decltype(trans(typename make_List<N>::type{}));
 		};
 
-		template<size_t N>
-		struct Ignore
-		{
-			template<class C>
-			Ignore(C&&){}
-		};
-
 		struct val_at_impl
 		{
 			template<class T, class...R>
@@ -48,12 +41,12 @@ namespace papali
 				return std::forward<T>(a);
 			}
 		};
-
 		template<class T>
 		struct wrap
 		{
 			using type = T;
 		};
+		
 	}
 
 
@@ -63,6 +56,12 @@ namespace papali
 	template<size_t...Idxs,class Func>
 	class drop_functor<Impl::List<Idxs...>,Func>
 	{
+		template<size_t N>
+		struct Ignore
+		{
+			template<class C>
+			Ignore(C&&){}
+		};
 		Func func_;
 	public:
 		template<class F>
@@ -70,7 +69,7 @@ namespace papali
 			:func_(std::forward<F>(f))
 		{}
 		template<class ...T>
-		auto operator()(Impl::Ignore<Idxs>...,T&&...args)
+		auto operator()(Ignore<Idxs>...,T&&...args)
 			->typename std::result_of<Func(T...)>::type
 		{
 			return func_(std::forward<T>(args)...);
@@ -78,31 +77,33 @@ namespace papali
 	};
 
 	template<size_t N,class Func>
-	drop_functor<typename Impl::make_List<N>::type, Func> make_drop(Func&&func)
+	auto make_drop(Func&&func)
+		->drop_functor<typename Impl::make_List<N>::type, Func>
 	{
 		return{ std::forward<Func>(func) };
 	}
 	
+
+
+
 	template<size_t N,class ...T>
 	auto value_at(T&&...args)
 		-> typename std::result_of<drop_functor<typename Impl::make_List<N>::type, Impl::val_at_impl>(T...)>::type
 	{
 		return make_drop<N>(Impl::val_at_impl{})(std::forward<T>(args)...);
 	}
+
+
+
+
 	template<size_t N,class ...T>
 	struct type_at
-	{
-		using type = decltype(value_at<N>(Impl::wrap<T>{}...));
+	{		
+		using type = decltype(value_at<N>(wrap<T>{}...));
 	};
-	template<class N, class >
-	struct Tl_at{};
+	
 
-	template<class N, class...T >
-	struct Tl_at<N,std::tuple<T...>>
-	{
-		using R = decltype(value_at<N::value>(Impl::wrap<T>{}...));
-		using type =  typename typename std::remove_reference<R>::type::type;
-	};
+
 
 	template<class Idx, class ...T>
 	auto value_at_e(T&&...args)
@@ -120,21 +121,42 @@ namespace papali
 			return make_drop<Idx::value>(Impl::val_at_impl{})(std::forward<T>(args)...);
 		}
 	};
+	
+	template< class>
+	struct take_impl{};
 
-	template<size_t N,class...T>
+	template< class...T>
+	struct take_impl<std::tuple<T...>>
+	{
+		template<class Func,class ...R>
+		static auto take(Func&&func, T&&...args, R&&...)
+			->typename std::result_of<Func(T...)>::type
+		{
+			return std::forward<Func>(func)(std::forward<T>(args)...);
+		}
+	};
+	template<class N, class >
+	struct Tl_at{};
+
+	template<class N, class...T >
+	struct Tl_at<N, std::tuple<T...>>
+	{
+		using R = decltype(value_at<N::value>(Impl::wrap<T>{}...));
+		using type = typename typename std::remove_reference<R>::type::type;
+	};
+	template<size_t N, class...T>
 	struct take_tuple
 	{
+		
 		using Tuple = std::tuple<T...>;
 		template<class...Idx>
 		static auto trans(std::tuple<Idx...>)
 			->std::tuple<typename Tl_at<Idx, Tuple>::type ...>;
 		using type = decltype(trans(typename Impl::make_List_e<N>::type{}));
 	};
-	template<class,class Func>
-	struct take_functor{};
-
-	template<class...Idxs,class Func>
-	struct take_functor<std::tuple<Idxs...>,Func>
+	
+	template<size_t N, class Func>
+	struct take_functor
 	{
 		Func func_;
 	public:
@@ -142,22 +164,17 @@ namespace papali
 		take_functor(F&&func)
 			:func_(std::forward<F>(func))
 		{}
-		template<class...T>
+		template<class ...T>
 		auto operator()(T&&...args)
-			->int//decltype(func_(value_at_e<Idxs>(args...)...))
+			->decltype(take_impl<typename take_tuple<N, T...>::type>::take(std::declval<Func>(), std::declval<T>()...))
 		{
-			return func_(value_at_e<Idxs>(args...)...);
-			//return func_(value_at_type<Idxs>::at(std::forward<T>(args)...)...);
-		}
-		template<class...T>
-		auto operator()(T&&...args)const
-			->decltype(func_(value_at<Idxs>(args...)...))
-		{
-			return func_(value_at<Idxs>(args...)...);
+			return take_impl<typename take_tuple<N, T...>::type>::take(func_, std::forward<T>(args)...);
 		}
 	};
+
+
 	template<size_t N, class Func>
-	take_functor<typename Impl::make_List_e<N>::type, Func> make_take(Func&&func)
+	take_functor<N, Func> make_take(Func&&func)
 	{
 		return{ std::forward<Func>(func) };
 	}
