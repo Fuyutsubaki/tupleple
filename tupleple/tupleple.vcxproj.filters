@@ -22,6 +22,12 @@
     <Filter Include="ヘッダー ファイル\MPLambda">
       <UniqueIdentifier>{ca336c82-af6b-481d-a414-0b55f4fa652f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\dir">
+      <UniqueIdentifier>{c123ea6f-9f4a-49e9-b499-c6b4d9f6c4dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\dir\dir">
+      <UniqueIdentifier>{d31c8b49-c6e0-4db5-993a-54409fddd60e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -109,6 +115,15 @@
     </ClInclude>
     <ClInclude Include="any.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
+    </ClInclude>
+    <ClInclude Include="dir\test.hpp">
+      <Filter>リソース ファイル\dir</Filter>
+    </ClInclude>
+    <ClInclude Include="dir\dir\test.hpp">
+      <Filter>リソース ファイル\dir\dir</Filter>
+    </ClInclude>
+    <ClInclude Include="unique.hpp">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
