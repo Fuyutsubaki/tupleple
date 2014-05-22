@@ -9,6 +9,25 @@
 
 namespace tupleple
 {
+	
+	namespace type_list
+	{
+		template<class Tuple,template<class>class Pred>
+		struct any
+		{
+			template<class T>
+			struct wrap
+			{
+				using type = Pred<T>;
+			};
+			template<class L,class R>
+			struct eval
+			{
+				using type = utility::cond_t<L::value, L, R>;
+			};
+			static const bool value= binary_fold_t<map_t<Tuple, wrap>, eval>::value;
+		};
+	}
 	namespace algorithm
 	{
 		template<class Tuple, class Pred>

@@ -7,6 +7,31 @@
 
 namespace ln_tuple
 {
+
+	template<class Functor>
+	struct binary_fold;
+
+	template<class Func,class ...T>
+	struct fold_impl
+	{
+		static const size_t N = sizeof...(T);
+		static void fold(Func&&func,T&&...args)
+		{
+			func(
+				ppl::make_take<N / 2>()(std::forward<T>(args)...)
+				, ppl::make_drop<N / 2>()(std::forward<T>(args)...)
+				);
+		}
+	};
+	template<class Func, class T>
+	struct fold_impl<Func,T>
+	{
+		static T&& fold(Func&&,T&&x)
+		{
+			return std::forward<T>(x);
+		}
+	};
+
 	template<class Functor>
 	struct binary_fold
 	{
@@ -15,24 +40,9 @@ namespace ln_tuple
 		binary_fold(T&&x)
 			:func(std::forward<T>(x))
 		{}
-		template<class...T>
-		auto operator()(T&&...args)
-			->int/*->std::result_of_t<Functor(
-			decltype(papali::make_take<(sizeof...(T)) / 2>(std::declval<binary_fold&>())(std::declval<T>()...))
-			, decltype(papali::make_drop<(sizeof...(T)) / 2>(std::declval<binary_fold&>())(std::declval<T>()...)))>*/
-		{
-			return func(
-				papali::make_take<(sizeof...(T)) / 2>(*this)(std::forward<T>(args)...)
-				, papali::make_drop<(sizeof...(T)) / 2>(*this)(std::forward<T>(args)...)
-				);
-		}
-		template<class T>
-		T&& operator()(T&&x)
-		{
-			return std::forward<T>(x);
-		}
 	};
 
+	
 	template<class T,class...R>
 	void make_tuple(T&&x, R&&...args)
 	{

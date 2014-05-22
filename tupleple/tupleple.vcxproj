@@ -89,8 +89,10 @@
     <ClInclude Include="column.hpp" />
     <ClInclude Include="do_nothing.hpp" />
     <ClInclude Include="foldl.hpp" />
+    <ClInclude Include="in.hpp" />
     <ClInclude Include="ListStyle.hpp" />
     <ClInclude Include="lnTuple.h" />
+    <ClInclude Include="maybe_type.hpp" />
     <ClInclude Include="move_view.hpp" />
     <ClInclude Include="MPLambda.h" />
     <ClInclude Include="parameter_pack_at.hpp" />
