@@ -53,7 +53,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\tupleple;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\tupleple\Include;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -70,7 +71,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\tupleple;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\tupleple\Include;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -83,6 +85,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Include\tupleple\tuple.hpp" />
+    <ClInclude Include="..\Include\tupleple\utility\index_tuple.hpp" />
+    <ClInclude Include="..\Include\tupleple\utility\utility.hpp" />
     <ClInclude Include="all.hpp" />
     <ClInclude Include="any.hpp" />
     <ClInclude Include="apply.hpp" />

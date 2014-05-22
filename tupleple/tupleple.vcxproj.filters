@@ -28,6 +28,12 @@
     <Filter Include="リソース ファイル\dir\dir">
       <UniqueIdentifier>{d31c8b49-c6e0-4db5-993a-54409fddd60e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tupleple">
+      <UniqueIdentifier>{b2282b0c-d72c-43e2-adc7-9e0f147e5eae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tupleple\utility">
+      <UniqueIdentifier>{e5b79b42-7565-4e4c-92fc-aebe97f72583}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -124,6 +130,15 @@
     </ClInclude>
     <ClInclude Include="unique.hpp">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\utility\index_tuple.hpp">
+      <Filter>tupleple\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\utility\utility.hpp">
+      <Filter>tupleple\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\tuple.hpp">
+      <Filter>tupleple</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
