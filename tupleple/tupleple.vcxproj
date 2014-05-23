@@ -86,8 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\tupleple\tuple.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\map.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\index_tuple.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\utility.hpp" />
+    <ClInclude Include="..\Include\tupleple\view\map.hpp" />
     <ClInclude Include="all.hpp" />
     <ClInclude Include="any.hpp" />
     <ClInclude Include="apply.hpp" />
@@ -108,11 +110,8 @@
     <ClInclude Include="base_view.hpp" />
     <ClInclude Include="parameter_pack_library.hpp" />
     <ClInclude Include="STD_tuple_traits.hpp" />
-    <ClInclude Include="tuple.hpp" />
     <ClInclude Include="drop.hpp" />
     <ClInclude Include="filter.hpp" />
-    <ClInclude Include="Index.hpp" />
-    <ClInclude Include="map.hpp" />
     <ClInclude Include="reverse.hpp" />
     <ClInclude Include="take.hpp" />
     <ClInclude Include="unique.hpp" />

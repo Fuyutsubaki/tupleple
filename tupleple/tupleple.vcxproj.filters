@@ -34,6 +34,12 @@
     <Filter Include="tupleple\utility">
       <UniqueIdentifier>{e5b79b42-7565-4e4c-92fc-aebe97f72583}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tupleple\type_list">
+      <UniqueIdentifier>{c6095aa6-1740-480b-8026-6cf0e6916f1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tupleple\view">
+      <UniqueIdentifier>{8d8f5a56-6429-4fa3-91eb-67a689ef5307}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,16 +77,7 @@
     <ClInclude Include="cat.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
     </ClInclude>
-    <ClInclude Include="Index.hpp">
-      <Filter>ソース ファイル\utility</Filter>
-    </ClInclude>
     <ClInclude Include="reverse.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="tuple.hpp">
-      <Filter>ソース ファイル\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="map.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
     </ClInclude>
     <ClInclude Include="MPLambda.h">
@@ -139,6 +136,12 @@
     </ClInclude>
     <ClInclude Include="..\Include\tupleple\tuple.hpp">
       <Filter>tupleple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\map.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\map.hpp">
+      <Filter>tupleple\view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
