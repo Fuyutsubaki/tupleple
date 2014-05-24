@@ -40,6 +40,9 @@
     <Filter Include="tupleple\view">
       <UniqueIdentifier>{8d8f5a56-6429-4fa3-91eb-67a689ef5307}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tupleple\algorithm">
+      <UniqueIdentifier>{ceb59070-9586-40a7-b6c0-8cee992db518}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,31 +53,16 @@
     <ClInclude Include="zip.hpp">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="utility.hpp">
-      <Filter>ソース ファイル\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="STD_tuple_traits.hpp">
-      <Filter>ソース ファイル\utility</Filter>
-    </ClInclude>
     <ClInclude Include="do_nothing.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
     </ClInclude>
     <ClInclude Include="apply.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
     </ClInclude>
-    <ClInclude Include="drop.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="take.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
     <ClInclude Include="move_view.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
     </ClInclude>
     <ClInclude Include="binary_fold.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="cat.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
     </ClInclude>
     <ClInclude Include="reverse.hpp">
@@ -88,9 +76,6 @@
     </ClInclude>
     <ClInclude Include="lnTuple.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="base_view.hpp">
-      <Filter>リソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="column.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
@@ -141,6 +126,42 @@
       <Filter>tupleple\type_list</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\tupleple\view\map.hpp">
+      <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\utility\base_view.hpp">
+      <Filter>tupleple\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\filter.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\cat.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\binary_fold.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\take.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\drop.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\drop.hpp">
+      <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\take.hpp">
+      <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\cat.hpp">
+      <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\algorithm\binary_fold.hpp">
+      <Filter>tupleple\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\STD_tuple_traits.hpp">
+      <Filter>tupleple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\filter.hpp">
       <Filter>tupleple\view</Filter>
     </ClInclude>
   </ItemGroup>

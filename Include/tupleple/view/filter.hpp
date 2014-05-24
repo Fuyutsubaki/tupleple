@@ -1,10 +1,12 @@
 #pragma once
 
-#include"Index.hpp"
-#include"tuple.hpp"
-#include"map.hpp"
-#include"utility.hpp"
-#include"cat.hpp"
+#include<tupleple\utility\index_tuple.hpp>
+#include<tupleple\tuple.hpp>
+#include<tupleple\view\map.hpp>
+#include<tupleple\utility\utility.hpp>
+#include<tupleple\view\cat.hpp>
+#include<tupleple\type_list\map.hpp>
+#include<tupleple\type_list\cat.hpp>
 
 /*
 	using namespace tupleple;
@@ -69,14 +71,6 @@ namespace tupleple
 		}
 	}
 
-	namespace type_list
-	{
-		template<class Tuple,template<class>class Pred>
-		struct filter
-		{
-			using type = view::filter_view<Tuple, Pred>;
-		};
-	}
 	template<class Tuple, template<class>class Pred>
 	class tuple_trait<view::filter_view<Tuple, Pred>>
 	{

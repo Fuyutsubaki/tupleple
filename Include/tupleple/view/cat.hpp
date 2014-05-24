@@ -1,5 +1,5 @@
 #pragma once
-#include"tuple.hpp"
+#include<tupleple\tuple.hpp>
 #include<type_traits>
 #include"binary_fold.hpp"
 
@@ -15,9 +15,6 @@ auto p = s | at<2>();
 */
 namespace tupleple
 {
-	
-
-
 	namespace view
 	{
 		template<class TupleL,class TupleR>
@@ -56,32 +53,6 @@ namespace tupleple
 		{
 			return algorithm::binary_fold(std::forward_as_tuple(std::forward<R>(tuple)...),deteil::cat_impl());
 		}
-	}
-
-	namespace type_list
-	{
-
-		template<class Tuple>
-		struct flat
-		{
-			template<class L, class R>
-			struct cat_
-			{
-				using type = view::cat_view<L, R>;
-			};
-			using type = binary_fold_t<Tuple, cat_>;
-		};
-		template<class ...R>
-		struct cat
-		{
-			using type = flat<std::tuple<R...>>;
-		};
-		template<class Tuple>
-		using flat_t = typename flat<Tuple>::type;
-		template<class ...R>
-		using cat_t = typename cat<R...>::type;
-
-
 	}
 
 	template<class TupleL, class TupleR>

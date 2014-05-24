@@ -2,7 +2,7 @@
 #define TUPPLEPLE_VIEW_MAP_HPP
 
 #include<tupleple\tuple.hpp>
-
+#include<tupleple\utility\utility.hpp>
 namespace tupleple{
 
 	namespace view

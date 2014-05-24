@@ -1,6 +1,6 @@
 #pragma once 
-#include"tuple.hpp"
-#include"utility.hpp"
+#include<tupleple\tuple.hpp>
+#include<tupleple\utility\utility.hpp>
 /*
 using namespace tupleple;
 auto tuple = std::make_tuple(1, std::make_unique<int>(2), 3);
@@ -35,16 +35,6 @@ namespace tupleple
 		template<size_t N>
 		inline drop_functor<N> drop(){ return{}; }
 
-	}
-	namespace type_list
-	{
-		template<size_t N, class Tuple>
-		struct drop
-		{
-			using type = view::drop_view<N, Tuple>;
-		};
-		template<size_t N, class Tuple>
-		using drop_t = typename drop<N, Tuple>::type;
 	}
 	template <size_t N, class Tuple>
 	class tuple_trait<view::drop_view<N, Tuple>>

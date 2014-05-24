@@ -3,12 +3,20 @@
 
 #include<tuple>
 #include<tupleple\tuple.hpp>
+#include<tupleple\utility\utility.hpp>
 namespace tupleple
 {
 	template<class Tuple, class Enabler = void>
 	struct tuple_trait
 	{
+		template<class >
+		struct false_
+		{
+			static const bool value = false;
+
+		};
 		using is_not_define = void;
+		//static_assert(false_<Tuple>::value, "is not defined");
 	};
 
 	namespace type_list

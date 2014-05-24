@@ -85,16 +85,27 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Include\tupleple\algorithm\binary_fold.hpp" />
+    <ClInclude Include="..\Include\tupleple\STD_tuple_traits.hpp" />
     <ClInclude Include="..\Include\tupleple\tuple.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\binary_fold.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\cat.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\drop.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\filter.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\map.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\take.hpp" />
+    <ClInclude Include="..\Include\tupleple\utility\base_view.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\index_tuple.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\utility.hpp" />
+    <ClInclude Include="..\Include\tupleple\view\cat.hpp" />
+    <ClInclude Include="..\Include\tupleple\view\drop.hpp" />
+    <ClInclude Include="..\Include\tupleple\view\filter.hpp" />
     <ClInclude Include="..\Include\tupleple\view\map.hpp" />
+    <ClInclude Include="..\Include\tupleple\view\take.hpp" />
     <ClInclude Include="all.hpp" />
     <ClInclude Include="any.hpp" />
     <ClInclude Include="apply.hpp" />
     <ClInclude Include="binary_fold.hpp" />
-    <ClInclude Include="cat.hpp" />
     <ClInclude Include="column.hpp" />
     <ClInclude Include="dir\dir\test.hpp" />
     <ClInclude Include="dir\test.hpp" />
@@ -107,15 +118,10 @@
     <ClInclude Include="move_view.hpp" />
     <ClInclude Include="MPLambda.h" />
     <ClInclude Include="parameter_pack_at.hpp" />
-    <ClInclude Include="base_view.hpp" />
     <ClInclude Include="parameter_pack_library.hpp" />
-    <ClInclude Include="STD_tuple_traits.hpp" />
-    <ClInclude Include="drop.hpp" />
     <ClInclude Include="filter.hpp" />
     <ClInclude Include="reverse.hpp" />
-    <ClInclude Include="take.hpp" />
     <ClInclude Include="unique.hpp" />
-    <ClInclude Include="utility.hpp" />
     <ClInclude Include="zip.hpp" />
   </ItemGroup>
   <ItemGroup>
