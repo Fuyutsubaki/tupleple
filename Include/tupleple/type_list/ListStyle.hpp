@@ -1,5 +1,5 @@
 #pragma once
-#include"tuple.hpp"
+
 #include"take.hpp"
 #include"drop.hpp"
 namespace tupleple
@@ -20,22 +20,4 @@ namespace tupleple
 		template<class Tuple>
 		using tail_t = tail<Tuple>;
 	}
-	namespace view
-	{
-		
-		auto front()
-			->at_functor<0>
-		{
-			return{};
-		}
-	
-		auto tail()
-			->drop_functor<1>
-		{
-			return{};
-		}
-	}
-
-
-
 }

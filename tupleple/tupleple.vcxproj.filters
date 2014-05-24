@@ -16,18 +16,6 @@
     <Filter Include="ソース ファイル\完成済み">
       <UniqueIdentifier>{5e37b0b7-0f91-48fe-b9f5-f0f71d8e33d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\utility">
-      <UniqueIdentifier>{07f89a7d-ce8b-4c87-a945-e4114c15a84e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\MPLambda">
-      <UniqueIdentifier>{ca336c82-af6b-481d-a414-0b55f4fa652f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\dir">
-      <UniqueIdentifier>{c123ea6f-9f4a-49e9-b499-c6b4d9f6c4dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\dir\dir">
-      <UniqueIdentifier>{d31c8b49-c6e0-4db5-993a-54409fddd60e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="tupleple">
       <UniqueIdentifier>{b2282b0c-d72c-43e2-adc7-9e0f147e5eae}</UniqueIdentifier>
     </Filter>
@@ -53,40 +41,13 @@
     <ClInclude Include="zip.hpp">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="do_nothing.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="apply.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="move_view.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_fold.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="reverse.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="MPLambda.h">
-      <Filter>ヘッダー ファイル\MPLambda</Filter>
-    </ClInclude>
-    <ClInclude Include="filter.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
     <ClInclude Include="lnTuple.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="column.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
     </ClInclude>
-    <ClInclude Include="parameter_pack_at.hpp">
-      <Filter>ソース ファイル\utility</Filter>
-    </ClInclude>
     <ClInclude Include="foldl.hpp">
-      <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="ListStyle.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
     </ClInclude>
     <ClInclude Include="parameter_pack_library.hpp">
@@ -103,12 +64,6 @@
     </ClInclude>
     <ClInclude Include="any.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="dir\test.hpp">
-      <Filter>リソース ファイル\dir</Filter>
-    </ClInclude>
-    <ClInclude Include="dir\dir\test.hpp">
-      <Filter>リソース ファイル\dir\dir</Filter>
     </ClInclude>
     <ClInclude Include="unique.hpp">
       <Filter>ヘッダー ファイル</Filter>
@@ -163,6 +118,27 @@
     </ClInclude>
     <ClInclude Include="..\Include\tupleple\view\filter.hpp">
       <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\ListStyle.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\ListStyle.hpp">
+      <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\reverse.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\reverse.hpp">
+      <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\do_nothing.hpp">
+      <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\apply.hpp">
+      <Filter>tupleple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\parameter_pack_at.hpp">
+      <Filter>tupleple</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

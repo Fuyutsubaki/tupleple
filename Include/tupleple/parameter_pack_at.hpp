@@ -1,6 +1,6 @@
 #pragma once
-#include"Index.hpp"
-#include"utility.hpp"
+#include<tupleple\utility\index_tuple.hpp>
+#include<tupleple\utility\utility.hpp>
 namespace tupleple
 {
 	namespace utility

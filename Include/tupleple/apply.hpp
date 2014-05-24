@@ -1,7 +1,7 @@
 #pragma once
-#include"tuple.hpp"
-#include"Index.hpp"
-#include"utility.hpp"
+#include<tupleple\tuple.hpp>
+#include<tupleple\utility\index_tuple.hpp>
+#include<tupleple\utility\utility.hpp>
 
 namespace tupleple
 {
