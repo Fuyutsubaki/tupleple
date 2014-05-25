@@ -112,11 +112,13 @@
     <ClInclude Include="all.hpp" />
     <ClInclude Include="any.hpp" />
     <ClInclude Include="column.hpp" />
+    <ClInclude Include="debug.h" />
     <ClInclude Include="foldl.hpp" />
     <ClInclude Include="in.hpp" />
     <ClInclude Include="lnTuple.h" />
     <ClInclude Include="maybe_type.hpp" />
     <ClInclude Include="parameter_pack_library.hpp" />
+    <ClInclude Include="type_map.h" />
     <ClInclude Include="unique.hpp" />
     <ClInclude Include="zip.hpp" />
   </ItemGroup>

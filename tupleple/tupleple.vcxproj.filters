@@ -140,6 +140,12 @@
     <ClInclude Include="..\Include\tupleple\parameter_pack_at.hpp">
       <Filter>tupleple</Filter>
     </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>リソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="type_map.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">

@@ -3,62 +3,54 @@
 #include<tuple>
 
 
-
-
-namespace ln_tuple
+namespace tupleple
 {
-
-	template<class Functor>
-	struct binary_fold;
-
-	template<class Func,class ...T>
-	struct fold_impl
+	template<class T, class ID>
+	struct Data
 	{
-		static const size_t N = sizeof...(T);
-		static void fold(Func&&func,T&&...args)
-		{
-			func(
-				ppl::make_take<N / 2>()(std::forward<T>(args)...)
-				, ppl::make_drop<N / 2>()(std::forward<T>(args)...)
-				);
-		}
-	};
-	template<class Func, class T>
-	struct fold_impl<Func,T>
-	{
-		static T&& fold(Func&&,T&&x)
-		{
-			return std::forward<T>(x);
-		}
+		template<class U>
+		Data(U&&arg)
+			:data(std::forward<U>(arg))
+		{}
+		using data_type = T;
+		T data;
 	};
 
-	template<class Functor>
-	struct binary_fold
+	template<class ...T>
+	class make_tuple_Elem
 	{
-		Functor func;
-		template<class T>
-		binary_fold(T&&x)
-			:func(std::forward<T>(x))
+		using Seq = index::make_tuple_t<sizeof...(T)>;
+		template<class...T, class...N>
+		static auto trans(std::tuple<T...>, std::tuple<N...>)
+			->std::tuple<Data<T, N>...>;
+	public:
+		using type = decltype(trans(std::declval<std::tuple<T...>>(), Seq{}));
+	};
+	template<class>
+	struct tuple_impl{};
+
+	template<class ...T>
+	struct tuple_impl<std::tuple<T...>>
+		:T...
+	{
+		template<class ...R>
+		tuple_impl(R&&...args)
+			:T(std::forward<R>(args))...
+		{}
+		template<size_t N>
+		auto get()
+			->typename typename utility::type_at<N, T...>::type::data_type&
+		{
+			return static_cast<utility::type_at_t<N, T...>&>(*this).data;
+		}
+	};
+	template<class ...T>
+	struct tuple :tuple_impl<typename make_tuple_Elem<T...>::type>
+	{
+		using base = tuple_impl<typename make_tuple_Elem<T...>::type>;
+		template<class ...R>
+		tuple(R&&...args)
+			:base(std::forward<R>(args)...)
 		{}
 	};
-
-	
-	template<class T,class...R>
-	void make_tuple(T&&x, R&&...args)
-	{
-		papali::make_take();
-
-	}
-
-	template<class T>
-	void make_tuple(T&&x)
-	{
-
-	}
-
-
-
-
-
-
 }
