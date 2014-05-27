@@ -1,7 +1,7 @@
 #pragma once
 #include"any.hpp"
 #include<type_traits>
-
+#include<tuple>
 namespace tupleple
 {
 	namespace type_list
@@ -12,6 +12,15 @@ namespace tupleple
 			template<class T>
 			struct eval
 				:std::is_same<T, element>
+			{};
+			static const bool value = any<Tuple, eval>::value;
+		};
+
+		template<class element, class ...T>
+		struct in<element,std::tuple<T...>>
+		{
+			struct eval
+			: virtual T...
 			{};
 			static const bool value = any<Tuple, eval>::value;
 		};

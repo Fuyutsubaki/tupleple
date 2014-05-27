@@ -56,17 +56,11 @@
     <ClInclude Include="maybe_type.hpp">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="in.hpp">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="all.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
     </ClInclude>
     <ClInclude Include="any.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="unique.hpp">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\tupleple\utility\index_tuple.hpp">
       <Filter>tupleple\utility</Filter>
@@ -145,6 +139,18 @@
     </ClInclude>
     <ClInclude Include="type_map.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\unique.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\in.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="type_hash.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\zip.hpp">
+      <Filter>tupleple\type_list</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

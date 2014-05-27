@@ -17,6 +17,12 @@ namespace tupleple
 		public:
 			using type = decltype(trans(seq()));
 		};
+
+		template<class...T, template<class>class F>
+		struct map<std::tuple<T...>,F>
+		{
+			using type = std::tuple<typename F<T>::type...>;
+		};
 		template<class Tuple, template<class>class F>
 		using map_t = typename map<Tuple, F>::type;
 	}

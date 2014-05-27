@@ -133,16 +133,20 @@ namespace tupleple
 			return std::forward<result_of_forward_mem_t<Class, Member>>(mem);
 		}
 
-		template<class U>
-		struct Same
+		template<class>
+		struct Ignore_class
 		{
 			template<class T>
-			struct type
-			{
-				static const bool value = std::is_same<U, T>::value;
-			};
+			Ignore_class(T&&){}
 		};
 
+
+		//VS‚¾‚Ætypename T::type...‚Æ‚©‚ª³í‚É“®‚©‚È‚¢‚±‚Æ‚ª‚ ‚é
+		template<class T>
+		struct unwrap
+		{
+			using type = typename T::type;
+		};
 	}
 }
 template<class Lhs, class Rhs,

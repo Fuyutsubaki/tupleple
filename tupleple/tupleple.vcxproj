@@ -94,10 +94,13 @@
     <ClInclude Include="..\Include\tupleple\type_list\cat.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\drop.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\filter.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\in.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\ListStyle.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\map.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\reverse.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\take.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\unique.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\zip.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\base_view.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\index_tuple.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\utility.hpp" />
@@ -114,12 +117,11 @@
     <ClInclude Include="column.hpp" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="foldl.hpp" />
-    <ClInclude Include="in.hpp" />
     <ClInclude Include="lnTuple.h" />
     <ClInclude Include="maybe_type.hpp" />
     <ClInclude Include="parameter_pack_library.hpp" />
+    <ClInclude Include="type_hash.h" />
     <ClInclude Include="type_map.h" />
-    <ClInclude Include="unique.hpp" />
     <ClInclude Include="zip.hpp" />
   </ItemGroup>
   <ItemGroup>
