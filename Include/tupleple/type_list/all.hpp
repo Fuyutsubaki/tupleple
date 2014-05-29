@@ -1,14 +1,19 @@
 #pragma once
 #include<tuple>
 #include<tupleple\utility\utility.hpp>
+#include<tupleple\utility\index_tuple.hpp>
+
 namespace tupleple
 {
 
 	namespace type_list
 	{
 
-		template<class,template<class>class>
-		struct all{};
+		template<class Tuple,template<class>class F>
+		struct all
+		{
+			
+		};
 
 		namespace deteil
 		{

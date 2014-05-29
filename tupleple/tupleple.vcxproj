@@ -92,6 +92,7 @@
     <ClInclude Include="..\Include\tupleple\tuple.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\all.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\any.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\apply.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\binary_fold.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\cat.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\Container\Containers.hpp" />

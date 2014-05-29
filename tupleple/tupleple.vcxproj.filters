@@ -176,6 +176,9 @@
     <ClInclude Include="..\Include\tupleple\type_list\TypeList.hpp">
       <Filter>tupleple\type_list</Filter>
     </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\apply.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">
