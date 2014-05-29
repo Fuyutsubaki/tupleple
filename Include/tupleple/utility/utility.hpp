@@ -3,6 +3,7 @@
 
 #include<type_traits>
 #include<utility>
+#include<tupleple\type_list\TypeList.hpp>
 
 namespace tupleple
 {
@@ -147,6 +148,21 @@ namespace tupleple
 		{
 			using type = typename T::type;
 		};
+		//非型の結果を返す関数のためのラッパ
+		//VSでは非型のパラメータパックが正常に動作しないことがある
+		template<class T>
+		struct expr2Bool
+		{
+			using type = std::integral_constant<bool, T::value>;
+		};
+
+		template<class T>
+		struct deriver;
+		
+		//Listの全てを継承する
+		template<class ...T>
+		struct deriver<type_list::List<T...>>
+			:T...{};
 	}
 }
 template<class Lhs, class Rhs,

@@ -33,6 +33,11 @@ namespace tupleple
 		{
 			using type = typename flat<std::tuple<R...>>::type;
 		};
+		template<class...L, class...R>
+		struct cat<std::tuple<L...>, std::tuple<R...>>
+		{
+			using type = std::tuple<L..., R...>;
+		};
 		template<class Tuple>
 		using flat_t = typename flat<Tuple>::type;
 		template<class ...R>

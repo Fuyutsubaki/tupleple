@@ -21,7 +21,7 @@ int main()
 	auto x = algorithm::binary_fold(t, plus());
 }
 */
-
+#include<functional>
 
 namespace tupleple
 {

@@ -1,0 +1,28 @@
+#pragma once
+#include<tuple>
+#include<tupleple\utility\utility.hpp>
+namespace tupleple
+{
+
+	namespace type_list
+	{
+
+		template<class,template<class>class>
+		struct all{};
+
+		namespace deteil
+		{
+			template<class...>
+			struct all_impl :std::false_type
+			{};
+			template<class...T>
+			struct all_impl<std::pair<T, std::true_type>...>:std::true_type
+			{};
+		}
+		template<class...T, template<class>class F>
+		struct all<std::tuple<T...>,F>
+			:deteil::all_impl<std::pair<T, typename utility::expr2Bool<F<T>>::type>...>
+		{};
+	
+	}
+}

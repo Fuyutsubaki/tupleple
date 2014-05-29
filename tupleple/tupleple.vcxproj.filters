@@ -31,6 +31,9 @@
     <Filter Include="tupleple\algorithm">
       <UniqueIdentifier>{ceb59070-9586-40a7-b6c0-8cee992db518}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tupleple\type_list\Container">
+      <UniqueIdentifier>{273d2992-7799-4fa9-83de-f48a286885fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -150,6 +153,27 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\tupleple\type_list\zip.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="type_set.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="mem_forward.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\any.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\all.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="container.hpp">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\Container\Containers.hpp">
+      <Filter>tupleple\type_list\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\TypeList.hpp">
       <Filter>tupleple\type_list</Filter>
     </ClInclude>
   </ItemGroup>
