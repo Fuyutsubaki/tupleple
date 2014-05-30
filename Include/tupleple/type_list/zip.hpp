@@ -1,6 +1,6 @@
 #pragma once
 
-#include<tupleple\type_list\TypeList.hpp>
+#include<tupleple\type_list\List.hpp>
 
 namespace tupleple
 {
@@ -12,7 +12,7 @@ namespace tupleple
 		{};
 
 		template<class...L,class...R>
-		struct zip<std::tuple<L...>,std::tuple<R...>>
+		struct zip<List<L...>,List<R...>>
 		{
 			using type = List<List<L, R>...>;
 		};

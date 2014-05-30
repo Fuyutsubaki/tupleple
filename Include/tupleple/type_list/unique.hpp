@@ -17,8 +17,9 @@ namespace tupleple
 				using list = drop_t<N, Tuple>;
 				using head = front_t<list>;
 				using tail = tail_t<list>;
-				in<head, tail>::value;
+				using type = utility::cond_t<in<head, tail>::value, std::tuple<>, std::tuple<head>>;
 			};
+
 		};
 	}
 

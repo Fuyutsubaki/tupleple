@@ -87,12 +87,16 @@
   <ItemGroup>
     <ClInclude Include="..\Include\tupleple\algorithm\binary_fold.hpp" />
     <ClInclude Include="..\Include\tupleple\apply.hpp" />
+    <ClInclude Include="..\Include\tupleple\index_tuple\index_sequence.hpp" />
+    <ClInclude Include="..\Include\tupleple\index_tuple\index_TypeList.hpp" />
     <ClInclude Include="..\Include\tupleple\parameter_pack_at.hpp" />
     <ClInclude Include="..\Include\tupleple\STD_tuple_traits.hpp" />
     <ClInclude Include="..\Include\tupleple\tuple.hpp" />
+    <ClInclude Include="..\Include\tupleple\tuple_traits.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\all.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\any.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\apply.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\at.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\binary_fold.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\cat.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\Container\Containers.hpp" />
@@ -102,12 +106,12 @@
     <ClInclude Include="..\Include\tupleple\type_list\ListStyle.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\map.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\reverse.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\size.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\take.hpp" />
-    <ClInclude Include="..\Include\tupleple\type_list\TypeList.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\List.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\unique.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\zip.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\base_view.hpp" />
-    <ClInclude Include="..\Include\tupleple\utility\index_tuple.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\utility.hpp" />
     <ClInclude Include="..\Include\tupleple\view\cat.hpp" />
     <ClInclude Include="..\Include\tupleple\view\do_nothing.hpp" />

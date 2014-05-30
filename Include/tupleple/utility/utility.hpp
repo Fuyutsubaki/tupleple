@@ -3,7 +3,7 @@
 
 #include<type_traits>
 #include<utility>
-#include<tupleple\type_list\TypeList.hpp>
+#include<tupleple\type_list\List.hpp>
 
 namespace tupleple
 {
@@ -142,12 +142,7 @@ namespace tupleple
 		};
 
 
-		//VSだとtypename T::type...とかが正常に動かないことがある
-		template<class T>
-		struct unwrap
-		{
-			using type = typename T::type;
-		};
+		
 		//非型の結果を返す関数のためのラッパ
 		//VSでは非型のパラメータパックが正常に動作しないことがある
 		template<class T>

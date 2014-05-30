@@ -2,40 +2,13 @@
 #define TUPLEPLE_TUPLE_HPP_0523
 
 #include<tuple>
-#include<tupleple\tuple.hpp>
 #include<tupleple\utility\utility.hpp>
+#include<tupleple\tuple_traits.hpp>
 namespace tupleple
 {
-	template<class Tuple, class Enabler = void>
-	struct tuple_trait
-	{
-		template<class >
-		struct false_
-		{
-			static const bool value = false;
-
-		};
-		using is_not_define = void;
-		//static_assert(false_<Tuple>::value, "is not defined");
-	};
-
+	
 	namespace type_list
 	{
-		template<size_t N, class Tuple>
-		struct at
-		{
-			using type = typename typename tuple_trait<utility::remove_cv_ref_t <Tuple>>::template element<N>::type;
-		};
-
-		template<class Tuple>
-		struct size
-		{
-			static const size_t value = tuple_trait<Tuple>::size;
-		};
-
-		template<size_t N, class Tuple>
-		using at_t = typename at<N, Tuple>::type;
-
 		template<size_t N, class Tuple>
 		class result_of
 		{
@@ -71,14 +44,7 @@ namespace tupleple
 	at_functor<N> at(){ return{}; }
 
 
-	template<class Tuple, class Enabler = void>
-	struct is_tuple
-		:std::true_type
-	{};
-	template<class Tuple>
-	struct is_tuple<Tuple, typename tuple_trait<Tuple>::is_not_define>
-		:std::false_type
-	{};
+	
 
 
 

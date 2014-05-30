@@ -2,7 +2,7 @@
 #include<tuple>
 #include<tupleple\utility\utility.hpp>
 #include<tupleple\utility\index_tuple.hpp>
-
+#include"apply.hpp"
 namespace tupleple
 {
 
@@ -11,9 +11,8 @@ namespace tupleple
 
 		template<class Tuple,template<class>class F>
 		struct all
-		{
-			
-		};
+			:all<apply_struct_t<Tuple,std::tuple>,F>
+		{};
 
 		namespace deteil
 		{

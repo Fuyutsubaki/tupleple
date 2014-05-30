@@ -34,6 +34,9 @@
     <Filter Include="tupleple\type_list\Container">
       <UniqueIdentifier>{273d2992-7799-4fa9-83de-f48a286885fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tupleple\index_tuple">
+      <UniqueIdentifier>{22a23c76-46ef-45c1-9e5c-5c342c3f52e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -64,9 +67,6 @@
     </ClInclude>
     <ClInclude Include="any.hpp">
       <Filter>ソース ファイル\完成済み</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\tupleple\utility\index_tuple.hpp">
-      <Filter>tupleple\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\tupleple\utility\utility.hpp">
       <Filter>tupleple\utility</Filter>
@@ -173,11 +173,26 @@
     <ClInclude Include="..\Include\tupleple\type_list\Container\Containers.hpp">
       <Filter>tupleple\type_list\Container</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\tupleple\type_list\TypeList.hpp">
-      <Filter>tupleple\type_list</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\tupleple\type_list\apply.hpp">
       <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\size.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\at.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\index_tuple\index_sequence.hpp">
+      <Filter>tupleple\index_tuple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\index_tuple\index_TypeList.hpp">
+      <Filter>tupleple\index_tuple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\List.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\tuple_traits.hpp">
+      <Filter>tupleple</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,9 @@
 #pragma once 
 #include<tupleple\view\drop.hpp>
 #include<tupleple\utility\utility.hpp>
-#include<tupleple\utility\index_tuple.hpp>
+#include<tupleple\index_tuple\index_TypeList.hpp>
+#include<tupleple\type_list\List.hpp>
+#include<tupleple\type_list\map.hpp>
 /*
 using namespace tupleple;
 auto tuple = std::make_tuple(1, std::make_unique<int>(2), 3);
@@ -23,20 +25,26 @@ namespace tupleple
 
 		namespace deteil
 		{
+			//VS‚¾‚Ætypename T::type...‚Æ‚©‚ª³í‚É“®‚©‚È‚¢‚±‚Æ‚ª‚ ‚é
+			template<class T>
+			struct unwrap
+			{
+				using type = typename T::type;
+			};
 			template<class...>struct drop_impl{};
 			template<class...Idxs,class...T>
-			struct drop_impl<std::tuple<Idxs...>,T...>
+			struct drop_impl<List<Idxs...>,T...>
 			{
 				template<class...R>
 				static auto trans(utility::Ignore_class<Idxs>..., R...)
-					->std::tuple<typename utility::unwrap<R>::type ...>;
+					->List<R...>;
 				using type = decltype(trans(utility::identity<T>{}...));
 			};
 		}
 		template<size_t N, class ...T>
-		struct drop<N,std::tuple<T...>>
+		struct drop<N,List<T...>>
 		{
-			using type = typename deteil::drop_impl<index::make_tuple_t<N>, T...>::type;
+			using type = map_t<typename deteil::drop_impl<index::make_List_t<N>, T...>::type, deteil::unwrap>;
 		};
 		template<size_t N, class Tuple>
 		using drop_t = typename drop<N, Tuple>::type;

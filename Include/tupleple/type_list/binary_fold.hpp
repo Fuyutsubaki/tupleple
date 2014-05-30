@@ -1,6 +1,7 @@
 #pragma once
 #include"drop.hpp"
 #include"take.hpp"
+#include"ListStyle.hpp"
 #include<tupleple\tuple.hpp>
 
 /*
@@ -21,27 +22,45 @@ int main()
 	auto x = algorithm::binary_fold(t, plus());
 }
 */
-#include<functional>
 
 namespace tupleple
 {
 	namespace type_list
 	{
-		template<class Tuple, template<class, class>class Binary_func, class = void>
+		template<class List, template<class...>class Binary_func, class = void>
 		class binary_fold
 		{
-			static const size_t N = size<Tuple>::value;
-			using L = typename binary_fold<take_t<N / 2, Tuple>, Binary_func>::type;
-			using R = typename binary_fold<drop_t<N / 2, Tuple>, Binary_func>::type;
+			static const size_t N = size<List>::value;
+			using L = typename binary_fold<take_t<N / 2, List>, Binary_func>::type;
+			using R = typename binary_fold<drop_t<N / 2, List>, Binary_func>::type;
 		public:
 			using type = typename Binary_func<L, R>::type;
 		};
-		template<class Tuple, template<class, class>class Binary_func>
-		struct binary_fold<Tuple, Binary_func, std::enable_if_t<size<Tuple>::value == 1>>
+		template<class List, template<class...>class Binary_func>
+		struct binary_fold<List, Binary_func,typename std::enable_if<size<List>::value==1>::type>
 		{
-			using type = at_t<0, Tuple>;
+			using type = front_t<List>;
 		};
-		template<class Tuple, template<class, class>class Binary_func>
-		using binary_fold_t = typename binary_fold<Tuple, Binary_func>::type;
+		template<class List, template<class...>class Binary_func>
+		using binary_fold_t = typename binary_fold<List, Binary_func>::type;
+
+
+
+		template<class List, template<class...>class Binary_struct, class = void>
+		class binary_fold_struct
+		{
+			static const size_t N = size<List>::value;
+			using L = typename binary_fold_struct<take_t<N / 2, List>, Binary_struct>::type;
+			using R = typename binary_fold_struct<drop_t<N / 2, List>, Binary_struct>::type;
+		public:
+			using type = Binary_struct<L, R>;
+		};
+		template<class List, template<class...>class Binary_func>
+		struct binary_fold_struct<List, Binary_func, typename std::enable_if<size<List>::value == 1>::type>
+		{
+			using type = front_t<List>;
+		};
+		template<class List, template<class...>class Binary_func>
+		using binary_fold_struct_t = typename binary_fold_struct<List, Binary_func>::type;
 	}
 }

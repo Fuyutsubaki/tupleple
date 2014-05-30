@@ -3,6 +3,7 @@
 #include<type_traits>
 #include<tupleple\view\cat.hpp>
 #include"binary_fold.hpp"
+#include"List.hpp"
 
 /*
 using namespace tupleple;
@@ -18,7 +19,30 @@ namespace tupleple
 {
 	namespace type_list
 	{
-		template<class Tuple>
+		template<class...Lists>
+		struct cat;
+		namespace deteil
+		{
+			template<class...Lists>
+			struct cat_impl
+			{
+				using type = typename binary_fold<List<Lists...>, cat>::type;
+			};
+		}
+		template<class...Lists>
+		struct cat
+			:deteil::cat_impl<Lists...>
+		{};
+
+
+		template<class...L,class...R>
+		struct cat<List<L...>,List<R...>>
+		{
+			using type = List<L..., R...>;
+		};
+
+
+		/*template<class Tuple>
 		struct flat
 		{
 			template<class L, class R>
@@ -28,6 +52,7 @@ namespace tupleple
 			};
 			using type = binary_fold_t<Tuple, cat_>;
 		};
+
 		template<class ...R>
 		struct cat
 		{
@@ -41,7 +66,8 @@ namespace tupleple
 		template<class Tuple>
 		using flat_t = typename flat<Tuple>::type;
 		template<class ...R>
-		using cat_t = typename cat<R...>::type;
+		using cat_t = typename cat<R...>::type;*/
+
 
 
 	}

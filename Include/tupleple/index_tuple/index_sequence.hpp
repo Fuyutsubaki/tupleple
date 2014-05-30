@@ -1,9 +1,7 @@
-#ifndef TUPLEPLE_UTILITY_INDEX_TUPLE_HPP_0523
-#define TUPLEPLE_UTILITY_INDEX_TUPLE_HPP_0523
+#ifndef TUPLEPLE_UTILITY_INDEX_SEQUENCE_HPP_0523
+#define TUPLEPLE_UTILITY_INDEX_SEQUENCE_HPP_0523
 
-#include<tuple>
-#include<tupleple\tuple.hpp>
-#include"utility.hpp"
+#include<tupleple\utility\utility.hpp>
 
 namespace tupleple
 {
@@ -26,7 +24,7 @@ namespace tupleple
 			static auto trans(Sequence<K...>)
 				->utility::cond_t<(N % 2) == 0, Sequence<K..., (half + K)...>, Sequence<K..., (half + K)..., N - 1>>;
 		public:
-			using type = decltype(trans(rest()));
+			using type = decltype(trans(rest{}));
 		};
 		template<>
 		struct make_seq<0>{ using type = Sequence<>; };
@@ -56,14 +54,6 @@ namespace tupleple
 
 		template<size_t N>
 		using make_tuple_t = seq_to_tuple_t<make_seq_t<N>>;
-
-		template<class Tuple>
-		struct make_tuple_size_seq
-		{
-			using type = make_seq_t<tupleple::type_list::size<Tuple>::value>;
-		};
-		template<class Tuple>
-		using make_tuple_size_seq_t = typename make_tuple_size_seq<Tuple>::type;
 	}
 }
 
