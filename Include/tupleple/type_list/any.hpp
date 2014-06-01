@@ -18,8 +18,9 @@ namespace tupleple
 			struct any_impl :std::true_type
 			{};
 			template<class...T>
-			struct any_impl<std::pair<T, std::false_type>...>:std::false_type
+			struct any_impl<std::integral_constant<T,false>...>:std::false_type
 			{};
+			
 			template<class...>
 			struct none_impl :std::false_type
 			{};
@@ -29,7 +30,7 @@ namespace tupleple
 		}
 		template<class...T, template<class>class F>
 		struct any<List<T...>, F>
-			:deteil::any_impl<std::pair<T, typename utility::expr2Bool<F<T>>::type>...>
+			:deteil::any_impl<typename utility::expr2Bool<F<T>>::type...>
 		{};
 
 	}

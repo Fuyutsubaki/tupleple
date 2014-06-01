@@ -20,12 +20,12 @@ namespace tupleple
 			struct all_impl :std::false_type
 			{};
 			template<class...T>
-			struct all_impl<std::pair<T, std::true_type>...>:std::true_type
+			struct all_impl<std::integral_constant<T,true>...>:std::true_type
 			{};
 		}
 		template<class...T, template<class>class F>
 		struct all<List<T...>,F>
-			:deteil::all_impl<std::pair<T, typename utility::expr2Bool<F<T>>::type>...>
+			:deteil::all_impl<typename utility::expr2Bool<F<T>>::type...>
 		{};
 	
 	}
