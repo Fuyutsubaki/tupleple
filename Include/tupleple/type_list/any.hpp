@@ -1,5 +1,5 @@
 #pragma once
-#include<tuple>
+#include"List.hpp"
 #include<tupleple\utility\utility.hpp>
 #include"apply.hpp"
 namespace tupleple
@@ -9,7 +9,7 @@ namespace tupleple
 
 		template<class Tuple, template<class>class F>
 		struct any
-			:any<apply_struct_t<Tuple, std::tuple>, F>
+			:any<apply_struct_t<Tuple, List>, F>
 		{};
 
 		namespace deteil
@@ -28,7 +28,7 @@ namespace tupleple
 			{};
 		}
 		template<class...T, template<class>class F>
-		struct any<std::tuple<T...>, F>
+		struct any<List<T...>, F>
 			:deteil::any_impl<std::pair<T, typename utility::expr2Bool<F<T>>::type>...>
 		{};
 

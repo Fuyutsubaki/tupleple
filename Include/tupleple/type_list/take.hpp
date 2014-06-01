@@ -17,22 +17,15 @@ namespace tupleple
 			using type = view::take_view<N, Tuple>;
 		};
 
-		namespace deteil
-		{
-			template<class seq, class list>
-			struct take_impl
-			{};
-			template<size_t...Idxs, class list>
-			struct take_impl<index::Sequence<Idxs...>,list>
-			{
-				using type = List<at_t<Idxs, list>...>;
-			};
-
-		}
 		template<size_t N, class ...T>
 		struct take<N,List<T...>>
 		{
-			using type = typename deteil::take_impl<index::make_seq_t<N>, List<T...>>::type;
+			using list = List<T...>;
+			template<class Idx>
+			struct trans
+				:at<Idx::value, list>
+			{};
+			using type = map_t<index::make_List_t<N>, trans>;
 		};
 
 		template<size_t N, class Tuple>

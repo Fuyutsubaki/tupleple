@@ -22,7 +22,7 @@ namespace tupleple
 
 
 		template<template<class...>class Struct,class...L, class...R>
-		struct zip_struct<Struct, std::tuple<L...>, std::tuple<R...>>
+		struct zip_struct<Struct, List<L...>, List<R...>>
 		{
 			using type = List<Struct<L, R>...>;
 		};

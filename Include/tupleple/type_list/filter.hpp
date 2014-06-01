@@ -1,7 +1,8 @@
 #pragma once
 
-#include<tupleple\view\filter.hpp>
-
+#include"map.hpp"
+#include"cat.hpp"
+#include"List.hpp"
 
 /*
 	using namespace tupleple;
@@ -19,20 +20,32 @@ namespace tupleple
 {
 	namespace type_list
 	{
-		template<class Tuple,template<class>class Pred>
+		template<class tList,template<class>class Pred>
 		struct filter_if
 		{
-			using type = view::filter_view<Tuple, Pred>;
+			template<class T>
+			struct Trans
+			{
+				using type = utility::cond_t<Pred<T>::value, List<T>, List<> >;
+			};
+			using type= flat_t<map_t<tList,Trans>>;
 		};
-		template<class Tuple, class T>
+
+		template<class tList, class T>
 		struct filter
 		{
 			template<class U>
-			struct Impl
+			struct trans
 				:std::is_same<U,T>
 			{};
-			using type = view::filter_view<Tuple, Impl>;
+			using type = filter_if<tList, trans>;
 		};
+
+
+		template<class tList, template<class>class Pred>
+		using filter_if_t = typename filter_if<tList, Pred>::type;
+		template<class tList, class T>
+		using filter_t = typename filter<tList, T>::type;
 	}
 	
 }

@@ -19,29 +19,33 @@ namespace tupleple
 {
 	namespace type_list
 	{
+
+		template<class Lists>
+		struct flat;
 		template<class...Lists>
 		struct cat;
-		namespace deteil
-		{
-			template<class...Lists>
-			struct cat_impl
-			{
-				using type = typename binary_fold<List<Lists...>, cat>::type;
-			};
-		}
-		template<class...Lists>
-		struct cat
-			:deteil::cat_impl<Lists...>
-		{};
 
-
-		template<class...L,class...R>
-		struct cat<List<L...>,List<R...>>
+		template<class...L, class...R>
+		struct cat<List<L...>, List<R...>>
 		{
 			using type = List<L..., R...>;
 		};
+		
 
+		template<class Lists>
+		struct flat
+			: binary_fold<Lists, cat>
+		{};
 
+		
+		template<class...Lists>
+		struct cat
+			:flat<List<Lists...>>
+		{};
+		template<class ...T>
+		using cat_t = typename cat<T...>::type;
+		template<class Lists>
+		using flat_t = typename flat<Lists>::type;
 		/*template<class Tuple>
 		struct flat
 		{

@@ -1,26 +1,34 @@
 #pragma once
 
-#include"take.hpp"
 #include"drop.hpp"
 #include"ListStyle.hpp"
 #include"in.hpp"
+#include"cat.hpp"
+
 namespace tupleple
 {
 	namespace type_list
 	{
-		template<class Tuple>
+		template<class list>
 		struct unique
 		{
-			template<size_t N>
-			struct impl
+			static const size_t N = size<list>::value;
+			template<class Idx>
+			struct trans
 			{
-				using list = drop_t<N, Tuple>;
-				using head = front_t<list>;
-				using tail = tail_t<list>;
-				using type = utility::cond_t<in<head, tail>::value, std::tuple<>, std::tuple<head>>;
+				using mylist = drop_t<Idx::value, list>;
+				using head = front_t<mylist>;
+				using type = utility::cond_t<
+					in<head, tail_t<mylist>>::value
+					, List<>
+					, List<head>
+				>;
 			};
 
+			using type = flat_t<map_t<index::make_List_t<N>, trans>>;
 		};
+		template<class list>
+		using unique_t = typename unique<list>::type;
 	}
 
 

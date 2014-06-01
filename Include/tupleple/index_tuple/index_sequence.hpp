@@ -28,32 +28,6 @@ namespace tupleple
 		};
 		template<>
 		struct make_seq<0>{ using type = Sequence<>; };
-
-
-
-
-
-		template<class>struct seq_to_tuple;
-		template<size_t...N>
-		struct seq_to_tuple<Sequence<N...>>
-		{
-			using type = std::tuple<std::integral_constant<size_t, N>...>;
-		};
-		template<class Sequence>
-		using seq_to_tuple_t = typename seq_to_tuple<Sequence>::type;
-
-		template<class Tuple>struct tuple_to_seq;
-
-		template<class ...R>
-		struct tuple_to_seq<std::tuple<R...>>
-		{
-			using type = Sequence<R::value...>;
-		};
-		template<class STDTuple>
-		using tuple_to_seq_t = typename tuple_to_seq<STDTuple>::type;
-
-		template<size_t N>
-		using make_tuple_t = seq_to_tuple_t<make_seq_t<N>>;
 	}
 }
 

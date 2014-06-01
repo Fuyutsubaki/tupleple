@@ -17,24 +17,24 @@ namespace tupleple
 				using type = Struct<at_t<Idxs, Tuple>...>;
 			};
 		}
-		template<class Tuple, template<class...>class Struct>
+		template<class List, template<class...>class Struct>
 		struct apply_struct
 		{
-			using Seq = index::make_seq_t<size<Tuple>::value>;
-			using type = typename deteil::apply_struct_impl<Seq, Tuple, Struct>::type;
+			using Seq = index::make_seq_t<size<List>::value>;
+			using type = typename deteil::apply_struct_impl<Seq, List, Struct>::type;
 		};
 		template<class Tuple, template<class...>class Struct>
 		using apply_struct_t = typename apply_struct<Tuple, Struct>::type;
 		
 
-		template<class Tuple, template<class...>class F>
+		template<class List, template<class...>class F>
 		struct apply
 		{
-			using Seq = index::make_seq_t<size<Tuple>::value>;
-			using type = typename apply_struct_t<Tuple, F>::type;
+			using Seq = index::make_seq_t<size<List>::value>;
+			using type = typename apply_struct_t<List, F>::type;
 		};
-		template<class Tuple, template<class...>class F>
-		using apply_t = typename apply<Tuple, F>::type;
+		template<class List, template<class...>class F>
+		using apply_t = typename apply<List, F>::type;
 	}
 
 }

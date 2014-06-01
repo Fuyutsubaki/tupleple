@@ -1,7 +1,7 @@
 #pragma once
-#include<tuple>
+#include"List.hpp"
 #include<tupleple\utility\utility.hpp>
-#include<tupleple\utility\index_tuple.hpp>
+#include<tupleple\index_tuple\index_sequence.hpp>
 #include"apply.hpp"
 namespace tupleple
 {
@@ -24,7 +24,7 @@ namespace tupleple
 			{};
 		}
 		template<class...T, template<class>class F>
-		struct all<std::tuple<T...>,F>
+		struct all<List<T...>,F>
 			:deteil::all_impl<std::pair<T, typename utility::expr2Bool<F<T>>::type>...>
 		{};
 	
