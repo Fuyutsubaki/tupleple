@@ -27,13 +27,5 @@ namespace tupleple
 			using type = List<Struct<L, R>...>;
 		};
 
-
-
 	}
-
-
-
-
-
-
 }

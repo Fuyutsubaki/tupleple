@@ -4,24 +4,6 @@
 #include"ListStyle.hpp"
 #include<tupleple\tuple.hpp>
 
-/*
-struct plus
-{
-	template<class L,class R>
-	auto operator()(L l,R r)const
-	->decltype(l+r)
-	{
-	return l+r;
-	}
-};
-
-int main()
-{
-	using namespace tupleple;
-	auto t = std::make_tuple(1, 1.4f, 31.4, 18L);
-	auto x = algorithm::binary_fold(t, plus());
-}
-*/
 
 namespace tupleple
 {

@@ -4,12 +4,7 @@
 #include<tupleple\index_tuple\index_TypeList.hpp>
 #include<tupleple\type_list\List.hpp>
 #include<tupleple\type_list\map.hpp>
-/*
-using namespace tupleple;
-auto tuple = std::make_tuple(1, std::make_unique<int>(2), 3);
-auto x = std::move(tuple) | view::drop<1>();
-auto i = at<0>(std::move(x));
-*/
+
 
 namespace tupleple
 {

@@ -9,14 +9,7 @@ namespace tupleple
 	{
 		template<class Tuple, template<class...>class F>
 		class map
-		{
-			/*template<size_t ...Idx>
-			static auto trans(index::Sequence<Idx...>)
-				->std::tuple<typename F< at_t<Idx, Tuple> >::type ...>;
-			using seq = index::make_tuple_size_seq_t<Tuple>;
-		public:
-			using type = decltype(trans(seq()));*/
-		};
+		{};
 
 		template<class...T, template<class...>class F>
 		struct map<List<T...>,F>

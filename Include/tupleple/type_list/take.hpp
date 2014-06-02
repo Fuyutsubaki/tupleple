@@ -4,10 +4,7 @@
 #include<tupleple\type_list\zip.hpp>
 #include"apply_index.hpp"
 
-/*
-	using namespace tupleple;
-	std::make_tuple(1, std::make_unique<int>(2), 3) | view::take<1>() | at<0>();
-*/
+
 namespace tupleple
 {
 	namespace type_list
