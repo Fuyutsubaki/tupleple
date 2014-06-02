@@ -1,6 +1,7 @@
 #pragma once 
-#include<tupleple\tuple.hpp>
+
 #include<tupleple\utility\utility.hpp>
+#include<tupleple\tuple_traits.hpp>
 /*
 using namespace tupleple;
 auto tuple = std::make_tuple(1, std::make_unique<int>(2), 3);
@@ -47,12 +48,12 @@ namespace tupleple
 		using element = type_list::at<Idx + N, base_type>;
 
 		template<size_t Idx, class T>
-		using result_of
-			= type_list::result_of<Idx + N, utility::result_of_forward_mem_t<T, Tuple>>;
+		using result_type_of
+			= result_of<Idx + N, utility::result_of_forward_mem_t<T, Tuple>>;
 
 		template<size_t Idx, class T>
 		static auto get(T&&x)
-			->type_list::result_of_t<Idx, T>
+			->result_of_t<Idx, T>
 		{
 			return utility::forward_mem<T, Tuple>(x.base) | at<Idx + N>();
 		}

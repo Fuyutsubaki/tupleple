@@ -71,9 +71,6 @@
     <ClInclude Include="..\Include\tupleple\utility\utility.hpp">
       <Filter>tupleple\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\tupleple\tuple.hpp">
-      <Filter>tupleple</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\tupleple\type_list\map.hpp">
       <Filter>tupleple\type_list</Filter>
     </ClInclude>
@@ -196,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="..\Include\tupleple\type_list\apply_index.hpp">
       <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\at.hpp">
+      <Filter>tupleple</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 #pragma once
-#include<tupleple\tuple.hpp>
+
 #include<type_traits>
 #include"binary_fold.hpp"
 
@@ -79,17 +79,17 @@ namespace tupleple
 			>;
 
 		template<size_t Idx, class T>
-		using result_of = utility::cond_t<
+		using result_type_of = utility::cond_t<
 			(Idx<Lsize)
-			, type_list::result_of<Idx, utility::result_of_forward_mem_t<T, TupleL>>
-			, type_list::result_of<Idx - Lsize, utility::result_of_forward_mem_t<T, TupleR>>
+			, result_of<Idx, utility::result_of_forward_mem_t<T, TupleL>>
+			, result_of<Idx - Lsize, utility::result_of_forward_mem_t<T, TupleR>>
 			>;
 
 		template<size_t Idx, class T
 			,typename std::enable_if<isL<Idx>::value>::type* =nullptr
 		>
 		static auto get(T&&tuple)
-		->type_list::result_of_t<Idx,T>
+		->result_of_t<Idx,T>
 		{
 			return utility::forward_mem<T, TupleL>(tuple.lhs)
 				| at<Idx>();
@@ -99,7 +99,7 @@ namespace tupleple
 			, typename std::enable_if<!isL<Idx>::value>::type* = nullptr
 		>
 		static auto get(T&&tuple)
-		->type_list::result_of_t<Idx, T>
+		->result_of_t<Idx, T>
 		{
 			return utility::forward_mem<T, TupleR>(tuple.rhs)
 				| at<Idx - Lsize>();

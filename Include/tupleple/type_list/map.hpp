@@ -2,7 +2,7 @@
 #define TUPLEPLE_TYPELIST_MAP_HPP
 #include<tupleple\utility\utility.hpp>
 #include<tupleple\index_tuple\index_sequence.hpp>
-#include<tupleple\tuple.hpp>
+
 namespace tupleple
 {
 	namespace type_list

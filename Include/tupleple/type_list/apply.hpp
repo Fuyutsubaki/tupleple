@@ -1,5 +1,5 @@
 #pragma once
-#include<tupleple\tuple.hpp>
+
 #include<tupleple\index_tuple\index_sequence.hpp>
 #include"List.hpp"
 #include"apply_index.hpp"

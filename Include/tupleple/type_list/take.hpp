@@ -11,9 +11,7 @@ namespace tupleple
 	{
 		template<size_t N, class Tuple>
 		struct take
-		{
-			//using type = view::take_view<N, Tuple>;
-		};
+		{};
 
 		template<size_t N, class ...T>
 		struct take<N,List<T...>>

@@ -1,6 +1,6 @@
 #ifndef TUPLEPLE_UTILITY_BASE_VIEW_HPP
 #define TUPLEPLE_UTILITY_BASE_VIEW_HPP
-#include<tupleple\tuple.hpp>
+
 
 
 namespace tupleple

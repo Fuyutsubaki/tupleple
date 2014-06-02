@@ -2,7 +2,7 @@
 #include"drop.hpp"
 #include"take.hpp"
 #include"ListStyle.hpp"
-#include<tupleple\tuple.hpp>
+
 
 
 namespace tupleple
