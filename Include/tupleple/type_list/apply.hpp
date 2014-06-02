@@ -1,27 +1,17 @@
 #pragma once
 #include<tupleple\tuple.hpp>
 #include<tupleple\index_tuple\index_sequence.hpp>
-
+#include"List.hpp"
+#include"apply_index.hpp"
 namespace tupleple
 {
 	namespace type_list
 	{
-		namespace deteil
-		{
-			template<class Seq, class Tuple, template<class...>class Struct>
-			struct apply_struct_impl
-			{};
-			template<size_t...Idxs, class Tuple, template<class...>class Struct>
-			struct apply_struct_impl<index::Sequence<Idxs...>, Tuple, Struct>
-			{
-				using type = Struct<at_t<Idxs, Tuple>...>;
-			};
-		}
-		template<class List, template<class...>class Struct>
+		
+		template<class tList, template<class...>class Struct>
 		struct apply_struct
 		{
-			using Seq = index::make_seq_t<size<List>::value>;
-			using type = typename deteil::apply_struct_impl<Seq, List, Struct>::type;
+			using type= apply_index_t<index::make_seq_t<size<tList>::value>, tList, Struct>;
 		};
 		template<class Tuple, template<class...>class Struct>
 		using apply_struct_t = typename apply_struct<Tuple, Struct>::type;

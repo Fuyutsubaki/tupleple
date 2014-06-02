@@ -194,6 +194,9 @@
     <ClInclude Include="..\Include\tupleple\tuple_traits.hpp">
       <Filter>tupleple</Filter>
     </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\apply_index.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">

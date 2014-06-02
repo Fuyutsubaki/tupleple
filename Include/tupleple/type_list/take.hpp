@@ -2,6 +2,7 @@
 #include<tupleple\view\take.hpp>
 #include<tupleple\index_tuple\index_TypeList.hpp>
 #include<tupleple\type_list\zip.hpp>
+#include"apply_index.hpp"
 
 /*
 	using namespace tupleple;
@@ -14,18 +15,14 @@ namespace tupleple
 		template<size_t N, class Tuple>
 		struct take
 		{
-			using type = view::take_view<N, Tuple>;
+			//using type = view::take_view<N, Tuple>;
 		};
 
 		template<size_t N, class ...T>
 		struct take<N,List<T...>>
 		{
 			using list = List<T...>;
-			template<class Idx>
-			struct trans
-				:at<Idx::value, list>
-			{};
-			using type = map_t<index::make_List_t<N>, trans>;
+			using type = apply_index_t<index::make_seq_t<N>, list, List>;
 		};
 
 		template<size_t N, class Tuple>
