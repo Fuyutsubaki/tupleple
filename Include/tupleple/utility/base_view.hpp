@@ -1,11 +1,9 @@
 #ifndef TUPLEPLE_UTILITY_BASE_VIEW_HPP
 #define TUPLEPLE_UTILITY_BASE_VIEW_HPP
 
-
-
 namespace tupleple
 {
-	namespace impl
+	namespace utility
 	{
 		namespace deteil
 		{

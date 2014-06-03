@@ -109,31 +109,6 @@ namespace tupleple
 		template<class From, class To>
 		using trace_cv_ref_t = typename trace_cv_ref<From, To >::type;
 
-		template<class Class, class Member>
-		class result_of_forward_mem
-		{
-			static const bool r = std::is_lvalue_reference<Class>::value && std::is_rvalue_reference<Member>::value;
-
-			//mem==‚ªref‚ÌA‚»‚Ì‚Ü‚Ü•Ô‚·
-			//mem!= ref‚È‚Æ‚«,class‚É‚µ‚½‚ª‚¤
-			static const bool is_ref = std::is_reference<Member>::value;
-
-			using cv_mem = trace_reference_t< Member, trace_cv_t<Class, std::remove_reference_t<Member>>>;
-			using case_noref = trace_reference_t<Class, cv_mem>;
-		public:
-			using type = cond_t<is_ref, cv_mem, case_noref>;
-
-		};
-
-		template<class Class, class Member>
-		using result_of_forward_mem_t = typename result_of_forward_mem<Class, Member >::type;
-
-		template<class Class, class Member>
-		result_of_forward_mem_t<Class, Member> forward_mem(typename std::remove_reference<Member>::type&mem)
-		{
-			return std::forward<result_of_forward_mem_t<Class, Member>>(mem);
-		}
-
 		template<class>
 		struct Ignore_class
 		{

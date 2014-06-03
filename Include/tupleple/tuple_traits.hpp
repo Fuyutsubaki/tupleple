@@ -59,7 +59,7 @@ namespace tupleple
 	auto at(Tuple&&tuple)
 		->result_of_t<N, Tuple>
 	{
-		return tuple_trait<utility::remove_cv_ref_t<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
+		 return tuple_trait<utility::remove_cv_ref_t<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
 	}
 }
 

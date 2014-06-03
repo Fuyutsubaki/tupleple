@@ -1,6 +1,6 @@
 #pragma once
 #include<tupleple\tuple_traits.hpp>
-
+#include<tupleple\utility\mem_forward.hpp>
 
 namespace tupleple
 {
@@ -39,13 +39,13 @@ namespace tupleple
 
 		template<size_t N,class T>
 		using result_type_of
-			= result_of<N, utility::result_of_forward_mem_t<T, Tuple>>;
+			= result_of<N, utility::result_of_mem_forward_t<Tuple, decltype((std::declval<T>().base))>>;
 		
 		template<size_t N,class T>
 		static auto get(T&&x)
 			->result_of_t<N,T>
 		{
-			return utility::forward_mem<T, Tuple>(x.base) | at<N>();
+			return utility::mem_forward<T, Tuple>(x.base) | at<N>();
 		}
 	};
 

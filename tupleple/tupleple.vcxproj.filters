@@ -155,9 +155,6 @@
     <ClInclude Include="type_set.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="mem_forward.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\tupleple\type_list\any.hpp">
       <Filter>tupleple\type_list</Filter>
     </ClInclude>
@@ -196,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="..\Include\tupleple\at.hpp">
       <Filter>tupleple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\utility\mem_forward.hpp">
+      <Filter>tupleple\utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

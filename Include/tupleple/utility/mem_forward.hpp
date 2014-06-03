@@ -6,13 +6,29 @@
 
 //mem is ref -> T
 //other -> U
-
-template<class T, class U>
-auto mem_forward(U&&x)
-->typename std::conditional<std::is_reference<T>::value, T, U&&>::type
+namespace tupleple
 {
-	return std::forward<typename std::conditional<std::is_reference<T>::value, T, U&&>::type>(x);
+	namespace utility
+	{
+		
+		template<class T, class U, class result_type = typename std::conditional<std::is_reference<T>::value, T, U&&>::type>
+		auto mem_forward(U&&x)
+			->result_type
+		{
+			return std::forward<result_type>(x);
+		}
+		template<class T, class U>
+		struct result_of_mem_forward
+		{
+			using type = decltype(mem_forward<T>(std::declval<U>()));
+		};
+
+		//decltype(x.a) , decltype((x.a))
+		template<class T, class U>
+		using result_of_mem_forward_t = typename result_of_mem_forward<T, U>::type;
+	}
 }
+
 //struct C
 //{
 //	C(int&x)

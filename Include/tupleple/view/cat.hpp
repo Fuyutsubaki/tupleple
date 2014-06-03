@@ -1,7 +1,8 @@
 #pragma once
 
 #include<type_traits>
-#include"binary_fold.hpp"
+#include<tupleple\utility\mem_forward.hpp>
+#include<tupleple\tuple_traits.hpp>
 
 /*
 using namespace tupleple;
@@ -81,8 +82,8 @@ namespace tupleple
 		template<size_t Idx, class T>
 		using result_type_of = utility::cond_t<
 			(Idx<Lsize)
-			, result_of<Idx, utility::result_of_forward_mem_t<T, TupleL>>
-			, result_of<Idx - Lsize, utility::result_of_forward_mem_t<T, TupleR>>
+			, result_of<Idx, utility::result_of_mem_forward_t<T, TupleL>>
+			, result_of<Idx - Lsize, utility::result_of_mem_forward_t<T, TupleR>>
 			>;
 
 		template<size_t Idx, class T
@@ -91,7 +92,7 @@ namespace tupleple
 		static auto get(T&&tuple)
 		->result_of_t<Idx,T>
 		{
-			return utility::forward_mem<T, TupleL>(tuple.lhs)
+			return utility::mem_forward<TupleL>(tuple.lhs)
 				| at<Idx>();
 		}
 
@@ -101,7 +102,7 @@ namespace tupleple
 		static auto get(T&&tuple)
 		->result_of_t<Idx, T>
 		{
-			return utility::forward_mem<T, TupleR>(tuple.rhs)
+			return utility::mem_forward< TupleR>(tuple.rhs)
 				| at<Idx - Lsize>();
 		}
 	};

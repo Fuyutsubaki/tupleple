@@ -113,6 +113,7 @@
     <ClInclude Include="..\Include\tupleple\type_list\unique.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\zip.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\base_view.hpp" />
+    <ClInclude Include="..\Include\tupleple\utility\mem_forward.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\utility.hpp" />
     <ClInclude Include="..\Include\tupleple\view\cat.hpp" />
     <ClInclude Include="..\Include\tupleple\view\do_nothing.hpp" />
@@ -130,7 +131,6 @@
     <ClInclude Include="foldl.hpp" />
     <ClInclude Include="lnTuple.h" />
     <ClInclude Include="maybe_type.hpp" />
-    <ClInclude Include="mem_forward.hpp" />
     <ClInclude Include="parameter_pack_library.hpp" />
     <ClInclude Include="type_hash.h" />
     <ClInclude Include="type_map.h" />
