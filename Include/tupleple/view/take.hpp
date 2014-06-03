@@ -43,13 +43,13 @@ namespace tupleple
 
 		template<size_t N, class T>
 		using result_type_of
-			= result_of<N, utility::result_of_mem_forward_t<T, Tuple>>;
+			= result_of<N, decltype(utility::mem_forward<Tuple>(std::declval<T>().base))>;
 
 		template<size_t N, class T>
 		static auto get(T&&x)
 			->result_of_t<N, T>
 		{
-			return utility::mem_forward<Tuple>(x.base) | at<N>();
+			return utility::mem_forward<Tuple>(std::forward<T>(x).base) | at<N>();
 		}
 	};
 }

@@ -1,8 +1,16 @@
 #ifndef TUPPLEPLE_VIEW_MAP_HPP
 #define TUPPLEPLE_VIEW_MAP_HPP
 
-#include<tupleple\tuple.hpp>
+#include<tupleple\tuple_traits.hpp>
 #include<tupleple\utility\utility.hpp>
+#include<tupleple\utility\mem_forward.hpp>
+/*
+using namespace tupleple;
+auto r = std::make_tuple(3.5, 1, 3.14, 1.414);
+auto c = r | view::map([](double d){return d * 2; });
+auto d = c | at<2>();
+
+*/
 namespace tupleple{
 
 	namespace view
@@ -23,8 +31,9 @@ namespace tupleple{
 		template<class Func>
 		struct map_functor :utility::ExtensionMemberFunction
 		{
-			map_functor(Func&&func)
-			:func_(std::forward<Func>(func))
+			template<class T>
+			map_functor(T&&func)
+			:func_(std::forward<T>(func))
 			{}
 			template<class Tuple>
 			map_view<Tuple, Func> operator()(Tuple&&tuple)
@@ -56,17 +65,20 @@ namespace tupleple{
 			= utility::remove_cv_ref_t<typename std::result_of<Func(type_list::at_t<N, base>)>::type>;
 
 		template<size_t N, class T>
-		using result_of
-			= std::result_of<Func(type_list::result_of_t<N, utility::result_of_forward_mem_t<T, Tuple>>)>;
+		using result_type_of
+			= std::result_of<
+			decltype(utility::mem_forward<Func>(std::declval<T>().func))
+			(result_of_t<N, decltype(utility::mem_forward<Tuple>(std::declval<T>().base))>)
+			>;
 
 		template<size_t N, class T>
 		static auto get(T&&x)
-			->type_list::result_of_t<N, T>
+			->result_of_t<N, T>
 		{
 			return
-				utility::forward_mem<T, Func>(x.func)
+				utility::mem_forward<Func>(std::forward<T>(x).func)
 				(
-				utility::forward_mem<T, Tuple>(x.base) | at<N>()
+				utility::mem_forward<Tuple>(std::forward<T>(x).base) | at<N>()
 				);
 		}
 	};

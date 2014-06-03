@@ -1,12 +1,9 @@
 #pragma once
 
-#include<tupleple\utility\index_tuple.hpp>
-#include<tupleple\tuple.hpp>
-#include<tupleple\view\map.hpp>
+#include<tupleple\tuple_traits.hpp>
 #include<tupleple\utility\utility.hpp>
-#include<tupleple\view\cat.hpp>
-#include<tupleple\type_list\map.hpp>
-#include<tupleple\type_list\cat.hpp>
+#include<tupleple\type_list\filter.hpp>
+#include<tupleple\at.hpp>
 
 /*
 	using namespace tupleple;
@@ -14,12 +11,7 @@
 	auto c= r | view::filter_if<std::is_integral>();
 	std::cout << (c | at<1>());
 */
-/*
-	using namespace tupleple;
-	auto r = std::make_tuple(false, "ABC", 3.14, 42, 41);
-	auto c = r | view::filter<int>();
-	std::cout << (c | at<1>());
-*/
+
 namespace tupleple
 {
 	
@@ -75,34 +67,34 @@ namespace tupleple
 	class tuple_trait<view::filter_view<Tuple, Pred>>
 	{
 		using base = utility::remove_cv_ref_t<Tuple>;
-		using Seq = index::seq_to_tuple_t<index::make_tuple_size_seq_t<base>>;
+		static const size_t N = type_list::size<base>::value;
+
 		template<class Idx>
-		struct Trans
-		{
-			using type = utility::cond_t<Pred<type_list::at_t<Idx::value, Tuple>>::value, std::tuple<Idx>, std::tuple<>>;
-		};
-		using Seqr = type_list::map_t<Seq, Trans>;
-		using Res = type_list::flat_t<Seqr>;
+		struct Impl
+			:Pred<type_list::at_t<Idx::value, base>>
+		{};
+		using Seq = type_list::filter_if_t<index::make_List_t<N>, Impl>;
+
 		template<size_t N>
-		struct F 
+		struct F
 		{
-			static const size_t value =  type_list::at_t<N, Res>::value;
+			static const size_t value = type_list::at_t<N, Seq>::value;
 		};
 	public:
-		static const size_t size = type_list::size<Res>::value;
+		static const size_t size = type_list::size<Seq>::value;
 		
 		template<size_t N>
 		using element = type_list::at<F<N>::value, base>;
 
 		template<size_t N, class T>
-		using result_of
-			= type_list::result_of<F<N>::value, utility::result_of_forward_mem_t<T, Tuple>>;
+		using result_type_of
+			= result_of<F<N>::value, decltype(utility::mem_forward<Tuple>(std::declval<T>().base))>;
 
 		template<size_t N, class T>
 		static auto get(T&&x)
-			->type_list::result_of_t<N, T>
+			->result_of_t<N, T>
 		{
-			return utility::forward_mem<T, Tuple>(x.base) | at<F<N>::value>();
+			return utility::mem_forward<Tuple>(std::forward<T>(x).base) | at<F<N>::value>();
 		}
 	};
 

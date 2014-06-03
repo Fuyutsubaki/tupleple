@@ -80,12 +80,12 @@ namespace tupleple
 			>;
 
 		template<size_t Idx, class T>
-		using result_type_of = utility::cond_t<
+		using result_type_of = void;/* utility::cond_t<
 			(Idx<Lsize)
 			, result_of<Idx, utility::result_of_mem_forward_t<T, TupleL>>
 			, result_of<Idx - Lsize, utility::result_of_mem_forward_t<T, TupleR>>
 			>;
-
+*/
 		template<size_t Idx, class T
 			,typename std::enable_if<isL<Idx>::value>::type* =nullptr
 		>

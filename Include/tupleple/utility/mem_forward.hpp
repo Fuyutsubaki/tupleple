@@ -17,15 +17,6 @@ namespace tupleple
 		{
 			return std::forward<result_type>(x);
 		}
-		template<class T, class U>
-		struct result_of_mem_forward
-		{
-			using type = decltype(mem_forward<T>(std::declval<U>()));
-		};
-
-		//decltype(x.a) , decltype((x.a))
-		template<class T, class U>
-		using result_of_mem_forward_t = typename result_of_mem_forward<T, U>::type;
 	}
 }
 

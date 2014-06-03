@@ -139,7 +139,6 @@ template<class Lhs, class Rhs,
 	typename std::enable_if<std::is_base_of<tupleple::utility::ExtensionMemberFunction, Rhs>::value>::type* = nullptr>
 	typename std::result_of<Rhs(Lhs)>::type operator|(Lhs&&lhs, Rhs&&rhs)
 {
-		auto r = std::is_lvalue_reference<Lhs>::value;
 		return std::forward<Rhs>(rhs)(std::forward<Lhs>(lhs));
 }
 

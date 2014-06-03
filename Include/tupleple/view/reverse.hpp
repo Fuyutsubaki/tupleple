@@ -1,7 +1,7 @@
 #pragma once
-#include<tupleple\tuple.hpp>
+#include<tupleple\tuple_traits.hpp>
 #include<tupleple\utility\utility.hpp>
-
+#include<tupleple\utility\mem_forward.hpp>
 /*
 using namespace tupleple;
 auto x = std::make_tuple(1, 2, 3, 4) | view::reverse() | at<0>();
@@ -43,14 +43,14 @@ namespace tupleple
 		using element = type_list::at_t<size - 1 - Idx, Base>;
 
 		template<size_t N, class T>
-		using result_of
-			= type_list::result_of<size - 1 - N, utility::result_of_forward_mem_t<T, Tuple>>;
+		using result_type_of
+			= result_of<size - 1 - N, decltype(utility::mem_forward<Tuple>(std::declval<T>().base))>;
 
 		template<size_t Idx, class T>
 		static auto get(T&&x)
-			->type_list::result_of_t<Idx,T>
+			->result_of_t<Idx,T>
 		{
-			return utility::forward_mem<T, Tuple>(x.base) | at<size - 1 - Idx>();
+			return utility::mem_forward<Tuple>(std::forward<T>(x).base) | at<size - 1 - Idx>();
 		}
 
 	};
