@@ -6,14 +6,8 @@
 namespace tupleple
 {
 	template<size_t N, class Tuple,class =void>
-	class result_of
-	{
-		/*using base_tuple = utility::remove_cv_ref_t <Tuple>;
-		using res = typename tuple_trait<base_tuple>::template result_of<N, Tuple>;
-		using base_result_type = typename res::type;
-	public:
-		using type = base_result_type;*/
-	};
+	class result_of;
+	
 	template<size_t N, class Tuple>
 	using result_of_t = typename result_of<N, Tuple>::type;
 
@@ -24,7 +18,7 @@ namespace tupleple
 		auto operator () (Tuple&&tuple)
 			->result_of_t<N, Tuple>
 		{
-			return at<N>(std::forward<Tuple>(tuple));
+			 return at<N>(std::forward<Tuple>(tuple));
 		}
 	};
 	template<size_t N>

@@ -44,23 +44,23 @@ namespace tupleple
 		};
 	}
 
+	
+
+	template<size_t N, class Tuple>
+	class result_of<N,Tuple,typename std::enable_if<is_tuple<utility::remove_cv_ref_t<Tuple>>::value>::type>
+	{
+		using base_tuple = utility::remove_cv_ref_t <Tuple>;
+		using res = typename tuple_trait<base_tuple>::template result_type_of<N, Tuple>;
+		using base_result_type = typename res::type;
+	public:
+		using type = base_result_type;
+	};
 	template<size_t N, class Tuple>
 	auto at(Tuple&&tuple)
 		->result_of_t<N, Tuple>
 	{
 		return tuple_trait<utility::remove_cv_ref_t<Tuple>>::template get<N>(std::forward<Tuple>(tuple));
 	}
-
-	template<size_t N, class Tuple>
-	class result_of<N,Tuple,typename std::enable_if<is_tuple<Tuple>::value>::type>
-	{
-		using base_tuple = utility::remove_cv_ref_t <Tuple>;
-		using res = typename tuple_trait<base_tuple>::template result_of<N, Tuple>;
-		using base_result_type = typename res::type;
-	public:
-		using type = base_result_type;
-	};
-	
 }
 
 

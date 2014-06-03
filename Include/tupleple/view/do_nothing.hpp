@@ -1,5 +1,5 @@
 #pragma once
-#include"tuple.hpp"
+#include<tupleple\tuple_traits.hpp>
 
 
 namespace tupleple
@@ -38,12 +38,12 @@ namespace tupleple
 		using element = type_list::at<N, base>;
 
 		template<size_t N,class T>
-		using result_of
-			= type_list::result_of<N, utility::result_of_forward_mem_t<T, Tuple>>;
+		using result_type_of
+			= result_of<N, utility::result_of_forward_mem_t<T, Tuple>>;
 		
 		template<size_t N,class T>
 		static auto get(T&&x)
-			->type_list::result_of_t<N,T>
+			->result_of_t<N,T>
 		{
 			return utility::forward_mem<T, Tuple>(x.base) | at<N>();
 		}
