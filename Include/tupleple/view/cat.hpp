@@ -3,7 +3,11 @@
 #include<type_traits>
 #include<tupleple\utility\mem_forward.hpp>
 #include<tupleple\tuple_traits.hpp>
-
+#include<tupleple\utility\utility.hpp>
+#include<tupleple\type_list\cat.hpp>
+#include<tupleple\type_list\replicate.hpp>
+#include<tupleple\STD_tuple_traits.hpp>
+#include<tupleple\index_tuple\index_TypeList.hpp>
 /*
 using namespace tupleple;
 auto a = std::make_tuple(1, 2);
@@ -18,92 +22,76 @@ namespace tupleple
 {
 	namespace view
 	{
-		template<class TupleL,class TupleR>
-		class cat_view
+		template<class Tuple>
+		class flat_view
 		{
-			friend tuple_trait<cat_view<TupleL, TupleR>>;
+			friend tuple_trait<flat_view<Tuple>>;
 		public:
-			cat_view(TupleL&&lhs, TupleR&&rhs)
-				:lhs(std::forward<TupleL>(lhs)), rhs(std::forward<TupleR>(rhs))
+			flat_view(Tuple&&tuple)
+				:base(std::forward<Tuple>(tuple))
 			{}
 		private:
-			TupleL lhs;
-			TupleR rhs;
+			Tuple base;
 		};
-
-		namespace deteil
+		template<class ...T>
+		flat_view<std::tuple<T...>> cat(T&&...tuples)
 		{
-			struct cat_impl
-			{
-				template<class TupleL, class TupleR>
-				cat_view<TupleL, TupleR> operator()(TupleL&&lhs, TupleR&&rhs)
-				{
-					return cat_view<TupleL, TupleR>(std::forward<TupleL>(lhs), std::forward<TupleR>(rhs));
-				}
-			};
-			template<class...R>
-			struct cat_result
-			{
-				using type = decltype(algorithm::binary_fold(std::declval<std::tuple<R&&...>>(), std::declval<deteil::cat_impl>()));
-			};
+			return{ { std::forward<T>(tuples)... } };
 		}
-		
-		template<class ...R>
-		auto cat(R&&...tuple)
-			->typename deteil::cat_result<R...>::type
+		template<class T>
+		flat_view<T> flat_test(T&&tuples)
 		{
-			return algorithm::binary_fold(std::forward_as_tuple(std::forward<R>(tuple)...),deteil::cat_impl());
+			return{ std::forward<T>(tuples) };
 		}
 	}
 
-	template<class TupleL, class TupleR>
-	class tuple_trait<view::cat_view<TupleL, TupleR>>
+	template<class Tuple>
+	class tuple_trait<view::flat_view<Tuple>>
 	{
-		using Lhs = utility::remove_cv_ref_t<TupleL>;
-		using Rhs = utility::remove_cv_ref_t<TupleR>;
-		static const size_t Lsize = type_list::size<Lhs>::value;
-		static const size_t Rsize = type_list::size<Rhs>::value;
-		
-		template<size_t Idx>
-		struct isL
+		using base = utility::remove_cv_ref_t<Tuple>;
+		static const size_t N = type_list::size<base>::value;
+		template<class Idx>
+		struct n_size
 		{
-			static const bool value = (Idx < Lsize);
+			static const size_t value = type_list::size<utility::remove_cv_ref_t<type_list::at_t<Idx::value, base>>>::value;
 		};
+		using Seq = index::make_List_t<N>;
+		template<class Idx>
+		struct Impl1
+		{
+			using type = type_list::replicate_t<n_size<Idx>::value, Idx>;
+		};
+		template<class Idx>
+		struct Impl2
+		{
+			using type = index::make_List_t<n_size<Idx>::value>;
+		};
+
+
+		using Seq1 = typename type_list::flat<typename type_list::map<Seq, Impl1>::type>::type;		//11 2 333
+		using Seq2 = typename type_list::flat<type_list::map_t<Seq, Impl2>>::type;//12 1 123
+		template<size_t Idx>
+		struct F1
+			:type_list::at_t<Idx, Seq1>
+		{};
+		template<size_t Idx>
+		struct F2
+			:type_list::at_t<Idx, Seq2>
+		{};
+
 	public:
-		static const size_t size = Lsize + Rsize;
+		static const size_t size = type_list::size<Seq1>::value;
 
 		template<size_t Idx>
-		using element = utility::cond_t <
-			(Idx<Lsize),
-			type_list::at<Idx, Lhs>,
-			type_list::at<Idx - Lsize, Rhs>
-			>;
+		using element = type_list::at<F2<Idx>::value, type_list::at_t<F1<Idx>::value, base>>;
 
 		template<size_t Idx, class T>
-		using result_type_of = void;/* utility::cond_t<
-			(Idx<Lsize)
-			, result_of<Idx, utility::result_of_mem_forward_t<T, TupleL>>
-			, result_of<Idx - Lsize, utility::result_of_mem_forward_t<T, TupleR>>
-			>;
-*/
-		template<size_t Idx, class T
-			,typename std::enable_if<isL<Idx>::value>::type* =nullptr
-		>
-		static auto get(T&&tuple)
-		->result_of_t<Idx,T>
-		{
-			return utility::mem_forward<TupleL>(tuple.lhs)
-				| at<Idx>();
-		}
-
-		template<size_t Idx, class T
-			, typename std::enable_if<!isL<Idx>::value>::type* = nullptr
-		>
-		static auto get(T&&tuple)
+		using result_type_of =  result_of<F2<Idx>::value, result_of_t<F1<Idx>::value, decltype(utility::mem_forward<Tuple>(std::declval<T>().base))>>;
+		template<size_t Idx, class T>
+		static auto get(T&&x)
 		->result_of_t<Idx, T>
 		{
-			return utility::mem_forward< TupleR>(tuple.rhs)
-				| at<Idx - Lsize>();
+			 utility::mem_forward<Tuple>(std::forward<T>(x).base) | at<F1<Idx>::value>() | at<F2<Idx>::value>();
 		}
 	};
 }

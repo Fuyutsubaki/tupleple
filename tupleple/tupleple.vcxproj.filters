@@ -197,6 +197,9 @@
     <ClInclude Include="..\Include\tupleple\utility\mem_forward.hpp">
       <Filter>tupleple\utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\replicate.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">

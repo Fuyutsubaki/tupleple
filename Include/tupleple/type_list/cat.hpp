@@ -1,6 +1,6 @@
 #pragma once
 #include<type_traits>
-#include<tupleple\view\cat.hpp>
+
 #include"binary_fold.hpp"
 #include"List.hpp"
 
@@ -29,8 +29,9 @@ namespace tupleple
 		
 		template<class...Lists>
 		struct cat
-			:flat<List<Lists...>>
-		{};
+		{
+			using type = typename flat<List<Lists...>>::type;
+		};
 		template<class ...T>
 		using cat_t = typename cat<T...>::type;
 		template<class Lists>

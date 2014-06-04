@@ -9,7 +9,9 @@ namespace tupleple
 	{
 		template<class Tuple, template<class...>class F>
 		class map
-		{};
+		{
+			static_assert(sizeof(Tuple),"not define");
+		};
 
 		template<class...T, template<class...>class F>
 		struct map<List<T...>,F>
