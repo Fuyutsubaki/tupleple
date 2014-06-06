@@ -1,8 +1,8 @@
 #pragma once
 #include<tupleple\view\take.hpp>
 #include<tupleple\view\drop.hpp>
-#include<tupleple\tuple.hpp>
-#include<tupleple\move_view.hpp>
+#include<tupleple\view\ListStyle.hpp>
+
 /*
 struct plus
 {
@@ -52,11 +52,11 @@ namespace tupleple
 			struct binary_fold_impl<Tuple, binary_func,
 				typename std::enable_if<(type_list::size<utility::remove_cv_ref_t<Tuple>>::value==1)>::type>
 			{
-				using result_type = decltype(std::declval<Tuple>() | at<0>());
+				using result_type = decltype(std::declval<Tuple>() | view::front());
 				static auto fold(Tuple&&tuple, binary_func&&func)
 					->result_type
 				{
-					return std::forward<Tuple>(tuple) | at<0>();
+					return std::forward<Tuple>(tuple) | view::front();
 				}
 			};
 		}
@@ -64,11 +64,11 @@ namespace tupleple
 
 		template<class Tuple, class binary_func>
 		auto binary_fold(Tuple&&tuple, binary_func&&func)
-			->typename deteil::binary_fold_impl<result_of_forward_view_t<Tuple>, binary_func>::result_type
+			->typename deteil::binary_fold_impl<Tuple, binary_func>::result_type
 		{
 			return deteil::
-				binary_fold_impl<result_of_forward_view_t<Tuple>, binary_func>::
-				fold(forward_view<Tuple>(tuple), std::forward<binary_func>(func));
+				binary_fold_impl<Tuple, binary_func>::
+				fold(std::forward<Tuple>(tuple), std::forward<binary_func>(func));
 		}
 	}
 }

@@ -91,7 +91,6 @@
     <ClInclude Include="..\Include\tupleple\at.hpp" />
     <ClInclude Include="..\Include\tupleple\index_tuple\index_sequence.hpp" />
     <ClInclude Include="..\Include\tupleple\index_tuple\index_TypeList.hpp" />
-    <ClInclude Include="..\Include\tupleple\move_view.hpp" />
     <ClInclude Include="..\Include\tupleple\parameter_pack_at.hpp" />
     <ClInclude Include="..\Include\tupleple\STD_tuple_traits.hpp" />
     <ClInclude Include="..\Include\tupleple\tuple_traits.hpp" />
@@ -102,7 +101,6 @@
     <ClInclude Include="..\Include\tupleple\type_list\at.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\binary_fold.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\cat.hpp" />
-    <ClInclude Include="..\Include\tupleple\type_list\Container\Containers.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\drop.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\filter.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\in.hpp" />

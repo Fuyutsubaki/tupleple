@@ -31,9 +31,6 @@
     <Filter Include="tupleple\algorithm">
       <UniqueIdentifier>{ceb59070-9586-40a7-b6c0-8cee992db518}</UniqueIdentifier>
     </Filter>
-    <Filter Include="tupleple\type_list\Container">
-      <UniqueIdentifier>{273d2992-7799-4fa9-83de-f48a286885fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="tupleple\index_tuple">
       <UniqueIdentifier>{22a23c76-46ef-45c1-9e5c-5c342c3f52e4}</UniqueIdentifier>
     </Filter>
@@ -161,9 +158,6 @@
     <ClInclude Include="container.hpp">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\tupleple\type_list\Container\Containers.hpp">
-      <Filter>tupleple\type_list\Container</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\tupleple\type_list\apply.hpp">
       <Filter>tupleple\type_list</Filter>
     </ClInclude>
@@ -196,9 +190,6 @@
     </ClInclude>
     <ClInclude Include="..\Include\tupleple\type_list\replicate.hpp">
       <Filter>tupleple\type_list</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\tupleple\move_view.hpp">
-      <Filter>tupleple</Filter>
     </ClInclude>
     <ClInclude Include="my_test.hpp">
       <Filter>ヘッダー ファイル</Filter>
