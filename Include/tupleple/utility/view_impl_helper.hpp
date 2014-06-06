@@ -4,7 +4,7 @@
 #include<tupleple\utility\mem_forward.hpp>
 #include<tupleple\utility\utility.hpp>
 #include<tupleple\tuple_traits.hpp>
-
+#include<tupleple\STD_tuple_traits.hpp>
 namespace tupleple
 {
 	namespace utility

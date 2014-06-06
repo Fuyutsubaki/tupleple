@@ -1,7 +1,8 @@
 #pragma once
-#include<tupleple\tuple.hpp>
-#include<tupleple\utility\index_tuple.hpp>
+#include<type_traits>
+#include<tupleple\index_tuple\index_sequence.hpp>
 #include<tupleple\utility\utility.hpp>
+#include<tupleple\type_list\size.hpp>
 
 namespace tupleple
 {
@@ -9,7 +10,7 @@ namespace tupleple
 	namespace deteil
 	{
 		template<class Tuple, class Functor, size_t ...index>
-		typename std::result_of<Functor(type_list::result_of_t<index, Tuple>...)>::type
+		typename std::result_of<Functor(result_of_t<index, Tuple>...)>::type
 			apply_impl(Tuple&&tuple, Functor&&functor, index::Sequence<index...>)
 		{
 				return std::forward<Functor>(functor)((std::forward<Tuple>(tuple) | at<index>())...);
@@ -20,11 +21,11 @@ namespace tupleple
 	auto apply(Tuple&&tuple, Functor&&functor)
 		->decltype(deteil::apply_impl(std::declval<Tuple>()
 		, std::declval<Functor>()
-		, index::make_tuple_size_seq_t<utility::remove_cv_ref_t<Tuple>>{}))
+		, index::make_seq_t<type_list::size<utility::remove_cv_ref_t<Tuple>>::value>{}))
 	{
 		return deteil::apply_impl(std::forward<Tuple>(tuple)
 			, std::forward<Functor>(functor)
-			, index::make_tuple_size_seq_t<utility::remove_cv_ref_t<Tuple>>{});
+			, index::make_seq_t<type_list::size<utility::remove_cv_ref_t<Tuple>>::value>{});
 	}
 
 	template<class Functor>

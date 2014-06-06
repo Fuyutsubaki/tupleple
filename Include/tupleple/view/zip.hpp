@@ -36,7 +36,7 @@ namespace tupleple
 		auto zip(Tuples&&...tuples)
 			->zip_view<std::tuple<Tuples...>>
 		{
-			return{ std::tuple<Tuples...>{ std::forward<Tuples>(tuples)... } };
+			return zip_view<std::tuple<Tuples...>>{ std::tuple<Tuples...>{ std::forward<Tuples>(tuples)... } };
 		}
 	}
 	template<class Tuple>

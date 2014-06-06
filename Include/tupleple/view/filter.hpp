@@ -20,7 +20,7 @@ namespace tupleple
 	{
 		template<class Tuple,template<class>class Pred>
 		struct filter_view
-			:utility::base_view<filter_view<Tuple,Pred>>
+			:utility::base_view<filter_view<Tuple,Pred>,Tuple>
 		{
 			filter_view(Tuple&&tuple)
 				:isuper(std::forward<Tuple>(tuple))
