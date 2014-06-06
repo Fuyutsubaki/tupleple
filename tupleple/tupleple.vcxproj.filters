@@ -77,9 +77,6 @@
     <ClInclude Include="..\Include\tupleple\view\map.hpp">
       <Filter>tupleple\view</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\tupleple\utility\base_view.hpp">
-      <Filter>tupleple\utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\tupleple\type_list\filter.hpp">
       <Filter>tupleple\type_list</Filter>
     </ClInclude>
@@ -199,6 +196,24 @@
     </ClInclude>
     <ClInclude Include="..\Include\tupleple\type_list\replicate.hpp">
       <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\move_view.hpp">
+      <Filter>tupleple</Filter>
+    </ClInclude>
+    <ClInclude Include="my_test.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\zip.hpp">
+      <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\column.hpp">
+      <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\algorithm\for_each.hpp">
+      <Filter>tupleple\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\utility\view_impl_helper.hpp">
+      <Filter>tupleple\utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

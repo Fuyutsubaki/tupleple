@@ -4,6 +4,7 @@
 #include<tupleple\tuple_traits.hpp>
 #include<tupleple\utility\utility.hpp>
 #include<tupleple\utility\mem_forward.hpp>
+#include<tupleple\utility\view_impl_helper.hpp>
 /*
 using namespace tupleple;
 auto r = std::make_tuple(3.5, 1, 3.14, 1.414);
@@ -15,16 +16,25 @@ namespace tupleple{
 
 	namespace view
 	{
-		template<class Tuple, class Functor>
-		struct map_view
+		namespace deteil
 		{
-			Tuple base;
-			Functor func;
-			friend tuple_trait<view::map_view<Tuple, Functor>>;
-		public:
-			map_view(Tuple&&tuple, Functor&&func)
-				:base(std::forward<Tuple>(tuple))
-				, func(std::forward<Functor>(func))
+			template<class Func>
+			struct Functor
+			{
+				template<class Func>
+				Functor(Func&&func)
+					:func(std::forward<Func>(func))
+				{}
+				Func func;
+			};
+		}
+		
+		template<class Tuple, class Func>
+		struct map_view
+			:utility::base_view<map_view<Tuple, Func>, Tuple, deteil::Functor<Func>>
+		{
+			map_view(Tuple&&tuple, Func&&func)
+				:isuper(std::forward<Tuple>(tuple), std::forward<Func>(func))
 			{}
 		};
 
@@ -51,24 +61,21 @@ namespace tupleple{
 		}
 	}
 
-
-
 	template<class Tuple, class Func>
-	class tuple_trait<view::map_view<Tuple, Func>>
+	struct tuple_trait<view::map_view<Tuple, Func>>
+		:utility::view_tuple_trait_helper<view::map_view<Tuple, Func>>
 	{
-		using base = utility::remove_cv_ref_t<Tuple>;
-	public:
-		static const size_t size = type_list::size<base>::value;
+		static const size_t size = base_size;
 
 		template<size_t N>
 		using element
-			= utility::remove_cv_ref_t<typename std::result_of<Func(type_list::at_t<N, base>)>::type>;
+			= utility::remove_cv_ref_t<typename std::result_of<Func(base_element_t<N>)>::type>;
 
 		template<size_t N, class T>
 		using result_type_of
 			= std::result_of<
 			decltype(utility::mem_forward<Func>(std::declval<T>().func))
-			(result_of_t<N, decltype(utility::mem_forward<Tuple>(std::declval<T>().base))>)
+			(base_result_type_of_t<N, T>)
 			>;
 
 		template<size_t N, class T>
@@ -78,7 +85,7 @@ namespace tupleple{
 			return
 				utility::mem_forward<Func>(std::forward<T>(x).func)
 				(
-				utility::mem_forward<Tuple>(std::forward<T>(x).base) | at<N>()
+				base_forward<T>(x) | at<N>()
 				);
 		}
 	};

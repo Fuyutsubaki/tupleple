@@ -53,7 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\file\lib\boost_1_55_0\Include;C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\tupleple\Include;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
@@ -71,7 +71,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\file\lib\boost_1_55_0\Include;C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\tupleple\Include;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
@@ -86,10 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\tupleple\algorithm\binary_fold.hpp" />
+    <ClInclude Include="..\Include\tupleple\algorithm\for_each.hpp" />
     <ClInclude Include="..\Include\tupleple\apply.hpp" />
     <ClInclude Include="..\Include\tupleple\at.hpp" />
     <ClInclude Include="..\Include\tupleple\index_tuple\index_sequence.hpp" />
     <ClInclude Include="..\Include\tupleple\index_tuple\index_TypeList.hpp" />
+    <ClInclude Include="..\Include\tupleple\move_view.hpp" />
     <ClInclude Include="..\Include\tupleple\parameter_pack_at.hpp" />
     <ClInclude Include="..\Include\tupleple\STD_tuple_traits.hpp" />
     <ClInclude Include="..\Include\tupleple\tuple_traits.hpp" />
@@ -113,10 +115,11 @@
     <ClInclude Include="..\Include\tupleple\type_list\List.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\unique.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\zip.hpp" />
-    <ClInclude Include="..\Include\tupleple\utility\base_view.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\mem_forward.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\utility.hpp" />
+    <ClInclude Include="..\Include\tupleple\utility\view_impl_helper.hpp" />
     <ClInclude Include="..\Include\tupleple\view\cat.hpp" />
+    <ClInclude Include="..\Include\tupleple\view\column.hpp" />
     <ClInclude Include="..\Include\tupleple\view\do_nothing.hpp" />
     <ClInclude Include="..\Include\tupleple\view\drop.hpp" />
     <ClInclude Include="..\Include\tupleple\view\filter.hpp" />
@@ -124,6 +127,7 @@
     <ClInclude Include="..\Include\tupleple\view\map.hpp" />
     <ClInclude Include="..\Include\tupleple\view\reverse.hpp" />
     <ClInclude Include="..\Include\tupleple\view\take.hpp" />
+    <ClInclude Include="..\Include\tupleple\view\zip.hpp" />
     <ClInclude Include="all.hpp" />
     <ClInclude Include="any.hpp" />
     <ClInclude Include="column.hpp" />
@@ -132,6 +136,7 @@
     <ClInclude Include="foldl.hpp" />
     <ClInclude Include="lnTuple.h" />
     <ClInclude Include="maybe_type.hpp" />
+    <ClInclude Include="my_test.hpp" />
     <ClInclude Include="parameter_pack_library.hpp" />
     <ClInclude Include="type_hash.h" />
     <ClInclude Include="type_map.h" />

@@ -4,6 +4,7 @@
 #include<tupleple\utility\utility.hpp>
 #include<tupleple\type_list\filter.hpp>
 #include<tupleple\at.hpp>
+#include<tupleple\utility\view_impl_helper.hpp>
 
 /*
 	using namespace tupleple;
@@ -19,12 +20,10 @@ namespace tupleple
 	{
 		template<class Tuple,template<class>class Pred>
 		struct filter_view
+			:utility::base_view<filter_view<Tuple,Pred>>
 		{
-			Tuple base;
-			friend tuple_trait<view::filter_view<Tuple, Pred>>;
-		public:
 			filter_view(Tuple&&tuple)
-				:base(std::forward<Tuple>(tuple))
+				:isuper(std::forward<Tuple>(tuple))
 			{}
 		};
 
@@ -65,13 +64,13 @@ namespace tupleple
 
 	template<class Tuple, template<class>class Pred>
 	class tuple_trait<view::filter_view<Tuple, Pred>>
+		:utility::view_tuple_trait_helper<view::filter_view<Tuple, Pred>>
 	{
-		using base = utility::remove_cv_ref_t<Tuple>;
-		static const size_t N = type_list::size<base>::value;
+		static const size_t N = base_size;
 
 		template<class Idx>
 		struct Impl
-			:Pred<type_list::at_t<Idx::value, base>>
+			:Pred<base_element_t<Idx::value>>
 		{};
 		using Seq = type_list::filter_if_t<index::make_List_t<N>, Impl>;
 
@@ -84,17 +83,17 @@ namespace tupleple
 		static const size_t size = type_list::size<Seq>::value;
 		
 		template<size_t N>
-		using element = type_list::at<F<N>::value, base>;
+		using element = base_element<F<N>::value>;
 
 		template<size_t N, class T>
 		using result_type_of
-			= result_of<F<N>::value, decltype(utility::mem_forward<Tuple>(std::declval<T>().base))>;
+			= base_result_type_of<F<N>::value,T>;
 
 		template<size_t N, class T>
 		static auto get(T&&x)
 			->result_of_t<N, T>
 		{
-			return utility::mem_forward<Tuple>(std::forward<T>(x).base) | at<F<N>::value>();
+			return base_forward<T>(x) | at<F<N>::value>();
 		}
 	};
 

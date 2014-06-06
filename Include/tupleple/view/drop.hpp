@@ -1,8 +1,6 @@
 #pragma once 
 
-#include<tupleple\utility\utility.hpp>
-#include<tupleple\tuple_traits.hpp>
-#include<tupleple\utility\mem_forward.hpp>
+#include<tupleple\utility\view_impl_helper.hpp>
 /*
 using namespace tupleple;
 auto tuple = std::make_tuple(1, std::make_unique<int>(2), 3);
@@ -16,12 +14,10 @@ namespace tupleple
 	{
 		template<size_t N, class Tuple>
 		struct drop_view
+			:utility::base_view<drop_view<N,Tuple>,Tuple>
 		{
-			Tuple base;
-			friend tuple_trait<view::drop_view<N,Tuple>>;
-		public:
 			drop_view(Tuple&&tuple)
-				:base(std::forward<Tuple>(tuple))
+				:isuper(std::forward<Tuple>(tuple))
 			{}
 		};
 		
@@ -39,25 +35,22 @@ namespace tupleple
 
 	}
 	template <size_t N, class Tuple>
-	class tuple_trait<view::drop_view<N, Tuple>>
+	struct tuple_trait<view::drop_view<N, Tuple>>
+		:utility::view_tuple_trait_helper<view::drop_view<N, Tuple>>
 	{
-		using View = view::drop_view<N, Tuple>;
-		using base_type = utility::remove_cv_ref_t<Tuple>;
-	public:
-		static const size_t size = type_list::size<base_type>::value - N;
+		static const size_t size = base_size - N;
 		template<size_t Idx>
-		using element = type_list::at<Idx + N, base_type>;
+		using element = base_element<Idx + N>;
 
 		template<size_t Idx, class T>
 		using result_type_of
-			= result_of < N + Idx, decltype(utility::mem_forward<Tuple>(std::declval<T>().base)) >;
+			= base_result_type_of<Idx + N, T>;
 
 		template<size_t Idx, class T>
 		static auto get(T&&x)
 			->result_of_t<Idx, T>
 		{
-			return utility::mem_forward<Tuple>(std::forward<T>(x).base)
-				| at<Idx + N>();
+			return base_forward<T>(x) | at<Idx + N>();
 		}
 	};
 }
