@@ -4,7 +4,7 @@
 #include<tupleple\index_tuple\index_TypeList.hpp>
 #include<tupleple\type_list\List.hpp>
 #include<tupleple\type_list\map.hpp>
-
+#include<tupleple\utility\to_typelist.hpp>
 
 namespace tupleple
 {
@@ -12,9 +12,8 @@ namespace tupleple
 	{
 		template<size_t N, class Tuple>
 		struct drop
-		{
-			using type = view::drop_view<N, Tuple>;
-		};
+			:drop<N,utility::to_typelist_t<Tuple>>
+		{};
 		
 
 

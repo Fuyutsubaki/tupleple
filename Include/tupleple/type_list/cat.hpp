@@ -20,10 +20,9 @@ namespace tupleple
 			using type = List<L..., R...>;
 		};
 		
-
 		template<class Lists>
 		struct flat
-			: binary_fold<Lists, cat>
+			: utility::cond_t<size<Lists>::value == 0,utility::identity<List<>>, binary_fold<Lists, cat>>
 		{};
 
 		

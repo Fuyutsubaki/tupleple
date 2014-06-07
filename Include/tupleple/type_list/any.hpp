@@ -1,15 +1,14 @@
 #pragma once
 #include"List.hpp"
 #include<tupleple\utility\utility.hpp>
-#include"apply.hpp"
+#include<tupleple\utility\to_typelist.hpp>
 namespace tupleple
 {
 	namespace type_list
 	{
-
 		template<class Tuple, template<class>class F>
 		struct any
-			:any<apply_struct_t<Tuple, List>, F>
+			:any<utility::to_typelist_t<Tuple>, F>
 		{};
 
 		namespace deteil
@@ -19,13 +18,6 @@ namespace tupleple
 			{};
 			template<class...T>
 			struct any_impl<std::integral_constant<T,false>...>:std::false_type
-			{};
-			
-			template<class...>
-			struct none_impl :std::false_type
-			{};
-			template<class...T>
-			struct none_impl<std::pair<T, std::false_type>...>:std::true_type
 			{};
 		}
 		template<class...T, template<class>class F>

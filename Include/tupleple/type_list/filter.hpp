@@ -24,7 +24,7 @@ namespace tupleple
 		{
 			template<class U>
 			struct trans
-				:std::is_same<U,T>
+				:std::is_same<U, T>
 			{};
 			using type = filter_if<tList, trans>;
 		};

@@ -2,16 +2,16 @@
 #include"List.hpp"
 #include<tupleple\utility\utility.hpp>
 #include<tupleple\index_tuple\index_sequence.hpp>
-#include"apply.hpp"
+#include<tupleple\utility\to_typelist.hpp>
+
 namespace tupleple
 {
 
 	namespace type_list
 	{
-
 		template<class Tuple,template<class>class F>
 		struct all
-			:all<apply_struct_t<Tuple,std::tuple>,F>
+			:all<utility::to_typelist_t<Tuple>, F>
 		{};
 
 		namespace deteil

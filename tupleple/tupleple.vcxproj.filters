@@ -206,6 +206,18 @@
     <ClInclude Include="..\Include\tupleple\utility\view_impl_helper.hpp">
       <Filter>tupleple\utility</Filter>
     </ClInclude>
+    <ClInclude Include="make_overloar.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\type_list\quick_sort.hpp">
+      <Filter>tupleple\type_list</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\type_separate.hpp">
+      <Filter>tupleple\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\utility\to_typelist.hpp">
+      <Filter>tupleple\utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">

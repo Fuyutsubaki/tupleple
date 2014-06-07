@@ -2,16 +2,15 @@
 #define TUPLEPLE_TYPELIST_MAP_HPP
 #include<tupleple\utility\utility.hpp>
 #include<tupleple\index_tuple\index_sequence.hpp>
-
+#include<tupleple\utility\to_typelist.hpp>
 namespace tupleple
 {
 	namespace type_list
 	{
 		template<class Tuple, template<class...>class F>
 		class map
-		{
-			static_assert(sizeof(Tuple),"not define");
-		};
+			:map<utility::to_typelist_t<Tuple>, F>
+		{};
 
 		template<class...T, template<class...>class F>
 		struct map<List<T...>,F>

@@ -3,6 +3,7 @@
 #include"map.hpp"
 #include<tupleple\index_tuple\index_TypeList.hpp>
 #include"apply.hpp"
+#include<tupleple\utility\to_typelist.hpp>
 //using namespace tupleple;
 //using namespace type_list;
 //static_assert(std::is_same<reverse_t<List<char, int, void>>, List<void, int, char>>::value, "");
@@ -12,9 +13,8 @@ namespace tupleple
 	{
 		template<class Tuple>
 		struct reverse
-		{
-			
-		};
+			:reverse<utility::to_typelist_t<Tuple>>
+		{};
 		template<class ...T>
 		struct reverse<List<T...>>
 		{

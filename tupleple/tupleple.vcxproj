@@ -106,6 +106,7 @@
     <ClInclude Include="..\Include\tupleple\type_list\in.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\ListStyle.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\map.hpp" />
+    <ClInclude Include="..\Include\tupleple\type_list\quick_sort.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\replicate.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\reverse.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\size.hpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="..\Include\tupleple\type_list\unique.hpp" />
     <ClInclude Include="..\Include\tupleple\type_list\zip.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\mem_forward.hpp" />
+    <ClInclude Include="..\Include\tupleple\utility\to_typelist.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\utility.hpp" />
     <ClInclude Include="..\Include\tupleple\utility\view_impl_helper.hpp" />
     <ClInclude Include="..\Include\tupleple\view\cat.hpp" />
@@ -125,6 +127,7 @@
     <ClInclude Include="..\Include\tupleple\view\map.hpp" />
     <ClInclude Include="..\Include\tupleple\view\reverse.hpp" />
     <ClInclude Include="..\Include\tupleple\view\take.hpp" />
+    <ClInclude Include="..\Include\tupleple\view\type_separate.hpp" />
     <ClInclude Include="..\Include\tupleple\view\zip.hpp" />
     <ClInclude Include="all.hpp" />
     <ClInclude Include="any.hpp" />
@@ -133,6 +136,7 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="foldl.hpp" />
     <ClInclude Include="lnTuple.h" />
+    <ClInclude Include="make_overloar.h" />
     <ClInclude Include="maybe_type.hpp" />
     <ClInclude Include="my_test.hpp" />
     <ClInclude Include="parameter_pack_library.hpp" />
