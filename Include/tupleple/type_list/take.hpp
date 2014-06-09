@@ -1,7 +1,6 @@
 #pragma once 
-#include<tupleple\view\take.hpp>
+
 #include<tupleple\index_tuple\index_TypeList.hpp>
-#include<tupleple\type_list\zip.hpp>
 #include"apply_index.hpp"
 
 namespace tupleple
@@ -10,7 +9,7 @@ namespace tupleple
 	{
 		template<size_t N, class Tuple>
 		struct take
-			:apply_index_t<index::make_seq_t<N>, Tuple, List>
+			:apply_index<index::make_seq_t<N>, Tuple, List>
 		{};
 
 		template<size_t N, class Tuple>

@@ -9,7 +9,7 @@ namespace tupleple
 	{
 		template<class T>
 		struct to_typelist
-			:type_list::apply_struct<T,List>
+			:type_list::apply_struct<T,type_list::List>
 		{};
 		template<class T>
 		using to_typelist_t = typename to_typelist<T>::type; 

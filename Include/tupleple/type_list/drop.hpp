@@ -1,5 +1,4 @@
 #pragma once 
-#include<tupleple\view\drop.hpp>
 #include<tupleple\utility\utility.hpp>
 #include<tupleple\index_tuple\index_TypeList.hpp>
 #include<tupleple\type_list\List.hpp>
@@ -12,7 +11,7 @@ namespace tupleple
 	{
 		template<size_t N, class Tuple>
 		struct drop
-			:drop<N,utility::to_typelist_t<Tuple>>
+			:drop<N, utility::to_typelist_t<Tuple>>
 		{};
 		
 
@@ -36,7 +35,7 @@ namespace tupleple
 			};
 		}
 		template<size_t N, class ...T>
-		struct drop<N,List<T...>>
+		struct drop<N, List<T...>>
 		{
 			using type = map_t<typename deteil::drop_impl<index::make_List_t<N>, T...>::type, deteil::unwrap>;
 		};

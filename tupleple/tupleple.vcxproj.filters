@@ -212,11 +212,11 @@
     <ClInclude Include="..\Include\tupleple\type_list\quick_sort.hpp">
       <Filter>tupleple\type_list</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\tupleple\view\type_separate.hpp">
-      <Filter>tupleple\view</Filter>
-    </ClInclude>
     <ClInclude Include="..\Include\tupleple\utility\to_typelist.hpp">
       <Filter>tupleple\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\tupleple\view\unique.hpp">
+      <Filter>tupleple\view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

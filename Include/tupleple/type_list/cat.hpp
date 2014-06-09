@@ -22,7 +22,7 @@ namespace tupleple
 		
 		template<class Lists>
 		struct flat
-			: utility::cond_t<size<Lists>::value == 0,utility::identity<List<>>, binary_fold<Lists, cat>>
+			: binary_fold<Lists, cat, List<>>
 		{};
 
 		

@@ -127,7 +127,7 @@
     <ClInclude Include="..\Include\tupleple\view\map.hpp" />
     <ClInclude Include="..\Include\tupleple\view\reverse.hpp" />
     <ClInclude Include="..\Include\tupleple\view\take.hpp" />
-    <ClInclude Include="..\Include\tupleple\view\type_separate.hpp" />
+    <ClInclude Include="..\Include\tupleple\view\unique.hpp" />
     <ClInclude Include="..\Include\tupleple\view\zip.hpp" />
     <ClInclude Include="all.hpp" />
     <ClInclude Include="any.hpp" />
