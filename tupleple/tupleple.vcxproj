@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="..\Include\tupleple\algorithm\binary_fold.hpp" />
     <ClInclude Include="..\Include\tupleple\algorithm\for_each.hpp" />
+    <ClInclude Include="..\Include\tupleple\algorithm\unique.hpp" />
     <ClInclude Include="..\Include\tupleple\apply.hpp" />
     <ClInclude Include="..\Include\tupleple\at.hpp" />
     <ClInclude Include="..\Include\tupleple\index_tuple\index_sequence.hpp" />
@@ -127,7 +128,6 @@
     <ClInclude Include="..\Include\tupleple\view\map.hpp" />
     <ClInclude Include="..\Include\tupleple\view\reverse.hpp" />
     <ClInclude Include="..\Include\tupleple\view\take.hpp" />
-    <ClInclude Include="..\Include\tupleple\view\unique.hpp" />
     <ClInclude Include="..\Include\tupleple\view\zip.hpp" />
     <ClInclude Include="all.hpp" />
     <ClInclude Include="any.hpp" />
@@ -140,9 +140,11 @@
     <ClInclude Include="maybe_type.hpp" />
     <ClInclude Include="my_test.hpp" />
     <ClInclude Include="parameter_pack_library.hpp" />
+    <ClInclude Include="sprout_variant.h" />
     <ClInclude Include="type_hash.h" />
     <ClInclude Include="type_map.h" />
     <ClInclude Include="type_set.h" />
+    <ClInclude Include="variant.hpp" />
     <ClInclude Include="zip.hpp" />
   </ItemGroup>
   <ItemGroup>

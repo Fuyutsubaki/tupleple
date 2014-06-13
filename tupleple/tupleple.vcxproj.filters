@@ -34,6 +34,9 @@
     <Filter Include="tupleple\index_tuple">
       <UniqueIdentifier>{22a23c76-46ef-45c1-9e5c-5c342c3f52e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tupleple\Lazy">
+      <UniqueIdentifier>{0440becc-1d2c-477f-a005-b147b8603dd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -215,8 +218,14 @@
     <ClInclude Include="..\Include\tupleple\utility\to_typelist.hpp">
       <Filter>tupleple\utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\Include\tupleple\view\unique.hpp">
-      <Filter>tupleple\view</Filter>
+    <ClInclude Include="..\Include\tupleple\algorithm\unique.hpp">
+      <Filter>tupleple\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="variant.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="sprout_variant.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

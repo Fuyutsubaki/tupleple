@@ -36,11 +36,11 @@ overload_function<L, R> make_overload(L&&l, R&&r)
 
 
 #include<tupleple\type_list\quick_sort.hpp>
-#include<tupleple\view\type_separate.hpp>
+
 #include<tupleple\type_list\all.hpp>
 #include<tupleple\type_list\zip.hpp>
 #include<tupleple\type_list\binary_fold.hpp>
-#include<tupleple\view\type_separate.hpp>
+#include<tupleple\type_list\in.hpp>
 #include<tupleple\STD_tuple_traits.hpp>
 template<class L,class R>
 struct is_small_size
@@ -48,21 +48,17 @@ struct is_small_size
 {
 };
 
-template<class L,class R>
-struct max
-	:std::conditional < (sizeof(L)<sizeof(R)), R, L>
-{};
+
+#include"variant.hpp"
 
 
 
-//
-//
+
 int main()
 {
 	using namespace tupleple;
-	
-	
-	
-	
+	//tupleple::deteil::variant_apply<void, type_list::List<std::integral_constant<std::size_t,0>>>::apply(std::forward_as_tuple(variant<int, char>{}));
 
+	using v = variant<char, int, int>;
+	variant_apply<void>(1, v{1}, 0, v{2});
 }

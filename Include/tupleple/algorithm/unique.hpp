@@ -6,7 +6,7 @@
 #include<tupleple\type_list\ListStyle.hpp>
 namespace tupleple
 {
-	namespace view
+	namespace lazy
 	{
 		namespace deteil
 		{
@@ -14,17 +14,17 @@ namespace tupleple
 		}
 		//bool(T ,T)
 		template<class Tuple>
-		struct type_separate_view
-			:utility::base_view<type_separate_view<Tuple>, Tuple>
+		struct unique_view
+			:utility::base_view<unique_view<Tuple>, Tuple>
 		{
-			type_separate_view(Tuple&&tuple)
+			unique_view(Tuple&&tuple)
 			:isuper(std::forward<Tuple>(tuple))
 			{}
 		};
 	}
 	template<class Tuple>
-	struct tuple_trait<view::type_separate_view<Tuple>>
-		:utility::view_tuple_trait_helper<view::type_separate_view<Tuple>>
+	struct tuple_trait<lazy::unique_view<Tuple>>
+		:utility::view_tuple_trait_helper<lazy::unique_view<Tuple>>
 	{
 		using seq = index::make_List_t<base_size>;
 		using uniqued = type_list::unique_t<base_simple_type>;
