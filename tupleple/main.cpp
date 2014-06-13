@@ -49,16 +49,19 @@ struct is_small_size
 };
 
 
+template<int i>
+struct Which
+{
+	static const size_t value = i;
+};
+
 #include"variant.hpp"
-
-
-
+#include"debug.h"
 
 int main()
 {
 	using namespace tupleple;
-	//tupleple::deteil::variant_apply<void, type_list::List<std::integral_constant<std::size_t,0>>>::apply(std::forward_as_tuple(variant<int, char>{}));
 
-	using v = variant<char, int, int>;
-	variant_apply<void>(1, v{1}, 0, v{2});
+	using v = variant<char, int, double>;
+	variant_apply<bool>(Print{}, 1, v{ Which<2>{}, 3.14 }, v{ Which<1>{}, 65 }, v{ Which<0>{}, 'X' });
 }
