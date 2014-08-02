@@ -37,6 +37,9 @@
     <Filter Include="tupleple\Lazy">
       <UniqueIdentifier>{0440becc-1d2c-477f-a005-b147b8603dd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tupleple\mpl">
+      <UniqueIdentifier>{ab10ffc3-f8bd-4e63-a21f-e9c134da7e84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -226,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="sprout_variant.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="WD.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="mpl\mpl.hpp">
+      <Filter>tupleple\mpl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

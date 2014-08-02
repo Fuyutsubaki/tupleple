@@ -53,7 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\file\lib\boost_1_55_0\Include;C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\file\lib\mpl11-master\include;C:\file\lib\boost_1_55_0\Include;C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\tupleple\Include;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
@@ -71,7 +71,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\file\lib\boost_1_55_0\Include;C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\file\lib\mpl11-master\include;C:\file\lib\boost_1_55_0\Include;C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>C:\Users\ishihara\Documents\Visual Studio 2013\Projects\tupleple\tupleple\Include;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
@@ -138,6 +138,7 @@
     <ClInclude Include="lnTuple.h" />
     <ClInclude Include="make_overloar.h" />
     <ClInclude Include="maybe_type.hpp" />
+    <ClInclude Include="mpl\mpl.hpp" />
     <ClInclude Include="my_test.hpp" />
     <ClInclude Include="parameter_pack_library.hpp" />
     <ClInclude Include="sprout_variant.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="type_map.h" />
     <ClInclude Include="type_set.h" />
     <ClInclude Include="variant.hpp" />
+    <ClInclude Include="WD.hpp" />
     <ClInclude Include="zip.hpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,5 @@
 #pragma once
 
-
-
-
 #include<utility>
 #include<type_traits>
 
@@ -22,6 +19,8 @@ struct type_map<std::pair<Key, Val>...>
 	template<class T>
 	using type = decltype(trans<T>(std::declval<type_map>()));
 };
+
+
 /*
 struct R{};
 struct G{};
